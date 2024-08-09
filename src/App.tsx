@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home/Home';
 
 const queryClient = new QueryClient();
 
@@ -8,9 +9,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
-          <Route>
-            <div className="flex justify-center text-8xl">HI</div>
-          </Route>
+          <Route path="/" element={<Home />} />
         </Routes>
       </Router>
     </QueryClientProvider>
