@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import Button from "./Button";
+import Button from "../common/Button";
 
 // 홈 오늘의야구 커뮤니티 실시간채팅 알림 내정보
 
-const Navigaion = () => {
+const Navigation = () => {
   return (
     <>
       <nav>
-        <ul>
+        <ul className="flex flex-row md:flex-col">
           <li>
             <Link to="/">홈</Link>
           </li>
@@ -27,11 +27,11 @@ const Navigaion = () => {
             <Link to="/">내 정보</Link>
           </li>
         </ul>
+        <Button size="large" scheme="primary">
+          경기 기록하기
+        </Button>
       </nav>
-      <Button size="large" scheme="primary">
-        경기 기록하기
-      </Button>
     </>
   );
 };
-export default Navigaion;
+export default Navigation;
