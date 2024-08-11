@@ -1,3 +1,5 @@
+import Badge from "../common/Badge";
+
 interface ReviewSectionProps {
   review: string;
   result: string;
@@ -13,6 +15,10 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
 }) => (
   <div className="w-full">
     <p>{result}</p>
+    <div>
+      ⚾<Badge scheme="hanhwa" /> 7 : 5 <Badge scheme="kiwoom" />
+    </div>
+
     <p
       className={`text-gray-700 ${isExpanded ? "line-clamp-none" : "line-clamp-1"}`}
     >
