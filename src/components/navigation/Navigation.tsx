@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 
 // 홈 오늘의야구 커뮤니티 실시간채팅 알림 내정보
 
 const Navigation = () => {
+  const navigate = useNavigate();
   return (
     <>
       <nav>
@@ -27,7 +28,7 @@ const Navigation = () => {
             <Link to="/">내 정보</Link>
           </li>
         </ul>
-        <Button size="large" scheme="primary">
+        <Button size="large" scheme="primary" onClick={() => navigate("/add")}>
           경기 기록하기
         </Button>
       </nav>
