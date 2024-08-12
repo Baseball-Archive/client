@@ -1,4 +1,3 @@
-import Button from "../../components/common/Button";
 import Post from "./Post";
 
 const Posts = () => {
@@ -12,11 +11,6 @@ const Posts = () => {
         <main>
           <Post />
         </main>
-
-        <footer>
-          <Button size="medium" scheme="secondary">수정</Button>
-          <Button size="medium" scheme="primary">작성</Button>
-        </footer>
       </div>
     </>
   );

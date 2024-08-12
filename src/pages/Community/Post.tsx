@@ -1,7 +1,9 @@
 const Post = () => {
   return (
     <>
-      <div>게시글</div>
+      <div>
+        
+      </div>
     </>
   );
 };
