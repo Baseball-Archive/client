@@ -16,7 +16,7 @@ const NAV_DEFAULT =
   "fixed border z-10 bg-white top-auto bottom-0 w-full h-[100px]";
 
 const CONTENT_XL = "xl:w-2/4 xl:left-1/4";
-const CONTENT_MD = "md:w-full md:px-[100px]";
+const CONTENT_MD = "md:w-[calc(100%-100px)] md:left-[100px]";
 const CONTENT_DEFAULT = "absolute top-0 border w-100 left-0 w-full";
 
 const Layout = () => {

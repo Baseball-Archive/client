@@ -1,35 +1,42 @@
-import { Link } from "react-router-dom";
-import Button from "../common/Button";
+import { useState } from "react";
+import NavigationItem from "./NavigationItem";
+import { HomeIcon, CalendarDaysIcon, PlusCircleIcon, ChatBubbleOvalLeftEllipsisIcon, UserCircleIcon } from '@heroicons/react/20/solid'
+import PostsMenu from "./PostsMenu";
 
-// 홈 오늘의야구 커뮤니티 실시간채팅 알림 내정보
+const ICON_SIZE = "size-8"
+const LIST_STYLE = "py-4"
 
 const Navigation = () => {
+  const [isClickPostBtn, setIsClickPostBtn] = useState<boolean>(false);
+  
+  const handleClick = () => {
+    setIsClickPostBtn(!isClickPostBtn)
+  }
   return (
     <>
-      <nav>
-        <ul className="flex flex-row md:flex-col">
-          <li>
-            <Link to="/">홈</Link>
+      <nav className="px-6 md:py-4">
+        <div className="font-logo hidden text-3xl py-8 md:text-center md:block xl:text-left">야구볼램</div>
+        <ul className="flex flex-row justify-between md:flex-col">
+          <li className={LIST_STYLE}>
+            <NavigationItem title="홈" link="/" icon={<HomeIcon className={ICON_SIZE}/>}/>
           </li>
-          <li>
-            <Link to="/">오늘의 야구</Link>
+          <li className={LIST_STYLE}>
+            <NavigationItem title="오늘의 야구" link="/ranking" icon={<CalendarDaysIcon className={ICON_SIZE}/>}/>
           </li>
-          <li>
-            <Link to="/">커뮤니티</Link>
+          <li className={`md:relative ${LIST_STYLE}`} onClick={handleClick}>
+            <NavigationItem title="기록하기" icon={<PlusCircleIcon className={ICON_SIZE}/>}/>
+            {
+              isClickPostBtn &&
+              <PostsMenu onClick={handleClick}/>
+            }
           </li>
-          <li>
-            <Link to="/">실시간 채팅</Link>
+          <li className={LIST_STYLE}>
+            <NavigationItem title="커뮤니티" link="/posts" icon={<ChatBubbleOvalLeftEllipsisIcon className={ICON_SIZE}/>}/>
           </li>
-          <li>
-            <Link to="/">알림</Link>
-          </li>
-          <li>
-            <Link to="/">내 정보</Link>
+          <li className={`hidden md:block ${LIST_STYLE}`}>
+            <NavigationItem title="프로필" link="/mypage" icon={<UserCircleIcon className={ICON_SIZE}/>}/>
           </li>
         </ul>
-        <Button size="large" scheme="primary">
-          경기 기록하기
-        </Button>
       </nav>
     </>
   );
