@@ -22,7 +22,7 @@ const ArchiveHandleButton = () => {
     }
   };
   return (
-    <div className="" onBlur={handleBlurContainer}>
+    <div onBlur={handleBlurContainer}>
       <button
         onClick={handleClickContainer}
         className="px-3 text-4xl active:text-gray-400"

@@ -1,11 +1,11 @@
 import MatchInfo from "../../components/Archive/AddArchive/MatchInfo";
-import PickWeather from "../../components/Archive/AddArchive/PickWeather";
 
 const AddArchive = () => {
   return (
-    <div className="container">
-      <MatchInfo />
-      <PickWeather />
+    <div className="container mb-6 flex justify-center overflow-hidden bg-white">
+      <div className="flex w-full max-w-md flex-col">
+        <MatchInfo />
+      </div>
     </div>
   );
 };

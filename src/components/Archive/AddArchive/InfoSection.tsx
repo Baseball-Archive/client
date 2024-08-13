@@ -1,14 +1,16 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 interface InfoSectionProps {
   label: string;
   children: ReactNode;
 }
 
-const InfoSection: React.FC<InfoSectionProps> = ({ label, children }) => {
+const InfoSection = ({ label, children }: InfoSectionProps) => {
   return (
-    <div className="mb-4 flex flex-row">
-      <label className="mr-2 text-sm">{label}</label>
-      {children}
+    <div className="mt-2 flex flex-col">
+      <label className="text-base">{label}</label>
+      <div className="flex h-12 items-center justify-center rounded-[4px] border text-lg">
+        {children}
+      </div>
     </div>
   );
 };

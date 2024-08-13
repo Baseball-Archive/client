@@ -1,34 +1,34 @@
 import React from "react";
 import PickWeather from "./PickWeather";
 import InfoSection from "./InfoSection";
+import SelectTeam from "./SelectTeam";
 
 const MatchInfo = () => {
-  return (
-    <div className="mx-auto max-w-md p-4">
-      <InfoSection label="제목">
-        <input></input>
-      </InfoSection>
+  const today = new Date().toISOString().split("T")[0];
 
+  return (
+    <div className="container pt-6">
+      <InfoSection label="제목">
+        <input
+          className="w-full px-4 outline-none"
+          placeholder="제목을 입력하세요"
+        ></input>
+      </InfoSection>
       <InfoSection label="날씨">
         <PickWeather />
       </InfoSection>
-      <InfoSection label="직관 날짜">
-        <p className="text-sm">2024.08.24</p>
+      <InfoSection label="직관한 날짜">
+        <p className="text-sm"></p>
       </InfoSection>
-
-      <InfoSection label="경기 결과">
-        <input></input>
+      <InfoSection label="우리팀 vs 상대팀">
+        <SelectTeam />
+      </InfoSection>{" "}
+      <InfoSection label="직관한 날짜">
+        <p className="text-sm"></p>
+      </InfoSection>{" "}
+      <InfoSection label="직관한 날짜">
+        <p className="text-sm"></p>
       </InfoSection>
-
-      {/* 점수 */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="text-center text-lg">
-          우리팀 점수: <span className="text-2xl font-bold">7</span>
-        </div>
-        <div className="text-center text-lg">
-          상대팀 점수: <span className="text-2xl font-bold">5</span>
-        </div>
-      </div>
     </div>
   );
 };
