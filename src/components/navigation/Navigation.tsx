@@ -1,18 +1,20 @@
 import { useState } from "react";
-import NavigationItem from "./NavigationItem";
 import { HomeIcon, CalendarDaysIcon, PlusCircleIcon, ChatBubbleOvalLeftEllipsisIcon, UserCircleIcon } from '@heroicons/react/20/solid'
+import NavigationItem from "./NavigationItem";
 import PostsMenu from "./PostsMenu";
 
 const ICON_SIZE = "size-8"
 const LIST_STYLE = "py-4"
 
 const Navigation = () => {
-  const [isClickPostBtn, setIsClickPostBtn] = useState<boolean>(false);
-  
-  const handleClick = () => {
-    setIsClickPostBtn(!isClickPostBtn)
+  const [isClickPostButton, setIsClickPostButton] = useState(false);
+
+  const togglePostModal = (event: React.MouseEvent<HTMLLIElement | SVGSVGElement>) => {
+    event.stopPropagation()
+    setIsClickPostButton(prev => !prev)
   }
-  return (
+
+  return ( 
     <>
       <nav className="px-6 md:py-4">
         <div className="font-logo hidden text-3xl py-8 md:text-center md:block xl:text-left">야구볼램</div>
@@ -23,11 +25,11 @@ const Navigation = () => {
           <li className={LIST_STYLE}>
             <NavigationItem title="오늘의 야구" link="/ranking" icon={<CalendarDaysIcon className={ICON_SIZE}/>}/>
           </li>
-          <li className={`md:relative ${LIST_STYLE}`} onClick={handleClick}>
+          <li className={`md:relative ${LIST_STYLE}`} onClick={togglePostModal}>
             <NavigationItem title="기록하기" icon={<PlusCircleIcon className={ICON_SIZE}/>}/>
             {
-              isClickPostBtn &&
-              <PostsMenu onClick={handleClick}/>
+              isClickPostButton &&
+                <PostsMenu onClick={togglePostModal}/>
             }
           </li>
           <li className={LIST_STYLE}>

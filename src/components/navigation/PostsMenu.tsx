@@ -2,7 +2,7 @@ import { PlusCircleIcon, BookOpenIcon, ChatBubbleLeftRightIcon, XMarkIcon } from
 import PostsMenuItem from "./PostsMenuItem";
 
 interface Props {
-    onClick: () => void
+    onClick: (event: React.MouseEvent<HTMLLIElement | SVGSVGElement>) => void
 }
 
 const PostsMenu = ({onClick}: Props) => {
