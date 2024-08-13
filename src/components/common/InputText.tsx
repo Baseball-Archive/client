@@ -2,7 +2,7 @@ import React, { ForwardedRef } from 'react';
 
 type InputSize = 'large' | 'medium' | 'small';
 type InputScheme = 'primary' | 'secondary' | 'danger';
-type InputType = 'text' | 'email' | 'password' | 'number';
+type InputType = 'text' | 'email' | 'password' | 'number' | 'username';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
