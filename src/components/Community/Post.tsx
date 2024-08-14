@@ -88,7 +88,7 @@ const Post = ({ post }: Props) => {
           </div>
           <div className="flex justify-between items-center mt-2">
             <div className="flex items-center font-normal text-gray-500">
-              <div className="flex items-center justify-center" style={{ width: '3rem', height: '3rem' }}>
+              <div className="flex items-center justify-center w-12 h-12 relative overflow-hidden">
                 <Badge scheme={cheerTeam as TeamScheme} />
               </div>
               <div className="ml-1 text-sm">{userName}</div>
