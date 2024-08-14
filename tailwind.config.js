@@ -31,6 +31,10 @@ export default {
           light: "#D9D9D9",
           dark: "#2D3748",
         },
+        login: {
+          border: "#A9A9A9",
+          text: "#888"
+        }
       },
     },
   },
