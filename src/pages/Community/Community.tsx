@@ -1,4 +1,7 @@
 import Post, { PostType } from "../../components/Community/Post";
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
 
 const dummyPost: PostType[] = [
   {
@@ -24,10 +27,26 @@ const dummyPost: PostType[] = [
 ]
 
 const Community = () => {
+  const location = useLocation();
+  const [currentPage, setCurrentPage] = useState('');
+
+  useEffect(() => {
+    if (location.pathname === '/posts') {
+      setCurrentPage('community');
+    } else if (location.pathname === '/archive') {
+      setCurrentPage('archive');
+    }
+  }, [location]);
+
   return (
     <div>
-      <div>
-        커뮤니티
+      <div className="m-10 flex justify-center">
+        <button className={`w-20 h-12 ${currentPage === 'community' ? 'underline underline-offset-4' : ''}`}>
+          <span className="font-black">커뮤니티</span>
+        </button>
+        <button className={`w-20 h-12 ${currentPage === 'diary' ? 'underline underline-offset-4' : ''}`}>
+          <span className="font-black">일기</span>
+        </button>
       </div>
       {
         dummyPost.map((post) => (
