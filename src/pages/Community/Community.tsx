@@ -1,4 +1,4 @@
-import Post, { PostType, TeamScheme } from "../../components/Community/Post";
+import Post, { PostType } from "../../components/Community/Post";
 
 const dummyPost: PostType[] = [
   {
