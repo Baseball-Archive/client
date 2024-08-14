@@ -30,10 +30,10 @@ const Posts = () => {
         커뮤니티
       </div>
       {
-        dummyPost.map((item) => (
+        dummyPost.map((post) => (
           <Post 
-            key={item.id}
-            post={item}
+            key={post.id}
+            post={post}
           />
         ))
       }
