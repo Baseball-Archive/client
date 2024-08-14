@@ -28,19 +28,28 @@ interface Props {
   post: Post;
 }
 
-const Post: React.FC<Props> = ({ post }: Props) => {
+const Post = ({ post }: Props) => {
+
+  const {
+    home_team_name,
+    away_team_name,
+    review_short,
+    comments,
+    likes
+  } = post;
+
   return (
     <div className="mb-6 flex justify-center overflow-hidden bg-white">
       <div className="w-full max-w-lg">
         <div className="bg-gray-100">
           <div className="flex">
-            <Badge scheme={post.home_team_name} />
-            <Badge scheme={post.away_team_name} />
-            <p>{post.review_short}</p>
+            <Badge scheme={home_team_name} />
+            <Badge scheme={away_team_name} />
+            <p>{review_short}</p>
           </div>
           <div className="flex">
-            <div>{post.comments}</div>
-            <div>{post.likes}</div>
+            <div>{comments}</div>
+            <div>{likes}</div>
           </div>
         </div>
       </div>
