@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-type Weather = "sun" | "cloud" | "rain" | null;
+fetype Weather = "sun" | "cloud" | "rain" | "snow" | null;
 
 const PickWeather: React.FC = () => {
   const [selectedEmoji, setSelectedEmoji] = useState<Weather>(null);
@@ -38,8 +38,10 @@ const PickWeather: React.FC = () => {
             <div>☁️</div>
           ) : selectedEmoji == "rain" ? (
             <span>☔</span>
-          ) : (
+          ) : selectedEmoji == "sun" ? (
             <span>☀️</span>
+          ) : (
+            <span>❄️</span>
           )
         ) : (
           <span className="text-lg">날씨를 선택하세요.</span>
@@ -76,6 +78,16 @@ const PickWeather: React.FC = () => {
               }
             >
               ☔
+            </span>{" "}
+            <span
+              onClick={() => handleWeather("snow")}
+              className={
+                selectedEmoji === "snow"
+                  ? ""
+                  : "cursor-pointer brightness-[0.5]"
+              }
+            >
+              ❄️
             </span>
           </p>
         </div>

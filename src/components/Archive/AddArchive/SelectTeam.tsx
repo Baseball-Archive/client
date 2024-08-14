@@ -16,13 +16,9 @@ const SelectTeam = () => {
   return (
     <div className="relative flex h-full w-full" onBlur={handleBlurContainer}>
       <div className="flex w-full items-center justify-start gap-4 px-4 text-lg text-gray-400">
-        <button onClick={() => handleClickContainer("our")}>
-          <Badge scheme="default" />
-        </button>
+        <button onClick={() => handleClickContainer("our")}></button>
         vs
-        <button onClick={() => handleClickContainer("opponent")}>
-          <Badge scheme="default" />
-        </button>
+        <button onClick={() => handleClickContainer("opponent")}></button>
       </div>
 
       {isDropdownView == "our" && (
