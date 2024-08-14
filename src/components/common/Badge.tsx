@@ -8,8 +8,7 @@ type TeamScheme =
   | "nc"
   | "hanhwa"
   | "lotte"
-  | "kiwoom"
-  | "default";
+  | "kiwoom";
 
 interface Props {
   scheme: TeamScheme;
@@ -28,7 +27,6 @@ const SCHEME_MAP: Record<TeamScheme, { name: string; style: string }> = {
   hanhwa: { name: "한화", style: "bg-team-hanhwa" },
   lotte: { name: "롯데", style: "bg-team-lotte" },
   kiwoom: { name: "키움", style: "bg-team-kiwoom" },
-  default: { name: "선택", style: "bg-team-default" },
 };
 
 const Badge = ({ scheme }: Props) => {
