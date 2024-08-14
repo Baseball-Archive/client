@@ -1,9 +1,8 @@
-import { forwardRef, useEffect, useState } from "react";
+import { forwardRef, useState } from "react";
 import DatePicker from "react-datepicker";
-import ReactDatePicker from "react-datepicker";
 import { CalendarDaysIcon } from "@heroicons/react/20/solid";
 import "react-datepicker/dist/react-datepicker.css";
-import React from "react";
+
 const PickDate = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [isOpen, setIsOpen] = useState<boolean>(false);

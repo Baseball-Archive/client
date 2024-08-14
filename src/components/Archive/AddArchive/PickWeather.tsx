@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 type Weather = "sun" | "cloud" | "rain" | "snow" | null;
 

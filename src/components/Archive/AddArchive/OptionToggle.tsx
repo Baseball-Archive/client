@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { CheckCircleIcon, FaceSmileIcon } from "@heroicons/react/20/solid";
 
 interface OptionToggleProps {

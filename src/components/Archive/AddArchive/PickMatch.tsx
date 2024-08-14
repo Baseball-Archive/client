@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Select, { StylesConfig, components } from "react-select";
+import Select, { StylesConfig } from "react-select";
 import Badge from "../../common/Badge";
 
 interface MatchOption {
