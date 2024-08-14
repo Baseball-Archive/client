@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 type Weather = "sun" | "cloud" | "rain" | "snow" | null;
 
-const PickWeather: React.FC = () => {
+const PickWeather = () => {
   const [selectedEmoji, setSelectedEmoji] = useState<Weather>(null);
   const handleWeather = (emoji: Weather) => {
     setSelectedEmoji(emoji);
@@ -17,16 +17,7 @@ const PickWeather: React.FC = () => {
       setDropdownView(false);
     }, 200);
   };
-  const handleDelete = () => {
-    if (window.confirm("삭제 하시겠습니까?")) {
-      alert("삭제 되었습니다.");
-    }
-  };
-  const handleEdit = () => {
-    if (window.confirm("수정 하시겠습니까?")) {
-      alert("수정 되었습니다.");
-    }
-  };
+
   return (
     <div className="relative flex h-full w-full" onBlur={handleBlurContainer}>
       <button

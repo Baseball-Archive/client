@@ -8,7 +8,7 @@ const InfoSection = ({ label, children }: InfoSectionProps) => {
   return (
     <div className="mt-2 flex flex-col">
       <label className="text-base">{label}</label>
-      <div className="flex h-12 items-center justify-center rounded-[4px] border text-lg">
+      <div className="mb-4 flex h-12 items-center justify-center rounded-[4px] border text-lg">
         {children}
       </div>
     </div>
