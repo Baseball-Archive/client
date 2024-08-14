@@ -1,4 +1,3 @@
-import React from "react";
 import Badge from "../common/Badge";
 
 export type TeamScheme =
@@ -13,7 +12,7 @@ export type TeamScheme =
   | "lotte"
   | "kiwoom";
 
-export interface Post {
+export interface PostType {
   id: number;
   match_date: string;
   home_team_name: TeamScheme;
@@ -25,7 +24,7 @@ export interface Post {
 }
 
 interface Props {
-  post: Post;
+  post: PostType;
 }
 
 const Post = ({ post }: Props) => {

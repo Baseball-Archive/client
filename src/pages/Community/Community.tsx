@@ -1,6 +1,6 @@
-import Post, { TeamScheme } from "../../components/Community/Post";
+import Post, { PostType, TeamScheme } from "../../components/Community/Post";
 
-const dummyPost: DummyPost[] = [
+const dummyPost: PostType[] = [
   {
     id: 1,
     match_date: "2024.01.01",
@@ -22,17 +22,6 @@ const dummyPost: DummyPost[] = [
     comments: 0,
   },
 ]
-
-interface DummyPost {
-  id: number;
-  match_date: string;
-  home_team_name: TeamScheme;
-  away_team_name: TeamScheme;
-  review_short: string;
-  user_id: number;
-  likes: number;
-  comments: number;
-}
 
 const Posts = () => {
   return (
