@@ -23,7 +23,7 @@ const dummyPost: PostType[] = [
   },
 ]
 
-const Posts = () => {
+const Community = () => {
   return (
     <div>
       <div>
@@ -41,4 +41,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default Community;
