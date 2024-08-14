@@ -18,7 +18,7 @@ const MatchInfo = () => {
         <PickWeather />
       </InfoSection>
       <InfoSection label="직관한 날짜">
-        <p className="text-sm"></p>
+        <div className="w-full px-4">{today}</div>
       </InfoSection>
       <InfoSection label="우리팀 vs 상대팀">
         <SelectTeam />

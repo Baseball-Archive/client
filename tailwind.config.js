@@ -23,7 +23,6 @@ export default {
           hanhwa: "#EF563A",
           lotte: "#092346",
           kiwoom: "#801C26",
-          default: "#d3d3d3",
         },
         text: {
           primary: "#000000",
