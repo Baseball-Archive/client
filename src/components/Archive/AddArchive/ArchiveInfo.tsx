@@ -9,26 +9,29 @@ import UploadPhotoButton from "./UploadPhotoButton";
 import OptionToggle from "./OptionToggle";
 
 const ArchiveInfo = () => {
-  return (
-    <div className="scrollbar-hide container pt-6">
-      <InfoSection label="제목">
+  const sections = [
+    {
+      label: "제목",
+      component: (
         <input
           className="w-full px-4 outline-none"
           placeholder="제목을 입력하세요"
-        ></input>
-      </InfoSection>
-      <InfoSection label="날씨">
-        <PickWeather />
-      </InfoSection>
-      <InfoSection label="직관한 날짜">
-        <PickDate />
-      </InfoSection>
-      <InfoSection label="경기 선택">
-        <PickMatch />
-      </InfoSection>
-      <InfoSection label="경기 결과?승패 여부?">
-        <input value="7:0" className="w-full px-4 outline-none"></input>
-      </InfoSection>
+        />
+      ),
+    },
+    { label: "날씨", component: <PickWeather /> },
+    { label: "직관한 날짜", component: <PickDate /> },
+    { label: "경기 선택", component: <PickMatch /> },
+    {
+      label: "경기 결과?승패 여부?",
+      component: <input value="7:0" className="w-full px-4 outline-none" />,
+    },
+  ];
+  return (
+    <div className="container pt-6">
+      {sections.map((section) => (
+        <InfoSection label={section.label}>{section.component}</InfoSection>
+      ))}
       <MatchDetails />
       <UploadPhotoButton />
       <div className="mb-10 mt-6 flex flex-col">
