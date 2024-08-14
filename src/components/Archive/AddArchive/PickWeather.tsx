@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-fetype Weather = "sun" | "cloud" | "rain" | "snow" | null;
+type Weather = "sun" | "cloud" | "rain" | "snow" | null;
 
 const PickWeather: React.FC = () => {
   const [selectedEmoji, setSelectedEmoji] = useState<Weather>(null);
