@@ -13,7 +13,7 @@ export type TeamScheme =
   | "lotte"
   | "kiwoom";
 
-export interface PostProps {
+export interface Post {
   id: number;
   match_date: string;
   home_team_name: TeamScheme;
@@ -25,7 +25,7 @@ export interface PostProps {
 }
 
 interface Props {
-  post: PostProps;
+  post: Post;
 }
 
 const Post: React.FC<Props> = ({ post }: Props) => {
