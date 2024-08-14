@@ -81,6 +81,7 @@ const Post = ({ post }: Props) => {
             backgroundColor: homeTeamColor,
             borderRadius: '9999px 0 0 9999px',
             paddingLeft: '1rem',
+            minWidth: '3.5rem',
           }}
         >
           {homeTeamName}
@@ -91,6 +92,7 @@ const Post = ({ post }: Props) => {
             backgroundColor: awayTeamColor,
             borderRadius: '0 9999px 9999px 0',
             paddingRight: '1rem',
+            minWidth: '3.5rem',
           }}
         >
           {awayTeamName}
