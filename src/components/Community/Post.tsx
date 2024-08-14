@@ -91,7 +91,7 @@ const Post = ({ post }: Props) => {
               <div className="flex items-center justify-center" style={{ width: '3rem', height: '3rem' }}>
                 <Badge scheme={cheerTeam as TeamScheme} />
               </div>
-              <div className="ml-2 text-sm">{userName}</div>
+              <div className="ml-1 text-sm">{userName}</div>
             </div>
             <div className="flex items-center space-x-2">
               <div className="flex items-center w-16 h-10">
