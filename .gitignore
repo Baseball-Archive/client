@@ -25,5 +25,3 @@ dist-ssr
 *.sw?
 
 image*.png
-mocks/
-main.tsx
