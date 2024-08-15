@@ -63,8 +63,8 @@ const Login = () => {
 
             <div className="pt-6">
               <div className="flex gap-6">
-                <Link to={'/users/signup'}>비밀번호 찾기 </Link>
-                <Link to="users/reset">회원가입</Link>
+                <Link to="/users/reset">비밀번호 찾기 </Link>
+                <Link to="/users/signup">회원가입</Link>
               </div>
               <div className="pt-20 text-center font-title font-light">
                 SNS 계정으로 간편하게 로그인

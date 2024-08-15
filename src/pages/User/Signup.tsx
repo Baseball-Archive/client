@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
 import InputText from '../../components/common/InputText';
 import { useAuth } from '../../hooks/useAuth';
-import Button from '../../components/common/Button';
 import { Link } from 'react-router-dom';
 import { LoginProps } from './Login';
+import { useState } from 'react';
 
 export interface SignupProps extends LoginProps {
   username: string;

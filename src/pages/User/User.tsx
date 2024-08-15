@@ -4,7 +4,6 @@ import { Cog6ToothIcon } from '@heroicons/react/20/solid';
 import { ArchiveProps } from '../../components/Archive/Archive';
 import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
-import { useAuth } from '../../hooks/useAuth';
 
 type PropfileImageProps = Pick<ArchiveProps, 'photo'>;
 
@@ -17,7 +16,6 @@ export interface ProfileProps extends PropfileImageProps {
 
 const User: React.FC<ProfileProps> = ({ photo }) => {
   const { register, handleSubmit } = useForm<ProfileProps>();
-  const { userProfile } = useAuth();
 
   return (
     <div className="m-5 flex flex-col overflow-hidden bg-white">
@@ -33,10 +31,6 @@ const User: React.FC<ProfileProps> = ({ photo }) => {
               />
               <Cog6ToothIcon className="absolute bottom-5 right-10 h-6 w-6 text-white" />
             </div>
-          </div>
-          <div>
-            <div>email</div>
-            <div>직관 승률 99.9%</div>
           </div>
         </div>
         <form className="flex flex-col">

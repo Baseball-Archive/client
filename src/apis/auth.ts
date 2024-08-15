@@ -29,5 +29,3 @@ export const login = async (data: LoginProps) => {
 
   return response.data;
 };
-
-// export const fetchUser = async();
