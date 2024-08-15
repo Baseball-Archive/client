@@ -24,7 +24,7 @@ export const useAuth = () => {
   const userSignup = (data: SignupProps) => {
     signup(data).then(
       (res) => {
-        navigate('/login');
+        navigate('/users/login');
       },
       (error) => {
         console.error('Signup failed:', error);
@@ -35,7 +35,7 @@ export const useAuth = () => {
   const userResetPassword = (data: SignupProps) => {
     resetPassword(data).then(
       () => {
-        navigate('/login');
+        navigate('/users/login');
       },
       (error) => {
         console.error('Password reset failed:', error);
@@ -55,11 +55,16 @@ export const useAuth = () => {
     );
   };
 
+  const userProfile = (data: SignupProps) => {
+    signup(data).then((res) => {});
+  };
+
   return {
     userLogin,
     userSignup,
     userResetPassword,
     userResetRequest,
     resetRequested,
+    userProfile,
   };
 };

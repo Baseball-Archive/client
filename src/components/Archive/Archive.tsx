@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import ReviewSection from "./ReviewSection";
-import ArchiveHeader from "./ArchiveHeader";
+import React, { useState } from 'react';
+import ReviewSection from './ReviewSection';
+import ArchiveHeader from './ArchiveHeader';
 
-type WeatherType = "맑음" | "비" | "흐림";
+type WeatherType = '맑음' | '비' | '흐림';
 
-interface ArchiveProps {
+export interface ArchiveProps {
   schedule_id: string;
   weather: WeatherType;
   result: string;
@@ -14,9 +14,9 @@ interface ArchiveProps {
 }
 
 const weatherEmojis: Record<WeatherType, string> = {
-  맑음: "☀️",
-  비: "☂️",
-  흐림: "☁️",
+  맑음: '☀️',
+  비: '☂️',
+  흐림: '☁️',
 };
 
 const Archive: React.FC<ArchiveProps> = ({

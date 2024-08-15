@@ -4,13 +4,6 @@ import { useAuth } from '../../hooks/useAuth';
 import Button from '../../components/common/Button';
 import { Link } from 'react-router-dom';
 
-const dummyLogin: LoginProps[] = [
-  {
-    email: '1234@gmail.com',
-    password: '1234',
-  },
-];
-
 export interface LoginProps {
   email: string;
   password: string;
@@ -30,16 +23,14 @@ const Login = () => {
   return (
     <div className="m-5 flex flex-col overflow-hidden bg-white">
       <div className="mx-auto my-0 max-w-screen-md">
-        <div className="text-center font-logo text-3xl">야구볼램</div>
-        <p className="pb-8 text-center text-xs font-light not-italic leading-normal">
-          슬로건을 작성하세요.
-        </p>
+        <div className="py-10 text-center font-logo text-3xl">야구볼램</div>
+
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset className="p-3">
             <InputText
               placeholder="이메일"
               inputType="email"
-              inputSize="medium"
+              inputSize="small"
               scheme={errors.email ? 'danger' : 'primary'}
               {...register('email', {
                 required: true,
@@ -53,7 +44,7 @@ const Login = () => {
             <InputText
               placeholder="비밀번호"
               inputType="password"
-              inputSize="medium"
+              inputSize="small"
               scheme={errors.password ? 'danger' : 'primary'}
               {...register('password', {
                 required: true,
@@ -71,11 +62,11 @@ const Login = () => {
             {/* </button> */}
 
             <div className="pt-6">
-              <Link to={'/users/signup'}> 계정이 없으신가요? 회원가입</Link>
-              <div className="info">
-                <Link to="/reset">비밀번호 찾기</Link>
+              <div className="flex gap-6">
+                <Link to={'/users/signup'}>비밀번호 찾기 </Link>
+                <Link to="users/reset">회원가입</Link>
               </div>
-              <div className="pt-6 text-center font-title font-light">
+              <div className="pt-20 text-center font-title font-light">
                 SNS 계정으로 간편하게 로그인
               </div>
               <div className="flex pb-5 text-center">

@@ -104,12 +104,20 @@ const Signup = () => {
             )}
           </fieldset>
 
-          <fieldset>
-            <Button type="submit" size="medium" scheme="primary">
+          <fieldset className="text-center">
+            <button
+              type="submit"
+              className="h-16 w-80 shrink-0 rounded-lg bg-black text-2xl not-italic text-white"
+            >
               회원가입
-            </Button>
+            </button>
+            <span className="flex place-content-center py-5">
+              <p className="px-4 font-title font-light">
+                이미 아이디가 있으신가요?
+              </p>
+              <Link to={'/users/login'}>로그인</Link>
+            </span>
           </fieldset>
-          <Link to={'/users/login'}>이미 아이디가 있으신가요? 로그인</Link>
         </form>
       </div>
     </div>

@@ -1,14 +1,15 @@
-import { createBrowserRouter } from "react-router-dom";
-import Home from "./pages/Archive/Home";
-import Layout from "./components/layout/Layout";
-import Community from "./pages/Community/Community";
-import User from "./pages/User/User";
-import Login from "./pages/User/Login";
-import Signup from "./pages/User/Signup";
+import { createBrowserRouter } from 'react-router-dom';
+import Home from './pages/Archive/Home';
+import Layout from './components/layout/Layout';
+import Community from './pages/Community/Community';
+import User from './pages/User/User';
+import Login from './pages/User/Login';
+import Signup from './pages/User/Signup';
+import ResetPW from './components/common/ResetPW';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Layout />,
     children: [
       {
@@ -16,27 +17,31 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "test",
+        path: 'test',
         element: <Home />,
       },
       {
-        path: "posts",
+        path: 'posts',
         element: <Community />,
       },
       {
-        path: "users/login",
-        element: <Login/>
+        path: 'users/login',
+        element: <Login />,
       },
       {
-        path: "users/signup",
-        element: <Signup/>
+        path: 'users/signup',
+        element: <Signup />,
       },
       {
-        path: "users/user",
-        element: <User/>
+        path: 'users/user',
+        element: <User />,
+      },
+      {
+        path: 'users/reset',
+        element: <ResetPW />,
       },
     ],
-  }
+  },
 ]);
 
 export default router;

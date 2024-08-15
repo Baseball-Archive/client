@@ -3,7 +3,7 @@ import { SignupProps } from '../pages/User/Signup';
 import { httpClient } from './http';
 
 export const signup = async (userData: SignupProps) => {
-  const response = await httpClient.post('/users/join', userData);
+  const response = await httpClient.post('/users/signup', userData);
 
   return response.data;
 };
@@ -29,3 +29,5 @@ export const login = async (data: LoginProps) => {
 
   return response.data;
 };
+
+// export const fetchUser = async();
