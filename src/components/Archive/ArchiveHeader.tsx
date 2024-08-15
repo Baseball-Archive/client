@@ -26,6 +26,7 @@ const ArchiveHeader: React.FC<ArchiveHeaderProps> = ({
       alert("수정 되었습니다.");
     }
   };
+
   return (
     <div className="mb-5 flex items-center justify-between">
       <div className="flex">

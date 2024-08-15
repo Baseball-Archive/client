@@ -1,21 +1,41 @@
 import { useState } from "react";
 
 type Weather = "sun" | "cloud" | "rain" | "snow" | null;
+const WeatherEmojis = [
+  { weather: "sun", emoji: "☀️" },
+  { weather: "cloud", emoji: "☁️" },
+  { weather: "rain", emoji: "☔" },
+  { weather: "snow", emoji: "❄️" },
+];
 
 const PickWeather = () => {
   const [selectedEmoji, setSelectedEmoji] = useState<Weather>(null);
-  const handleWeather = (emoji: Weather) => {
-    setSelectedEmoji(emoji);
-  };
   const [isDropdownView, setDropdownView] = useState(false);
-  const handleClickContainer = () => {
-    setDropdownView(!isDropdownView);
-  };
 
+  const handleWeather = (weather: Weather) => {
+    setSelectedEmoji(weather);
+  };
+  const handleClickContainer = () => {
+    setDropdownView((prev) => !prev);
+  };
   const handleBlurContainer = () => {
     setTimeout(() => {
       setDropdownView(false);
     }, 200);
+  };
+  const renderEmoji = (selectedEmoji: Weather) => {
+    switch (selectedEmoji) {
+      case "cloud":
+        return <div>☁️</div>;
+      case "rain":
+        return <span>☔</span>;
+      case "sun":
+        return <span>☀️</span>;
+      case "snow":
+        return <span>❄️</span>;
+      case null:
+        return <span className="text-lg">날씨를 선택하세요.</span>;
+    }
   };
 
   return (
@@ -24,66 +44,30 @@ const PickWeather = () => {
         onClick={handleClickContainer}
         className="flex w-full items-center justify-start px-4 text-2xl text-gray-400"
       >
-        {selectedEmoji ? (
-          selectedEmoji == "cloud" ? (
-            <div>☁️</div>
-          ) : selectedEmoji == "rain" ? (
-            <span>☔</span>
-          ) : selectedEmoji == "sun" ? (
-            <span>☀️</span>
-          ) : (
-            <span>❄️</span>
-          )
-        ) : (
-          <span className="text-lg">날씨를 선택하세요.</span>
-        )}
+        {selectedEmoji && renderEmoji(selectedEmoji)}
       </button>
 
       {isDropdownView && (
         <div className="absolute left-1/2 top-full flex h-12 w-full -translate-x-1/2 items-center justify-center rounded-[4px] border bg-white">
           <p className="flex gap-x-20 text-2xl">
-            <span
-              onClick={() => handleWeather("sun")}
-              className={
-                selectedEmoji === "sun" ? "" : "cursor-pointer brightness-[0.5]"
-              }
-            >
-              ☀️
-            </span>
-            <span
-              onClick={() => handleWeather("cloud")}
-              className={
-                selectedEmoji === "cloud"
-                  ? ""
-                  : "cursor-pointer brightness-[0.5]"
-              }
-            >
-              ☁️
-            </span>
-            <span
-              onClick={() => handleWeather("rain")}
-              className={
-                selectedEmoji === "rain"
-                  ? ""
-                  : "cursor-pointer brightness-[0.5]"
-              }
-            >
-              ☔
-            </span>{" "}
-            <span
-              onClick={() => handleWeather("snow")}
-              className={
-                selectedEmoji === "snow"
-                  ? ""
-                  : "cursor-pointer brightness-[0.5]"
-              }
-            >
-              ❄️
-            </span>
+            {WeatherEmojis.map(({ weather, emoji }) => (
+              <span
+                key={weather}
+                onClick={() => handleWeather(weather as Weather)}
+                className={
+                  selectedEmoji === weather
+                    ? ""
+                    : "cursor-pointer brightness-[0.5]"
+                }
+              >
+                {emoji}
+              </span>
+            ))}
           </p>
         </div>
       )}
     </div>
   );
 };
+
 export default PickWeather;

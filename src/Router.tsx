@@ -15,7 +15,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/archive",
-        element: <AddArchive />, // 변경된 경로에 대한 컴포넌트
+        element: <AddArchive />,
       },
       {
         path: "posts",
