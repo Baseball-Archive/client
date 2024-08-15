@@ -1,87 +1,121 @@
-import InputText from '../../components/common/InputText';
+import Select, {
+  OptionProps,
+  components,
+  SingleValueProps,
+  StylesConfig,
+} from 'react-select';
 import { useForm } from 'react-hook-form';
 import { Cog6ToothIcon } from '@heroicons/react/20/solid';
-import { ArchiveProps } from '../../components/Archive/Archive';
+import InputText from '../../components/common/InputText';
 import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
+import { TeamScheme } from '../../components/Community/Post';
 import { useAuth } from '../../hooks/useAuth';
 
-type PropfileImageProps = Pick<ArchiveProps, 'photo'>;
-
-export interface ProfileProps extends PropfileImageProps {
+export interface ProfileProps {
   profile: string;
-  username: string;
+  nickname: string;
+  email: string;
   team: string;
-  password: string;
+}
+interface teamOptionsProps {
+  value: string;
+  label: string;
 }
 
-const User: React.FC<ProfileProps> = ({ photo }) => {
-  const { register, handleSubmit } = useForm<ProfileProps>();
-  const { userProfile } = useAuth();
+const dummyUserData = {
+  profile:
+    'https://firebasestorage.googleapis.com/v0/b/hotsix-blog-5f9b1.appspot.com/o/image%2F1723386154075?alt=media&token=04777f33-ef7b-4c50-bb0c-b748c2f6b8cf',
+  email: 'bigfan@baseball.com',
+  nickname: '닉네임',
+  team: 'ssg',
+};
 
+const BASEBALL_TEAMS = [
+  { value: 'kia', label: '기아' },
+  { value: 'samsung', label: '삼성' },
+  { value: 'lg', label: 'LG' },
+  { value: 'doosan', label: '두산' },
+  { value: 'ssg', label: 'SSG' },
+  { value: 'kt', label: 'KT' },
+  { value: 'nc', label: 'NC' },
+  { value: 'hanhwa', label: '한화' },
+  { value: 'lotte', label: '롯데' },
+  { value: 'kiwoom', label: '키움' },
+];
+
+const Option = (props: OptionProps<teamOptionsProps>) => {
   return (
-    <div className="m-5 flex flex-col overflow-hidden bg-white">
-      <div className="mx-auto my-0 max-w-screen-md">
-        <div className="flex justify-between pt-10 text-lg">
-          <div className="relative mb-10">
-            <div>
-              <img
-                className="mr-4 h-32 w-32 rounded-full bg-gray-200"
-                src={
-                  'https://firebasestorage.googleapis.com/v0/b/hotsix-blog-5f9b1.appspot.com/o/image%2F1723386154075?alt=media&token=04777f33-ef7b-4c50-bb0c-b748c2f6b8cf'
-                }
-              />
-              <Cog6ToothIcon className="absolute bottom-5 right-10 h-6 w-6 text-white" />
-            </div>
-          </div>
-          <div>
-            <div>email</div>
-            <div>직관 승률 99.9%</div>
-          </div>
-        </div>
-        <form className="flex flex-col">
-          <fieldset className="p-3">
-            <p>닉네임</p>
-            <InputText
-              inputType="username"
-              inputSize="large"
-              scheme="primary"
-              {...register('username', {
-                required: true,
-              })}
-            />
-            <p>응원팀</p>
-            <div className="my-3 h-[45px] w-[359px] shrink-0 rounded border-2 border-[#A9A9A9] bg-white">
-              <Badge scheme="hanhwa" />
-              <Badge scheme="kia" />
-              <Badge scheme="samsung" />
-              <Badge scheme="lg" />
-              <Badge scheme="ssg" />
-              <Badge scheme="kt" />
-              <Badge scheme="nc" />
-              <Badge scheme="lotte" />
-              <Badge scheme="kiwoom" />
-            </div>
-
-            <p>닉네임</p>
-            <InputText
-              inputType="password"
-              inputSize="large"
-              scheme="primary"
-              {...register('password', {
-                required: true,
-              })}
-            />
-          </fieldset>
-          <fieldset className="text-right">
-            <Button size="large" scheme="primary">
-              정보수정
-            </Button>
-          </fieldset>
-        </form>
-      </div>
+    <div {...props.innerProps}>
+      <Badge scheme={props.data.value as TeamScheme} />
     </div>
   );
 };
 
+const SingleValue = ({ ...props }: SingleValueProps<teamOptionsProps>) => (
+  <components.SingleValue {...props}>
+    <Badge scheme={props.data.value as TeamScheme} />
+  </components.SingleValue>
+);
+
+const selectStyle: StylesConfig<teamOptionsProps> = {
+  control: (base) => ({
+    ...base,
+    padding: '0.4rem',
+  }),
+  menuList: (base) => ({
+    ...base,
+    display: 'grid',
+    gridTemplateColumns: 'auto auto auto auto auto',
+    gap: 10,
+    padding: '1rem',
+  }),
+};
+const User = () => {
+  const { register, handleSubmit } = useForm<ProfileProps>();
+  const { profile, nickname, email, team } = dummyUserData;
+  const { userProfile } = useAuth();
+
+  return (
+    <div className="mx-auto max-w-md">
+      <div className="flex items-center gap-10 py-10">
+        <div className="relative cursor-pointer">
+          <img className="h-32 w-32 rounded-full" src={profile} />
+          <Cog6ToothIcon className="absolute bottom-5 right-5 size-6 text-white" />
+        </div>
+        <div>
+          <div className="text-lg">{email}</div>
+          <div className="text-2xl font-bold">{nickname}</div>
+        </div>
+      </div>
+      <form className="w-full">
+        <fieldset className="">
+          <p>닉네임</p>
+          <InputText
+            inputType="username"
+            inputSize="large"
+            scheme="primary"
+            {...register('nickname', {
+              required: true,
+            })}
+          />
+        </fieldset>
+        <fieldset className="">
+          <p>응원팀</p>
+          <Select
+            options={BASEBALL_TEAMS}
+            components={{ Option, SingleValue }}
+            defaultValue={BASEBALL_TEAMS.find((item) => item.value === team)}
+            styles={selectStyle}
+          />
+        </fieldset>
+        <fieldset>
+          <Button size="medium" scheme="primary">
+            정보수정
+          </Button>
+        </fieldset>
+      </form>
+    </div>
+  );
+};
 export default User;
