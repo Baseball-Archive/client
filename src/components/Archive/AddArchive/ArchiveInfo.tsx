@@ -28,7 +28,7 @@ const ArchiveInfo = () => {
     },
   ];
   return (
-    <div className="container pt-6">
+    <div className="container max-w-full overflow-x-hidden pt-6">
       {sections.map((section) => (
         <InfoSection label={section.label}>{section.component}</InfoSection>
       ))}
