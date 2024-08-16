@@ -37,7 +37,7 @@ const PostInfo = () => {
 
     <div className="mb-10 mt-6 flex flex-col">
       <button className="my-10 h-20 rounded-[10px] bg-black text-2xl font-medium text-white">
-        등록
+        게시글 등록
       </button>
     </div>
   </div>
