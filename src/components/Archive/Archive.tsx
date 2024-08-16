@@ -1,51 +1,30 @@
 import React, { useState } from "react";
 import ReviewSection from "./ReviewSection";
 import ArchiveHeader from "./ArchiveHeader";
+import { ArchiveProps } from "../../types/ArchiveProps";
 
-type WeatherType = "맑음" | "비" | "흐림";
-
-interface ArchiveProps {
-  schedule_id: string;
-  weather: WeatherType;
-  result: string;
-  review: string;
-  photo: string;
-  user_id: string;
-}
-
-const weatherEmojis: Record<WeatherType, string> = {
-  맑음: "☀️",
-  비: "☂️",
-  흐림: "☁️",
-};
-
-const Archive: React.FC<ArchiveProps> = ({
-  schedule_id,
-  weather,
-  result,
-  review,
-  photo,
-  user_id,
-}) => {
+const Archive = (props: ArchiveProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <div className="mb-6 flex justify-center overflow-hidden bg-white">
       <div className="w-full">
         <ArchiveHeader
-          user_id={user_id}
-          schedule_id={schedule_id}
-          weather={weather}
-          weatherEmojis={weatherEmojis}
-          profileImage={photo}
+          userId={props.userId}
+          weather={props.weather}
+          profileImage={props.photo}
         />
         <div className="w-full flex-col items-center">
-          <img src={photo} className="mb-4 aspect-square w-full object-cover" />
+          <img
+            src={props.photo}
+            className="mb-4 aspect-square w-full object-cover"
+          />
           <ReviewSection
-            review={review}
-            result={result}
+            review={props.review}
+            result={props.result}
+            scheduleId={props.scheduleId}
             isExpanded={isExpanded}
-            onToggleExpand={() => setIsExpanded(!isExpanded)}
+            onToggleExpand={() => setIsExpanded((prev) => !prev)}
           />
         </div>
       </div>

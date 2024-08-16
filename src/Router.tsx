@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "./pages/Archive/Home";
 import Layout from "./components/layout/Layout";
 import AddArchive from "./pages/Archive/AddArchive";
 import Community from "./pages/Community/Community";
@@ -7,38 +6,49 @@ import CommunityDetail from "./pages/Community/CommunityDetail";
 import League from "./pages/League/League";
 import Schedule from "./pages/League/Schedule";
 import Standings from "./pages/League/Standings";
+import Archives from "./pages/Archive/Archives";
+
+export const ROUTES = {
+  HOME: "/",
+  ADD_ARCHIVE: "/addarchive",
+  POSTS: "/posts",
+  POST_DETAIL: "/posts/:id",
+  LEAGUE: "/league",
+  SCHEDULE: "schedule",
+  STANDINGS: "standings",
+};
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: ROUTES.HOME,
     element: <Layout />,
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <Archives />,
       },
       {
-        path: "/archive",
+        path: ROUTES.ADD_ARCHIVE,
         element: <AddArchive />,
       },
       {
-        path: "/posts",
+        path: ROUTES.POSTS,
         element: <Community />,
       },
       {
-        path: "/posts/:id",
+        path: ROUTES.POST_DETAIL,
         element: <CommunityDetail />,
       },
       {
-        path: "league",
+        path: ROUTES.LEAGUE,
         element: <League />,
         children: [
           {
-            path: "schedule",
+            path: ROUTES.SCHEDULE,
             element: <Schedule />,
           },
           {
-            path: "standings",
+            path: ROUTES.STANDINGS,
             element: <Standings />,
           },
         ],

@@ -25,7 +25,7 @@ const PostsMenu = ({ onClick }: Props) => {
         <li className="p-4">
           <PostsMenuItem
             title="일기 쓰기"
-            link="/archive"
+            link="/addarchive"
             icon={<BookOpenIcon className="size-8" />}
           />
         </li>

@@ -1,15 +1,15 @@
 import { useState } from "react";
+import { Weather } from "../../../types/Weather";
 
-type Weather = "sun" | "cloud" | "rain" | "snow" | null;
 const WeatherEmojis = [
-  { weather: "sun", emoji: "☀️" },
+  { weather: "sun", emoji: "🌞" },
   { weather: "cloud", emoji: "☁️" },
   { weather: "rain", emoji: "☔" },
   { weather: "snow", emoji: "❄️" },
 ];
 
 const PickWeather = () => {
-  const [selectedEmoji, setSelectedEmoji] = useState<Weather>(null);
+  const [selectedEmoji, setSelectedEmoji] = useState<Weather>("null");
   const [isDropdownView, setDropdownView] = useState(false);
 
   const handleWeather = (weather: Weather) => {
@@ -33,7 +33,7 @@ const PickWeather = () => {
         return <span>☀️</span>;
       case "snow":
         return <span>❄️</span>;
-      case null:
+      case "null":
         return <span className="text-lg">날씨를 선택하세요.</span>;
     }
   };
