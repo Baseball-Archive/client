@@ -12,13 +12,13 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const SIZE_MAP: Record<InputSize, string> = {
-  large: 'w-[359px] h-[45px] shrink-0',
+  large: 'w-full h-[45px] shrink-0 p-4',
   medium: 'h-16 w-80 shrink-0',
   small: 'w-[263px] h-[45px] shrink-0',
 };
 
 const SCHEME_MAP: Record<InputScheme, string> = {
-  primary: 'border-2 rounded border-[#A9A9A9] bg-white',
+  primary: 'border rounded border-[#A9A9A9] bg-white',
   secondary: 'bg-input-secondary',
   danger: 'border-2 rounded border-rose-600 bg-white',
 };
