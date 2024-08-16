@@ -1,14 +1,4 @@
-type TeamScheme =
-  | "kia"
-  | "samsung"
-  | "lg"
-  | "doosan"
-  | "ssg"
-  | "kt"
-  | "nc"
-  | "hanhwa"
-  | "lotte"
-  | "kiwoom";
+import { TeamScheme } from "../../types/TeamScheme";
 
 interface Props {
   scheme: TeamScheme;

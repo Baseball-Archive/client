@@ -1,5 +1,5 @@
 import Badge from "../../components/common/Badge";
-import { TeamScheme } from "../../components/Community/Post";
+import { TeamScheme } from "../../types/TeamScheme";
 import { calculateWinPercentage } from "../../utils/baseballStats";
 
 interface Standings {

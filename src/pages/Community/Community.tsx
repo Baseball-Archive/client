@@ -1,4 +1,5 @@
-import Post, { TeamScheme } from "../../components/Community/Post";
+import Post from "../../components/Community/Post";
+import { TeamScheme } from "../../types/TeamScheme";
 
 const dummyPost: DummyPost[] = [
   {
@@ -21,7 +22,7 @@ const dummyPost: DummyPost[] = [
     likes: 2,
     comments: 0,
   },
-]
+];
 
 interface DummyPost {
   id: number;
@@ -37,17 +38,10 @@ interface DummyPost {
 const Posts = () => {
   return (
     <div>
-      <div>
-        커뮤니티
-      </div>
-      {
-        dummyPost.map((item) => (
-          <Post 
-            key={item.id}
-            post={item}
-          />
-        ))
-      }
+      <div>커뮤니티</div>
+      {dummyPost.map((item) => (
+        <Post key={item.id} post={item} />
+      ))}
     </div>
   );
 };

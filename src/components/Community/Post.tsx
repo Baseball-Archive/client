@@ -1,17 +1,6 @@
 import React from "react";
 import Badge from "../common/Badge";
-
-export type TeamScheme =
-  | "kia"
-  | "samsung"
-  | "lg"
-  | "doosan"
-  | "ssg"
-  | "kt"
-  | "nc"
-  | "hanhwa"
-  | "lotte"
-  | "kiwoom";
+import { TeamScheme } from "../../types/TeamScheme";
 
 export interface PostProps {
   id: number;
@@ -45,7 +34,7 @@ const Post: React.FC<Props> = ({ post }: Props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Post;

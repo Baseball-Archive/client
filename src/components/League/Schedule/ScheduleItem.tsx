@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import Badge from "../../common/Badge";
-import { TeamScheme } from "../../Community/Post";
+import { TeamScheme } from "../../../types/TeamScheme";
 
 interface Props {
   match_date: string;
