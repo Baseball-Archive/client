@@ -31,7 +31,7 @@ const Archive: React.FC<ArchiveProps> = ({
 
   return (
     <div className="mb-6 flex justify-center overflow-hidden bg-white">
-      <div className="w-full max-w-lg">
+      <div className="w-full">
         <ArchiveHeader
           user_id={user_id}
           schedule_id={schedule_id}
@@ -40,7 +40,7 @@ const Archive: React.FC<ArchiveProps> = ({
           profileImage={photo}
         />
         <div className="w-full flex-col items-center">
-          <img src={photo} className="mb-4 h-96 w-full object-cover" />
+          <img src={photo} className="mb-4 aspect-square w-full object-cover" />
           <ReviewSection
             review={review}
             result={result}

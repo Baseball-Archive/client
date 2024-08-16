@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Archive/Home";
 import Layout from "./components/layout/Layout";
+import AddArchive from "./pages/Archive/AddArchive";
 import Community from "./pages/Community/Community";
 import CommunityDetail from "./pages/Community/CommunityDetail";
 
@@ -14,8 +15,8 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "test",
-        element: <Home />,
+        path: "/archive",
+        element: <AddArchive />,
       },
       {
         path: "/posts",
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
         element: <CommunityDetail />,
       }
     ],
-  }
+  },
 ]);
 
 export default router;
