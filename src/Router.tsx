@@ -4,6 +4,7 @@ import Layout from "./components/layout/Layout";
 import AddArchive from "./pages/Archive/AddArchive";
 import Community from "./pages/Community/Community";
 import CommunityDetail from "./pages/Community/CommunityDetail";
+import AddPost from "./pages/Community/AddPost";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,11 @@ const router = createBrowserRouter([
       {
         path: "/posts/:id",
         element: <CommunityDetail />,
-      }
+      },
+      {
+        path: "/post",
+        element: <AddPost />,
+      },
     ],
   },
 ]);
