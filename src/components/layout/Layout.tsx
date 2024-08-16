@@ -10,11 +10,7 @@ const NAV_DEFAULT =
 const CONTENT_XL = "xl:w-2/4 xl:left-1/4";
 
 const CONTENT_MD = "md:w-[calc(100%-100px)] md:left-[100px]";
-<<<<<<< HEAD
-const CONTENT_DEFAULT = "absolute top-0 pt-[60px] w-100 left-0 w-full px-3";
-=======
-const CONTENT_DEFAULT = "absolute top-0 pt-[65px] w-100 left-0 w-full";
->>>>>>> origin/feature/pages-League
+const CONTENT_DEFAULT = "absolute top-0 pt-[65px] w-100 left-0 w-full px-3";
 
 const Layout = () => {
   return (
