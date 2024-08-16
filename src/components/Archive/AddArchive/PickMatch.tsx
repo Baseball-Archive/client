@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Select, { StylesConfig } from "react-select";
 import Badge from "../../common/Badge";
 import { MatchData } from "../../../types/MatchData";
-import { TeamScheme } from "../../Community/Post";
+import { TeamScheme } from "../../../types/TeamScheme";
 
 interface OptionProps {
   innerProps: React.HTMLAttributes<HTMLDivElement>;

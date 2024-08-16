@@ -131,6 +131,6 @@ const Post = ({ post }: Props) => {
       </div>
     </div>
   );
-}
+};
 
 export default Post;

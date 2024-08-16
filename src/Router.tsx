@@ -5,6 +5,9 @@ import AddArchive from "./pages/Archive/AddArchive";
 import Community from "./pages/Community/Community";
 import CommunityDetail from "./pages/Community/CommunityDetail";
 import AddPost from "./pages/Community/AddPost";
+import League from "./pages/League/League";
+import Schedule from "./pages/League/Schedule";
+import Standings from "./pages/League/Standings";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +33,20 @@ const router = createBrowserRouter([
       {
         path: "/post",
         element: <AddPost />,
+      },
+      {
+        path: "league",
+        element: <League />,
+        children: [
+          {
+            path: "schedule",
+            element: <Schedule />,
+          },
+          {
+            path: "standings",
+            element: <Standings />,
+          },
+        ],
       },
     ],
   },
