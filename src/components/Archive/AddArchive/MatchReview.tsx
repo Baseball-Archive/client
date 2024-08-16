@@ -1,7 +1,7 @@
 const MatchReview = () => {
   return (
     <div className="mt-2 flex flex-col">
-      <label className="text-base">내용</label>
+      <label className="text-base">상세 리뷰</label>
       <div className="mb-4 flex h-56 items-center justify-center rounded-[4px] border">
         <textarea
           className="h-full w-full resize-none overflow-hidden bg-transparent p-4 outline-none"

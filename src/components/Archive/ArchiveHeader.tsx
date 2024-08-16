@@ -47,7 +47,7 @@ const ArchiveHeader: React.FC<ArchiveHeaderProps> = ({
             </div>
           </div>
           <div className="flex-row">
-            <span className="text-sm text-black">한밭종합운동장</span>
+            <span className="text-sm text-black">한화생명이글스파크</span>
             <span> {weatherEmojis[weather]}</span>
           </div>
         </div>
