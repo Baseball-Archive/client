@@ -1,5 +1,3 @@
-import Badge from "../common/Badge";
-
 interface ReviewSectionProps {
   review: string;
   result: string;

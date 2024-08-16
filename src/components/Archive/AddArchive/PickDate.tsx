@@ -3,25 +3,24 @@ import DatePicker from "react-datepicker";
 import { CalendarDaysIcon } from "@heroicons/react/20/solid";
 import "react-datepicker/dist/react-datepicker.css";
 
+interface ShowInputDateProps {
+  value?: string;
+  onClick?: () => void;
+}
+const ShowInputDate = forwardRef<HTMLDivElement, ShowInputDateProps>(
+  ({ value, onClick }, ref) => (
+    <div className="custom-input-container" ref={ref} onClick={onClick}>
+      <input value={value} readOnly className="px-4 outline-none" />
+      <span className="absolute right-4 top-1/2 -translate-y-1/2 transform cursor-pointer">
+        <CalendarDaysIcon className="size-8" />
+      </span>
+    </div>
+  ),
+);
+
 const PickDate = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  interface CustomInputProps {
-    value?: string;
-    onClick?: () => void;
-  }
-
-  const CustomInput = forwardRef<HTMLDivElement, CustomInputProps>(
-    ({ value, onClick }, ref) => (
-      <div className="custom-input-container" ref={ref} onClick={onClick}>
-        <input value={value} readOnly className="px-4 outline-none" />
-        <span className="absolute right-4 top-1/2 -translate-y-1/2 transform cursor-pointer">
-          <CalendarDaysIcon className="size-8" />
-        </span>
-      </div>
-    ),
-  );
 
   return (
     <div className="relative flex w-full items-center">
@@ -37,7 +36,7 @@ const PickDate = () => {
         open={isOpen}
         onCalendarOpen={() => setIsOpen(true)}
         onCalendarClose={() => setIsOpen(false)}
-        customInput={<CustomInput />}
+        customInput={<ShowInputDate />}
       />
     </div>
   );

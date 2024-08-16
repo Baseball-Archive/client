@@ -8,20 +8,15 @@ interface OptionToggleProps {
 
 const OptionToggle = ({ firstOption, secondOption }: OptionToggleProps) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-
-  const handleOption1Click = () => {
-    setSelectedOption(firstOption);
-  };
-
-  const handleOption2Click = () => {
-    setSelectedOption(secondOption);
+  const handleOptionClick = (option: string) => {
+    setSelectedOption(option);
   };
 
   return (
     <div className="flex items-center space-x-4">
       <div
         className="flex cursor-pointer items-center"
-        onClick={handleOption1Click}
+        onClick={() => handleOptionClick(firstOption)}
       >
         {selectedOption === firstOption ? (
           <CheckCircleIcon className="h-6 w-6 text-black" />
@@ -32,7 +27,7 @@ const OptionToggle = ({ firstOption, secondOption }: OptionToggleProps) => {
       </div>
       <div
         className="flex cursor-pointer items-center"
-        onClick={handleOption2Click}
+        onClick={() => handleOptionClick(secondOption)}
       >
         {selectedOption === secondOption ? (
           <CheckCircleIcon className="black h-6 w-6" />
