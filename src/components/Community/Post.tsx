@@ -43,7 +43,7 @@ export interface PostType {
   comments: number;
   stadium: string;
   weather: string;
-  result: string;
+  result: TeamScheme;
   photo: number;
 }
 
@@ -94,7 +94,7 @@ const Post = ({ post }: Props) => {
               <div className="pl-6 font-bold w-64 overflow-hidden text-ellipsis whitespace-nowrap">
                 {review_short}
               </div>
-              <div className="ml-auto text-right">
+              <div className="ml-auto">
                 <div className="text-sm text-gray-400 font-thin">
                   {match_date}
                 </div>

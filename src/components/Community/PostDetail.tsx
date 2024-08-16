@@ -3,6 +3,7 @@ import { transformTeamName } from "./Post";
 import { dummyUser } from "../../pages/Community/dummyPostUser";
 import { TeamScheme } from "./Post";
 import Badge from "../common/Badge";
+import PostHandleButton from "../common/PostHandleButton";
 
 interface Props {
   postDetail: PostType;
@@ -23,8 +24,20 @@ const PostDetail = ({ postDetail }: Props) => {
     photo,
   } = postDetail;
 
+  const handleDelete = () => {
+    if (window.confirm("삭제 하시겠습니까?")) {
+      alert("삭제 되었습니다.");
+    }
+  };
+  const handleEdit = () => {
+    if (window.confirm("수정 하시겠습니까?")) {
+      alert("수정 되었습니다.");
+    }
+  };
+
   const homeTeam = transformTeamName(home_team_name);
   const awayTeam = transformTeamName(away_team_name);
+  const winTeam = transformTeamName(result);
 
   const user = dummyUser.find(user => user.id === user_id);
   const cheerTeam = user ? user.cheer_team : undefined;
@@ -37,10 +50,13 @@ const PostDetail = ({ postDetail }: Props) => {
   return (
     <div className="ml-6 mr-6 flex justify-center overflow-hidden bg-white">
       <div className="w-full max-w-lg">
-        <div className="pt-3 border-b-2 border-gray-300">
+        <div className="pt-6 border-b-2 border-gray-300">
           <div className="flex items-start">
             <div className="pl-2 pr-2 font-bold">
               {review_short}
+            </div>
+            <div className="ml-auto">
+              <PostHandleButton onEdit={handleEdit} onDelete={handleDelete} />
             </div>
           </div>
           <div className="flex justify-between items-center mt-2">
@@ -61,8 +77,8 @@ const PostDetail = ({ postDetail }: Props) => {
             <p className="font-bold min-w-[4rem]">{match_date}</p>
           </div>
           <div className="flex items-center">
-            <p className="text-gray-500 font-thin min-w-[4rem]">경기 결과</p>
-            <p className="font-bold min-w-[4rem]">{result}</p>
+            <p className="text-gray-500 font-thin min-w-[4rem]">승리 팀</p>
+            <p className="font-bold min-w-[4rem]">{winTeam.name}</p>
           </div>
           <div className="flex items-center">
             <p className="text-gray-500 font-thin min-w-[4rem]">경기장</p>
