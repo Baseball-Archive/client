@@ -53,6 +53,7 @@ interface Props {
 const Post = ({ post }: Props) => {
   const {
     id,
+    match_date,
     home_team_name,
     away_team_name,
     review_short,
@@ -65,7 +66,7 @@ const Post = ({ post }: Props) => {
   const awayTeam = transformTeamName(away_team_name);
 
   const user = dummyUser.find(user => user.id === user_id);
-  const cheerTeam = user ? user.cheer_team : "";
+  const cheerTeam = user ? user.cheer_team : undefined;
   const userName = user ? user.user_name : "Unknown";
 
   const displayComments = comments >= 100 ? "99+" : comments;
@@ -89,8 +90,13 @@ const Post = ({ post }: Props) => {
               >
                 {awayTeam.name}
               </div>
-              <div className="pl-6 font-bold overflow-hidden w-80 text-ellipsis whitespace-nowrap">
+              <div className="pl-6 font-bold w-64 overflow-hidden text-ellipsis whitespace-nowrap">
                 {review_short}
+              </div>
+              <div className="ml-auto text-right">
+                <div className="text-sm text-gray-400">
+                  {match_date}
+                </div>
               </div>
             </div>
             <div className="flex justify-between items-center mt-2">
@@ -111,7 +117,7 @@ const Post = ({ post }: Props) => {
                 </div>
                 <div className="flex items-center w-16 h-10">
                   <svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" fill="none">
-                    <path stroke="#DC7B7C" stroke-linejoin="round" stroke-width="1.5" d="M1.01 8.324c-.213-5.372 2.815-7.06 5.138-7.305C8.472.774 10.644 2.952 11.5 5.53c.856-2.579 3.012-4.67 5.352-4.512 2.339.157 5.351 1.933 5.137 7.305-.208 5.226-3.861 8.621-9.974 12.363a.988.988 0 0 1-1.03 0C4.872 16.945 1.219 13.55 1.01 8.324Z"/>
+                    <path stroke="#DC7B7C" strokeLinejoin="round" strokeWidth="1.5" d="M1.01 8.324c-.213-5.372 2.815-7.06 5.138-7.305C8.472.774 10.644 2.952 11.5 5.53c.856-2.579 3.012-4.67 5.352-4.512 2.339.157 5.351 1.933 5.137 7.305-.208 5.226-3.861 8.621-9.974 12.363a.988.988 0 0 1-1.03 0C4.872 16.945 1.219 13.55 1.01 8.324Z"/>
                   </svg>
                   <span className="text-[#DC7B7C] ml-2">
                     {displayLikes}

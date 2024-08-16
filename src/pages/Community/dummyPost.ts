@@ -14,7 +14,6 @@ export const dummyPost: PostType[] = [
     stadium: "lia경기장",
     weather: "맑음",
     photo: 1,
-    
   },
   {
     id: 2,
@@ -29,7 +28,6 @@ export const dummyPost: PostType[] = [
     stadium: "lg경기장",
     weather: "흐림",
     photo: 1,
-    
   },
   {
     id: 3,
@@ -44,7 +42,6 @@ export const dummyPost: PostType[] = [
     stadium: "ssg경기장",
     weather: "비",
     photo: 1,
-    
   },
   {
     id: 4,
@@ -59,14 +56,13 @@ export const dummyPost: PostType[] = [
     stadium: "nc경기장",
     weather: "맑음",
     photo: 1,
-    
   },
   {
     id: 5,
     match_date: "2024.01.05",
     home_team_name: "lotte",
     away_team_name: "kiwoom",
-    review_short: "재미있었다 재미있었다 재미있었다 재미있었다 재미있었다",
+    review_short: "재미있었다재미있었다재미있었다재미있었다재미있었다",
     user_id: 2,
     likes: 4000,
     comments: 5,
@@ -74,7 +70,6 @@ export const dummyPost: PostType[] = [
     stadium: "lotte경기장",
     weather: "맑음",
     photo: 1,
-    
   },
   {
     id: 6,
@@ -89,7 +84,6 @@ export const dummyPost: PostType[] = [
     stadium: "samsung경기장",
     weather: "맑음",
     photo: 1,
-    
   },
   {
     id: 7,
@@ -104,7 +98,6 @@ export const dummyPost: PostType[] = [
     stadium: "doosan경기장",
     weather: "맑음",
     photo: 1,
-    
   },
   {
     id: 8,
@@ -119,7 +112,6 @@ export const dummyPost: PostType[] = [
     stadium: "kt경기장",
     weather: "맑음",
     photo: 1,
-    
   },
   {
     id: 9,
@@ -134,7 +126,6 @@ export const dummyPost: PostType[] = [
     stadium: "hanhwa경기장",
     weather: "맑음",
     photo: 1,
-    
   },
   {
     id: 10,
@@ -149,6 +140,5 @@ export const dummyPost: PostType[] = [
     stadium: "kiwoom경기장",
     weather: "맑음",
     photo: 1,
-    
   },
 ];
