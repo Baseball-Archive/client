@@ -37,6 +37,7 @@ export interface PostType {
   home_team_name: TeamScheme;
   away_team_name: TeamScheme;
   review_short: string;
+  review_long: string;
   user_id: number;
   likes: number;
   comments: number;
@@ -94,7 +95,7 @@ const Post = ({ post }: Props) => {
                 {review_short}
               </div>
               <div className="ml-auto text-right">
-                <div className="text-sm text-gray-400">
+                <div className="text-sm text-gray-400 font-thin">
                   {match_date}
                 </div>
               </div>
