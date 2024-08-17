@@ -4,6 +4,7 @@ import { dummyUser } from "../../pages/Community/dummyPostUser";
 import { TeamScheme } from "./Post";
 import Badge from "../common/Badge";
 import PostHandleButton from "../common/PostHandleButton";
+import { useState } from "react";
 
 interface Props {
   postDetail: PostType;
@@ -23,6 +24,12 @@ const PostDetail = ({ postDetail }: Props) => {
     review_long,
     photo,
   } = postDetail;
+
+  const [isLikesClicked, setIsLikesClicked] = useState(false);
+
+  const toggleLikes = () => {
+    setIsLikesClicked(!isLikesClicked);
+  }
 
   const handleDelete = () => {
     if (window.confirm("삭제 하시겠습니까?")) {
@@ -68,7 +75,7 @@ const PostDetail = ({ postDetail }: Props) => {
             </div>
             <div className="text-sm text-gray-400 font-thin">
                 {match_date}
-              </div>
+            </div>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-1 mt-2 pb-3 border-b border-gray-300 text-sm">
@@ -97,13 +104,25 @@ const PostDetail = ({ postDetail }: Props) => {
             <p className="font-bold min-w-[4rem]">{awayTeam.name}</p>
           </div>
         </div>
-        <div className="mt-6 mb-16">
+        <div className="pt-6 pb-2">
           <div>
             <div className="pb-4">
               <img src={getPhotoSrc(photo)} alt="Post Photo" />
             </div>
             <p>{review_long}</p>
           </div>
+        </div>
+        <div className="pb-4 border-b border-gray-300 flex justify-end">
+          <button onClick={toggleLikes}>
+            <div className="border-[1px] w-[56px] h-[56px] rounded-full shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" fill={isLikesClicked ? "currentColor" : "none"} viewBox="-6 -6 32 32" stroke-width="1" stroke="currentColor" className="text-[#DC7B7C]" style={{ maxWidth: "48px" }}>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+              </svg>
+            </div>
+          </button>
+          </div>
+        <div className="h-32">
+
         </div>
       </div>
     </div>
