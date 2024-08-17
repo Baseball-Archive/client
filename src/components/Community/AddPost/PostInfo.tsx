@@ -11,8 +11,13 @@ const PostInfo = () => {
   const [weather, setWeather] = useState<string | null>(null);
   const [date, setDate] = useState<string>('');
   const [match, setMatch] = useState<{ home: string; away: string }>({ home: '', away: '' });
-  const [winningTeam, setWinningTeam] = useState<string>('kia');
+  const [winningTeam, setWinningTeam] = useState<string>('');
   const [review, setReview] = useState<string>('');
+
+  const teams = ['kia', 'samsung', 'lg', 'doosan', 'ssg', 'kt', 'nc', 'hanhwa', 'lotte', 'kiwoom'];
+  
+  // match의 home과 away 팀만 옵션으로 표시
+  const filteredTeams = teams.filter(team => team === match.home || team === match.away);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -27,10 +32,18 @@ const PostInfo = () => {
     };
 
     try {
+      // Firebase 연결 코드
       // const docRef = await addDoc(collection(db, 'posts'), formData);
       // console.log('Document written with ID: ', docRef.id);
     } catch (error) {
       console.error('Error adding document: ', error);
+    }
+  };
+
+  const handleSelectClick = (event: React.MouseEvent<HTMLSelectElement>) => {
+    if (!match.home || !match.away) {
+      event.preventDefault();
+      alert('경기를 먼저 선택해 주세요.');
     }
   };
 
@@ -62,20 +75,21 @@ const PostInfo = () => {
         <div className="relative">
           <select
             name="승리 팀"
-            className="w-full h-12 px-4 appearance-none rounded-[4px] border text-lg"
+            className={`w-full h-12 px-4 appearance-none rounded-[4px] border text-lg ${!match.home || !match.away ? 'bg-gray-200 cursor-not-allowed' : ''}`}
             value={winningTeam}
             onChange={(e) => setWinningTeam(e.target.value)}
+            onClick={handleSelectClick}
+            disabled={!match.home || !match.away}
           >
-            <option value="kia">KIA 타이거즈</option>
-            <option value="samsung">삼성 라이온즈</option>
-            <option value="lg">LG 트윈스</option>
-            <option value="doosan">두산 베어스</option>
-            <option value="ssg">SSG 랜더스</option>
-            <option value="kt">KT 위즈</option>
-            <option value="nc">NC 다이노스</option>
-            <option value="hanhwa">한화 이글스</option>
-            <option value="lotte">롯데 자이언츠</option>
-            <option value="kiwoom">키움 히어로즈</option>
+            {filteredTeams.length === 0 ? (
+              <option value="" disabled>경기를 선택하세요.</option>
+            ) : (
+              filteredTeams.map((team) => (
+                <option key={team} value={team}>
+                  {team} 팀
+                </option>
+              ))
+            )}
           </select>
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
             <svg

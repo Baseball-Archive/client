@@ -50,30 +50,26 @@ const dummyData: MatchData[] = [
   },
 ];
 
-const Option = (props: OptionProps) => {
-  return (
-    <div {...props.innerProps} className="flex items-center px-4 py-2">
-      <div>
-        <Badge scheme={props.data.homeTeam} /> <span> vs </span>
-        <Badge scheme={props.data.awayTeam} /> <span> </span>
-        {props.data.stadium}
-      </div>
+const Option = (props: OptionProps) => (
+  <div {...props.innerProps} className="flex items-center px-4 py-2">
+    <div>
+      <Badge scheme={props.data.homeTeam} /> <span> vs </span>
+      <Badge scheme={props.data.awayTeam} /> <span> </span>
+      {props.data.stadium}
     </div>
-  );
-};
+  </div>
+);
 
-const SingleValue = (props: OptionProps) => {
-  return (
-    <div {...props.innerProps} className="px-2">
-      <div>
-        <Badge scheme={props.data.homeTeam} /> <span> vs </span>
-        <Badge scheme={props.data.awayTeam} />
-        <span> </span>
-        {props.data.stadium}
-      </div>
+const SingleValue = (props: OptionProps) => (
+  <div {...props.innerProps} className="px-2">
+    <div>
+      <Badge scheme={props.data.homeTeam} /> <span> vs </span>
+      <Badge scheme={props.data.awayTeam} />
+      <span> </span>
+      {props.data.stadium}
     </div>
-  );
-};
+  </div>
+);
 
 const PostPickMatch: React.FC<PostPickMatchProps> = ({ onSelectMatch }) => {
   const [selectedOption, setSelectedOption] = useState<MatchData | null>(null);
