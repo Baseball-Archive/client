@@ -15,8 +15,6 @@ const PostInfo = () => {
   const [review, setReview] = useState<string>('');
 
   const teams = ['kia', 'samsung', 'lg', 'doosan', 'ssg', 'kt', 'nc', 'hanhwa', 'lotte', 'kiwoom'];
-  
-  // match의 home과 away 팀만 옵션으로 표시
   const filteredTeams = teams.filter(team => team === match.home || team === match.away);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -32,7 +30,6 @@ const PostInfo = () => {
     };
 
     try {
-      // Firebase 연결 코드
       // const docRef = await addDoc(collection(db, 'posts'), formData);
       // console.log('Document written with ID: ', docRef.id);
     } catch (error) {
@@ -82,7 +79,7 @@ const PostInfo = () => {
             disabled={!match.home || !match.away}
           >
             {filteredTeams.length === 0 ? (
-              <option value="" disabled>경기를 선택하세요.</option>
+              <option value="" disabled>경기를 먼저 선택하세요.</option>
             ) : (
               filteredTeams.map((team) => (
                 <option key={team} value={team}>
