@@ -6,6 +6,7 @@ import User from './pages/User/User';
 import Login from './pages/User/Login';
 import Signup from './pages/User/Signup';
 import ResetPW from './components/common/ResetPW';
+// import KakaoCallback from './components/kakao/kakaoCallback';
 
 const router = createBrowserRouter([
   {
@@ -29,17 +30,21 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: 'users/signup',
+        path: 'users/join',
         element: <Signup />,
       },
-      {
-        path: 'users/user',
-        element: <User />,
-      },
+      // {
+      //   path: 'users/user',
+      //   element: <User />,
+      // },
       {
         path: 'users/reset',
         element: <ResetPW />,
       },
+      // {
+      //   path: 'auth/kakao/callback',
+      //   element: <KakaoCallback />,
+      // },
     ],
   },
 ]);

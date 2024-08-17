@@ -1,25 +1,54 @@
 import { useForm } from 'react-hook-form';
 import InputText from '../../components/common/InputText';
-import { useAuth } from '../../hooks/useAuth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LoginProps } from './Login';
-import { useState } from 'react';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  updateProfile,
+} from 'firebase/auth';
+import { ref, set } from 'firebase/database';
+
+import firebaseApp, { db } from '../../service/firebase';
 
 export interface SignupProps extends LoginProps {
-  username: string;
+  passwordConfirm: string;
+  nickname: string;
 }
 
 const Signup = () => {
-  const { userSignup } = useAuth();
-
+  const auth = getAuth(firebaseApp);
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<SignupProps>();
+  const navigate = useNavigate();
+  const onSubmit = async (data: SignupProps) => {
+    try {
+      const createdUser = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password,
+      );
+      if (auth.currentUser) {
+        await updateProfile(auth.currentUser, {
+          displayName: data.nickname,
+          photoURL:
+            'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png',
+        });
 
-  const onSubmit = (data: SignupProps) => {
-    userSignup(data);
+        await set(ref(db, `users/${createdUser.user.uid}`), {
+          nickname: data.nickname,
+          image: auth.currentUser.photoURL,
+        });
+        navigate('/users/login');
+        console.log('createdUser', createdUser);
+      }
+    } catch (err) {
+      console.error('firebase Server failed:' + err);
+    }
   };
 
   return (
@@ -64,7 +93,7 @@ const Signup = () => {
               inputSize="medium"
               scheme={errors.password ? 'danger' : 'primary'}
               {...register('password', {
-                required: true,
+                required: '비밀번호를 입력해주세요.',
               })}
             />
             {errors.password && (
@@ -80,26 +109,29 @@ const Signup = () => {
               inputType="password"
               inputSize="medium"
               scheme={errors.password ? 'danger' : 'primary'}
-              {...register('password', {
-                required: true,
+              {...register('passwordConfirm', {
+                required: '비밀번호 확인을 입력해주세요.',
+                validate: (value) =>
+                  value === watch('password') ||
+                  '비밀번호가 일치하지 않습니다.',
               })}
             />
-            {errors.password && (
-              <p className="error-text">비밀번호을 입력해주세요.</p>
+            {errors.passwordConfirm && (
+              <p className="error-text">비밀번호 확인을 입력해주세요.</p>
             )}
           </fieldset>
           <fieldset className="p-3">
             <p>닉네임</p>
             <InputText
               placeholder="닉네임"
-              inputType="username"
+              inputType="nickname"
               inputSize="medium"
-              scheme={errors.username ? 'danger' : 'primary'}
-              {...register('username', {
+              scheme={errors.nickname ? 'danger' : 'primary'}
+              {...register('nickname', {
                 required: true,
               })}
             />
-            {errors.username && (
+            {errors.nickname && (
               <p className="error-text">닉네임을 입력해주세요.</p>
             )}
           </fieldset>

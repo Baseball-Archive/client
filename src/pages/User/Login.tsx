@@ -1,23 +1,34 @@
 import { useForm } from 'react-hook-form';
 import InputText from '../../components/common/InputText';
-import { useAuth } from '../../hooks/useAuth';
 import Button from '../../components/common/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import firebaseApp from '../../service/firebase';
 
+// import KakaoLogin from '../../components/kakao/KakaoLogin';
 export interface LoginProps {
   email: string;
   password: string;
 }
 
 const Login = () => {
-  const { userLogin } = useAuth();
+  const auth = getAuth(firebaseApp);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginProps>();
-  const onSubmit = (data: LoginProps) => {
-    userLogin(data);
+
+  const onSubmit = async (data: LoginProps) => {
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      navigate('/');
+      console.log('Login successful');
+    } catch (err) {
+      console.error('Login failed:', err);
+      alert('비밀번호 또는 아이디가 틀립니다.');
+    }
   };
 
   return (
@@ -64,13 +75,14 @@ const Login = () => {
             <div className="pt-6">
               <div className="flex gap-6">
                 <Link to="/users/reset">비밀번호 찾기 </Link>
-                <Link to="/users/signup">회원가입</Link>
+                <Link to="/users/join">회원가입</Link>
               </div>
               <div className="pt-20 text-center font-title font-light">
                 SNS 계정으로 간편하게 로그인
               </div>
               <div className="flex pb-5 text-center">
-                <div className="flex-1">구글</div>
+                {/* <KakaoLogin /> */}
+
                 <div className="flex-1">애플</div>
                 <div className="flex-1">페이스북</div>
               </div>
