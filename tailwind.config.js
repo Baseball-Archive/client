@@ -9,7 +9,7 @@ export default {
     extend: {
       colors: {
         button: {
-          primary: "#80CB9D",
+          primary: "#000",
           secondary: "#808080",
           danger: "#C22D40",
         },
@@ -41,5 +41,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };

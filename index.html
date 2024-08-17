@@ -10,7 +10,7 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="/manifest.json" />
-    <title>Baseball Archive</title>
+    <title>야구볼램</title>
   </head>
   <body>
     <div id="root"></div>
@@ -18,11 +18,11 @@
     <script>
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker
-          .register('/sw.js')
+          .register('/service-worker-event.js')
           .then((registration) => {
             console.log('Service worker registration succeeded:', registration);
           })
-          .catch((err) => {
+          .catch((error) => {
             console.log('Service worker registration failed:', error);
           });
       } else {

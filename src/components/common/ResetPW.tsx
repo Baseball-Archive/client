@@ -1,6 +1,22 @@
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 import InputText from './InputText';
 
 const ResetPW = () => {
+  const handlePasswordReset = () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    try {
+      if (user && user.email) {
+        sendPasswordResetEmail(auth, user.email);
+        console.log(user.email);
+
+        alert('해당 메일로 메시지를 보냈습니다!');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="m-5 flex flex-col overflow-hidden bg-white">
       <div className="mx-auto my-0 max-w-screen-md">
@@ -18,6 +34,7 @@ const ResetPW = () => {
           </fieldset>
           <fieldset className="py-10">
             <button
+              onClick={handlePasswordReset}
               type="submit"
               className="h-16 w-[359px] shrink-0 rounded-lg bg-black text-2xl not-italic text-white"
             >

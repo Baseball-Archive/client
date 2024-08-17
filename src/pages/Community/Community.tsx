@@ -1,55 +1,32 @@
-import Post, { TeamScheme } from "../../components/Community/Post";
+import Post from "../../components/Community/Post";
+import { useLocation } from 'react-router-dom';
+import { dummyPost } from "./dummyPost";
 
-const dummyPost: DummyPost[] = [
-  {
-    id: 1,
-    match_date: "2024.01.01",
-    home_team_name: "kia",
-    away_team_name: "samsung",
-    review_short: "재미있었다",
-    user_id: 1,
-    likes: 1,
-    comments: 0,
-  },
-  {
-    id: 2,
-    match_date: "2024.01.02",
-    home_team_name: "lg",
-    away_team_name: "doosan",
-    review_short: "즐거웠다",
-    user_id: 2,
-    likes: 2,
-    comments: 0,
-  },
-]
+const Community = () => {
+  const location = useLocation();
+  const isCommunity = location.pathname === '/posts';
+  const isDiary = location.pathname === '/archive';
 
-interface DummyPost {
-  id: number;
-  match_date: string;
-  home_team_name: TeamScheme;
-  away_team_name: TeamScheme;
-  review_short: string;
-  user_id: number;
-  likes: number;
-  comments: number;
-}
-
-const Posts = () => {
   return (
-    <div>
-      <div>
-        커뮤니티
+    <div className="mb-24">
+      <div className="m-10 flex justify-center">
+        <button className={`w-20 h-12 ${isCommunity ? 'underline underline-offset-4' : ''}`}>
+          <span className="font-black">커뮤니티</span>
+        </button>
+        <button className={`w-20 h-12 ${isDiary ? 'underline underline-offset-4' : ''}`}>
+          <span className="font-black">일기</span>
+        </button>
       </div>
-      {
-        dummyPost.map((item) => (
+      <div>
+        {dummyPost.slice().reverse().map((post) => (
           <Post 
-            key={item.id}
-            post={item}
+            key={post.id}
+            post={post}
           />
-        ))
-      }
+        ))}
+      </div>
     </div>
   );
 };
 
-export default Posts;
+export default Community;

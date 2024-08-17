@@ -10,6 +10,7 @@ import {
 import { ref, set } from 'firebase/database';
 
 import firebaseApp, { db } from '../../service/firebase';
+import { useAuth } from '../../hooks/useAuth';
 
 export interface SignupProps extends LoginProps {
   passwordConfirm: string;
@@ -18,20 +19,25 @@ export interface SignupProps extends LoginProps {
 
 const Signup = () => {
   const auth = getAuth(firebaseApp);
+  const { userSignup } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<SignupProps>();
-  const navigate = useNavigate();
+
   const onSubmit = async (data: SignupProps) => {
     try {
+      // 사용자 생성
       const createdUser = await createUserWithEmailAndPassword(
         auth,
         data.email,
         data.password,
       );
+
+      // Firebase 사용자 프로필 업데이트
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, {
           displayName: data.nickname,
@@ -39,15 +45,18 @@ const Signup = () => {
             'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png',
         });
 
+        // 사용자 정보를 Firebase Realtime Database에 저장
         await set(ref(db, `users/${createdUser.user.uid}`), {
-          nickname: data.nickname,
+          nickname: data.nickname, // SignupProps에서 nickname 가져오기
           image: auth.currentUser.photoURL,
         });
+        userSignup(data);
+        // 로그인 페이지로 리디렉션
         navigate('/users/login');
         console.log('createdUser', createdUser);
       }
     } catch (err) {
-      console.error('firebase Server failed:' + err);
+      console.error('firebase Server failed:', err);
     }
   };
 
