@@ -6,6 +6,10 @@ import CommunityDetail from "./pages/Community/CommunityDetail";
 import League from "./pages/League/League";
 import Schedule from "./pages/League/Schedule";
 import Standings from "./pages/League/Standings";
+import User from './pages/User/User';
+import Login from './pages/User/Login';
+import Signup from './pages/User/Signup';
+import ResetPW from './components/common/ResetPW';
 import Archives from "./pages/Archive/Archives";
 
 export const ROUTES = {
@@ -53,6 +57,23 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: 'users/login',
+        element: <Login />,
+      },
+      {
+        path: 'users/signup',
+        element: <Signup />,
+      },
+      {
+        path: 'users/user',
+        element: <User />,
+      },
+      {
+        path: 'users/reset',
+        element: <ResetPW />,
+      },
+
     ],
   },
 ]);
