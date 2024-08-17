@@ -4,7 +4,11 @@ import Badge from "../../common/Badge";
 import { MatchData } from "../../../types/MatchData";
 import { TeamScheme } from "../../../types/TeamScheme";
 
-interface OptionProps {
+interface PickMatchProps {
+  selectedMatch: MatchData | null;
+  setSelectedMatch: (option: MatchData | null) => void;
+}
+interface MatchProps {
   innerProps: React.HTMLAttributes<HTMLDivElement>;
   data: {
     homeTeam: TeamScheme;
@@ -46,7 +50,7 @@ const dummyData: MatchData[] = [
   },
 ];
 
-const Option = (props: OptionProps) => {
+const Option = (props: MatchProps) => {
   return (
     <div {...props.innerProps} className="flex items-center px-4 py-2">
       <div>
@@ -57,7 +61,7 @@ const Option = (props: OptionProps) => {
     </div>
   );
 };
-const SingleValue = (props: OptionProps) => {
+const SingleValue = (props: MatchProps) => {
   return (
     <div {...props.innerProps} className="px-2">
       <div>
@@ -70,10 +74,9 @@ const SingleValue = (props: OptionProps) => {
   );
 };
 
-const PickMatch = () => {
-  const [selectedOption, setSelectedOption] = useState<MatchData | null>(null);
+const PickMatch = ({ selectedMatch, setSelectedMatch }: PickMatchProps) => {
   const handleChange = (selected: MatchData | null) => {
-    setSelectedOption(selected);
+    setSelectedMatch(selected);
   };
 
   const customStyles: StylesConfig<MatchData, false> = {
@@ -105,7 +108,7 @@ const PickMatch = () => {
       <Select
         placeholder="경기를 선택하세요."
         isSearchable={false}
-        value={selectedOption}
+        value={selectedMatch}
         onChange={handleChange}
         options={dummyData}
         components={{ Option, SingleValue }}

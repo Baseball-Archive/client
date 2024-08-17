@@ -3,18 +3,16 @@ import ArchiveHandleButton from "../common/PostHandleButton";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 interface ArchiveHeaderProps {
   userId: string;
-
   weather: Weather;
   profileImage: string;
 }
-const weatherEmojis: Record<Weather, string> = {
+
+const WeatherEmojis = {
   sun: "🌞",
   rain: "☂️",
   cloud: "☁️",
   snow: "❄️",
-  null: "",
 };
-
 const ArchiveHeader: React.FC<ArchiveHeaderProps> = ({
   userId,
   weather,
@@ -43,12 +41,16 @@ const ArchiveHeader: React.FC<ArchiveHeaderProps> = ({
           <div className="flex flex-row gap-2">
             <div className="text-lg font-semibold">{userId}</div>
             <div className="flex flex-row gap-2">
-              · {isPublic ? <></> : <LockClosedIcon className="size-5" />}
+              {!isPublic && (
+                <>
+                  · <LockClosedIcon className="size-5" />
+                </>
+              )}
             </div>
           </div>
           <div className="flex-row">
             <span className="text-sm text-black">한화생명이글스파크</span>
-            <span> {weatherEmojis[weather]}</span>
+            <span> {weather && WeatherEmojis[weather]}</span>
           </div>
         </div>
       </div>
