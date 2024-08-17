@@ -1,5 +1,6 @@
 import { CameraIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { Link } from 'react-router-dom';
+import Button from '../common/Button';
 
 export interface Props {
   profile: string;
@@ -13,7 +14,7 @@ const Profile = ({ profile, email }: Props) => {
 
   return (
     <>
-      <div className="flex items-center gap-10 py-10">
+      <div className="flex items-center gap-10 py-10 relative">
         <form className="relative cursor-pointer">
           <fieldset>
             <label htmlFor="image" className="cursor-pointer">
@@ -38,6 +39,9 @@ const Profile = ({ profile, email }: Props) => {
             <span>비밀번호 변경</span>
             <ChevronRightIcon className="size-6" />
           </Link>
+        </div>
+        <div className='absolute right-0 top-10'>
+          <Button size="small" scheme="secondary">로그아웃</Button>
         </div>
       </div>
     </>

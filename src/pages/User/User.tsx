@@ -16,7 +16,7 @@ const User = () => {
 
   return (
     <div className="mx-auto max-w-md">
-      <Profile profile={profile} email={email} nickname={nickname} />
+      <Profile profile={profile} email={email} />
       <UserEditForm nickname={nickname} team={team} />
     </div>
   );
