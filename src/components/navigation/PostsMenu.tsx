@@ -14,7 +14,7 @@ interface Props {
 const PostsMenu = ({ button }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
-
+  
   const togglePostModal = () => {
     setIsOpen(prev => !prev)
   }
@@ -53,14 +53,14 @@ const PostsMenu = ({ button }: Props) => {
               className="absolute right-6 top-4 size-6 cursor-pointer md:hidden"
             />
             <ul>
-              <li className="py-4">
+              <li className="py-4" onClick={togglePostModal}>
                 <PostsMenuItem
                   title="일기 쓰기"
                   link="/archive"
                   icon={<BookOpenIcon className="size-8" />}
                 />
               </li>
-              <li className="py-4">
+              <li className="py-4" onClick={togglePostModal}>
                 <PostsMenuItem
                   title="커뮤니티 글쓰기"
                   link="/post"
