@@ -8,6 +8,7 @@ export default {
     },
     extend: {
       colors: {
+        background: 'rgba(0, 0, 0, 0.3)',
         button: {
           primary: "#000",
           secondary: "#808080",

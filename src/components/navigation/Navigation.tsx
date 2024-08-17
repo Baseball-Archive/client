@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import {
   HomeIcon,
   CalendarDaysIcon,
@@ -8,25 +8,20 @@ import {
 } from "@heroicons/react/20/solid";
 import NavigationItem from "./NavigationItem";
 import PostsMenu from "./PostsMenu";
+import Logo from "/images/logo.png"
+import Icon from "/images/icon.png"
 
 const ICON_SIZE = "size-8";
 const LIST_STYLE = "py-4";
 
 const Navigation = () => {
-  const [isClickPostButton, setIsClickPostButton] = useState(false);
-
-  const togglePostModal = (
-    event: React.MouseEvent<HTMLLIElement | SVGSVGElement>,
-  ) => {
-    event.stopPropagation();
-    setIsClickPostButton((prev) => !prev);
-  };
 
   return (
     <>
       <nav className="px-6 md:py-4">
-        <div className="hidden py-8 font-logo text-3xl md:block md:text-center xl:text-left">
-          야구볼램
+        <div className="hidden py-8 md:block md:text-center xl:text-left">
+          <img className="hidden xl:block w-[130px]" src={Logo} alt="야구볼램 로고" />
+          <img className="md:block xl:hidden w-[100px]" src={Icon} alt="야구볼램 아이콘" />
         </div>
         <ul className="flex flex-row justify-between md:flex-col">
           <li className={LIST_STYLE}>
@@ -43,12 +38,13 @@ const Navigation = () => {
               icon={<CalendarDaysIcon className={ICON_SIZE} />}
             />
           </li>
-          <li className={`md:relative ${LIST_STYLE}`} onClick={togglePostModal}>
-            <NavigationItem
+          <li className={`md:relative ${LIST_STYLE}`}>
+            <PostsMenu button={
+              <NavigationItem
               title="기록하기"
               icon={<PlusCircleIcon className={ICON_SIZE} />}
             />
-            {isClickPostButton && <PostsMenu onClick={togglePostModal} />}
+            } />
           </li>
           <li className={LIST_STYLE}>
             <NavigationItem
