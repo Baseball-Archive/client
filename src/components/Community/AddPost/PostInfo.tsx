@@ -83,7 +83,7 @@ const PostInfo = () => {
             ) : (
               filteredTeams.map((team) => (
                 <option key={team} value={team}>
-                  {team} 팀
+                  {team}
                 </option>
               ))
             )}
