@@ -8,11 +8,11 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const DEFAULT_STYLE =
-  'rounded-xl inline-flex items-center justify-center font-bold text-white';
+  'inline-flex items-center justify-center font-bold text-white';
 const SIZE_MAP: Record<ButtonSize, string> = {
-  large: 'w-[263px] h-[66px]',
-  medium: 'w-[200px] py-3 px-2',
-  small: 'py-2 px-4',
+  large: 'w-[263px] h-[66px] rounded-xl',
+  medium: 'w-[200px] py-3 px-2 rounded-xl',
+  small: 'py-1 px-3 text-sm rounded-lg',
 };
 const SCHEME_MAP: Record<ButtonScheme, string> = {
   primary: 'bg-button-primary',
