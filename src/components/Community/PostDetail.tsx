@@ -11,7 +11,7 @@ interface Props {
 }
 
 const PostDetail = ({ postDetail }: Props) => {
-  
+
   const {
     user_id,
     review_short,
@@ -25,10 +25,15 @@ const PostDetail = ({ postDetail }: Props) => {
     photo,
   } = postDetail;
 
-  const [isLikesClicked, setIsLikesClicked] = useState(false);
+  const [isLikesClicked, setIsLikesClicked] = useState(() => {
+    const savedState = localStorage.getItem(`isLikesClicked-${postDetail.id}`);
+    return savedState ? JSON.parse(savedState) : false;
+  });
 
   const toggleLikes = () => {
-    setIsLikesClicked(!isLikesClicked);
+    const newState = !isLikesClicked;
+    setIsLikesClicked(newState);
+    localStorage.setItem(`isLikesClicked-${postDetail.id}`, JSON.stringify(newState));
   }
 
   const handleDelete = () => {
@@ -120,10 +125,8 @@ const PostDetail = ({ postDetail }: Props) => {
               </svg>
             </div>
           </button>
-          </div>
-        <div className="h-32">
-
         </div>
+        <div className="h-32"></div>
       </div>
     </div>
   );
