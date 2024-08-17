@@ -2,10 +2,10 @@ import { Outlet } from "react-router-dom";
 import Header from "../header/Header";
 import Navigation from "../navigation/Navigation";
 
-const NAV_XL = "xl:w-1/4";
-const NAV_MD = "md:w-[100px] md:top-0 md:h-screen";
+const NAV_XL = 'xl:w-1/4';
+const NAV_MD = 'md:w-[100px] md:top-0 md:h-screen';
 const NAV_DEFAULT =
-  "fixed border z-10 bg-white top-auto bottom-0 w-full h-[100px]  ";
+  'fixed border z-10 bg-white top-auto bottom-0 w-full h-[100px]';
 
 const CONTENT_XL = "xl:w-2/4 xl:left-1/4";
 

@@ -7,10 +7,14 @@ import CommunityDetail from "./pages/Community/CommunityDetail";
 import League from "./pages/League/League";
 import Schedule from "./pages/League/Schedule";
 import Standings from "./pages/League/Standings";
+import User from './pages/User/User';
+import Login from './pages/User/Login';
+import Signup from './pages/User/Signup';
+import ResetPW from './components/common/ResetPW';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Layout />,
     children: [
       {
@@ -28,6 +32,22 @@ const router = createBrowserRouter([
       {
         path: "/posts/:id",
         element: <CommunityDetail />,
+      },
+      {
+        path: 'users/login',
+        element: <Login />,
+      },
+      {
+        path: 'users/signup',
+        element: <Signup />,
+      },
+      {
+        path: 'users/user',
+        element: <User />,
+      },
+      {
+        path: 'users/reset',
+        element: <ResetPW />,
       },
       {
         path: "league",
