@@ -7,7 +7,7 @@ const Header = () => {
         <Link className="font-logo text-2xl" to="/">
             야구볼램
         </Link>
-        <Link to="/mypage">
+        <Link to="/users/user">
             <UserCircleIcon className="size-8" />
         </Link>
     </header>

@@ -58,11 +58,7 @@ const Navigation = () => {
             />
           </li>
           <li className={`hidden md:block ${LIST_STYLE}`}>
-            <NavigationItem
-              title="프로필"
-              link="/mypage"
-              icon={<UserCircleIcon className={ICON_SIZE} />}
-            />
+            <NavigationItem title="프로필" link="/users/user" icon={<UserCircleIcon className={ICON_SIZE}/>}/>
           </li>
         </ul>
       </nav>

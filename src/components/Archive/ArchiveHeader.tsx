@@ -1,6 +1,6 @@
 import ArchiveHandleButton from "../common/PostHandleButton";
 
-type WeatherType = "맑음" | "비" | "흐림";
+type WeatherType = '맑음' | '비' | '흐림';
 interface ArchiveHeaderProps {
   user_id: string;
   schedule_id: string;
