@@ -18,11 +18,11 @@
     <script>
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker
-          .register('/sw.js')
+          .register('/service-worker-event.js')
           .then((registration) => {
             console.log('Service worker registration succeeded:', registration);
           })
-          .catch((err) => {
+          .catch((error) => {
             console.log('Service worker registration failed:', error);
           });
       } else {
