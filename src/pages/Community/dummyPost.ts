@@ -12,7 +12,7 @@ export const dummyPost: PostType[] = [
     likes: 0,
     comments: 1,
     result: "kia",
-    stadium: "lia경기장",
+    stadium: "kia경기장",
     weather: "맑음",
     photo: 11,
   },
