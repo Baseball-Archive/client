@@ -126,7 +126,6 @@ const PostDetail = ({ postDetail }: Props) => {
             </div>
           </button>
         </div>
-        <div className="h-32"></div>
       </div>
     </div>
   );
