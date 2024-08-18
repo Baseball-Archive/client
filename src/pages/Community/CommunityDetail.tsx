@@ -18,7 +18,7 @@ const CommunityDetail = () => {
   }
 
   return (
-    <div className="mb-24">
+    <div className="mb-32">
       <PostDetail postDetail={post} />
       {filteredComment.slice().map((comment) => (
         <Comment 
@@ -26,6 +26,7 @@ const CommunityDetail = () => {
           comment={comment}
         />
       ))}
+      
       <AddComment />
     </div>
   );
