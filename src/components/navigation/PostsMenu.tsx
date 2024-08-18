@@ -17,6 +17,7 @@ const PostsMenu = ({ togglePostModal }: Props) => {
   useClickOutside(menuRef, togglePostModal);
 
   return (
+
     <div className="bg-background-overlay fixed bottom-0 left-0 right-0 top-0 z-10 backdrop-blur-sm md:absolute md:bg-transparent md:backdrop-blur-none">
       <div
         ref={menuRef}

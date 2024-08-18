@@ -1,43 +1,41 @@
 import { useState } from "react";
 import { CheckCircleIcon, FaceSmileIcon } from "@heroicons/react/20/solid";
-
-interface OptionToggleProps {
-  firstOption: string;
-  secondOption: string;
+interface PickIsPublicProps {
+  isPublic: boolean | null;
+  setIsPublic: (option: boolean | null) => void;
 }
 
-const OptionToggle = ({ firstOption, secondOption }: OptionToggleProps) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const handleOptionClick = (option: string) => {
-    setSelectedOption(option);
+const PickIsPublic = ({ isPublic, setIsPublic }: PickIsPublicProps) => {
+  const handleOptionClick = (option: boolean) => {
+    setIsPublic(option);
   };
 
   return (
     <div className="flex items-center space-x-4">
       <div
         className="flex cursor-pointer items-center"
-        onClick={() => handleOptionClick(firstOption)}
+        onClick={() => handleOptionClick(true)}
       >
-        {selectedOption === firstOption ? (
+        {isPublic == true ? (
           <CheckCircleIcon className="h-6 w-6 text-black" />
         ) : (
           <FaceSmileIcon className="h-6 w-6 text-gray-400" />
         )}
-        <span className="ml-2">{firstOption}</span>
+        <span className="ml-2">공개</span>
       </div>
       <div
         className="flex cursor-pointer items-center"
-        onClick={() => handleOptionClick(secondOption)}
+        onClick={() => handleOptionClick(false)}
       >
-        {selectedOption === secondOption ? (
+        {isPublic == false ? (
           <CheckCircleIcon className="black h-6 w-6" />
         ) : (
           <FaceSmileIcon className="h-6 w-6 text-gray-400" />
         )}
-        <span className="ml-2">{secondOption}</span>
+        <span className="ml-2">비공개</span>
       </div>
     </div>
   );
 };
 
-export default OptionToggle;
+export default PickIsPublic;

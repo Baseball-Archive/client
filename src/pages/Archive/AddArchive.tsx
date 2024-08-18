@@ -2,8 +2,8 @@ import ArchiveInfo from "../../components/Archive/AddArchive/ArchiveInfo";
 
 const AddArchive = () => {
   return (
-    <div className="container mb-6 flex justify-center overflow-auto bg-white">
-      <div className="flex w-full max-w-md flex-col overflow-auto">
+    <div className="container mb-32 flex justify-center overflow-auto bg-white px-2">
+      <div className="flex w-full flex-col overflow-auto">
         <ArchiveInfo />
       </div>
     </div>
