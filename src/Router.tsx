@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./components/layout/Layout";
+import Archives from "./pages/Archive/Archives";
 import AddArchive from "./pages/Archive/AddArchive";
 import Community from "./pages/Community/Community";
 import CommunityDetail from "./pages/Community/CommunityDetail";
@@ -10,7 +11,9 @@ import User from './pages/User/User';
 import Login from './pages/User/Login';
 import Signup from './pages/User/Signup';
 import ResetPW from './components/common/ResetPW';
-import Archives from "./pages/Archive/Archives";
+// import KakaoCallback from './components/kakao/kakaoCallback';
+
+
 
 export const ROUTES = {
   HOME: "/",
@@ -21,6 +24,7 @@ export const ROUTES = {
   SCHEDULE: "schedule",
   STANDINGS: "standings",
 };
+
 
 const router = createBrowserRouter([
   {
@@ -41,6 +45,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTES.POST_DETAIL,
+
         element: <CommunityDetail />,
       },
       {
@@ -62,7 +67,7 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: 'users/signup',
+        path: 'users/join',
         element: <Signup />,
       },
       {
@@ -73,7 +78,6 @@ const router = createBrowserRouter([
         path: 'users/reset',
         element: <ResetPW />,
       },
-
     ],
   },
 ]);

@@ -1,6 +1,8 @@
 import { CameraIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
+import { getAuth, signOut } from 'firebase/auth';
+import firebaseApp from '../../service/firebase';
 
 export interface Props {
   profile: string;
@@ -11,10 +13,20 @@ const Profile = ({ profile, email }: Props) => {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log('UPLOAD', event.target.files);
   };
+  const navigate = useNavigate();
+  const auth = getAuth(firebaseApp);
 
+  const onSignOut = async () => {
+    try {
+      await signOut(auth);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
-      <div className="flex items-center gap-10 py-10 relative">
+      <div className="relative flex items-center gap-10 py-10">
         <form className="relative cursor-pointer">
           <fieldset>
             <label htmlFor="image" className="cursor-pointer">
@@ -40,8 +52,10 @@ const Profile = ({ profile, email }: Props) => {
             <ChevronRightIcon className="size-6" />
           </Link>
         </div>
-        <div className='absolute right-0 top-10'>
-          <Button size="small" scheme="secondary">로그아웃</Button>
+        <div className="absolute right-0 top-10">
+          <Button onClick={onSignOut} size="small" scheme="secondary">
+            로그아웃
+          </Button>
         </div>
       </div>
     </>
