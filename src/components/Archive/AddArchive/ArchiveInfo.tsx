@@ -1,15 +1,15 @@
-import PickWeather from "./PickWeather";
-import InfoSection from "./InfoSection";
-import PickDate from "./PickDate";
-import MatchReview from "./MatchReview";
-import PickMatch from "./PickMatch";
-import UploadPhotoButton from "./UploadPhotoButton";
-import PickScore from "./PickScore";
-import { useState } from "react";
-import { Weather } from "../../../types/Weather";
-import { MatchData } from "../../../types/MatchData";
-import PickIsPublic from "./PickIsPublic";
-import { set } from "date-fns";
+import PickWeather from './PickWeather';
+import InfoSection from './InfoSection';
+import PickDate from './PickDate';
+import MatchReview from './MatchReview';
+import PickMatch from './PickMatch';
+import UploadPhotoButton from './UploadPhotoButton';
+import PickScore from './PickScore';
+import { useState } from 'react';
+import { Weather } from '../../../types/Weather';
+import { MatchData } from '../../../types/MatchData';
+import PickIsPublic from './PickIsPublic';
+import { set } from 'date-fns';
 
 const ArchiveInfo = () => {
   const [homeScore, setHomeScore] = useState<number>(0);
@@ -17,9 +17,9 @@ const ArchiveInfo = () => {
   const [selectedEmoji, setSelectedEmoji] = useState<Weather | null>(null);
   const [selectedMatch, setSelectedMatch] = useState<MatchData | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [review, setReview] = useState("");
+  const [review, setReview] = useState('');
   const [isPublic, setIsPublic] = useState<boolean | null>(null);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState('');
 
   const handleHomeScore = (score: number) => {
     setHomeScore(score);
@@ -64,24 +64,27 @@ const ArchiveInfo = () => {
           onChange={handleTitleChange}
         ></input>
       </InfoSection>
-      <InfoSection label="직관한 날짜">
-        <PickDate
-          selectedDate={selectedDate}
-          setSelectedDate={handleSelectedDate}
-        />
-      </InfoSection>
+      <div className="flex space-x-2">
+        <InfoSection half={true} label="직관한 날짜">
+          <PickDate
+            selectedDate={selectedDate}
+            setSelectedDate={handleSelectedDate}
+          />
+        </InfoSection>
+        <InfoSection half={true} label="날씨">
+          <PickWeather
+            selectedEmoji={selectedEmoji}
+            setSelectedEmoji={handleSelectedEmoji}
+          />
+        </InfoSection>
+      </div>
       <InfoSection label="경기 선택">
         <PickMatch
           selectedMatch={selectedMatch}
           setSelectedMatch={handleSelectedMatch}
         />
       </InfoSection>
-      <InfoSection label="날씨">
-        <PickWeather
-          selectedEmoji={selectedEmoji}
-          setSelectedEmoji={handleSelectedEmoji}
-        />
-      </InfoSection>
+
       <div className="flex flex-col">
         <label className="mb-1 text-base">경기 결과</label>
       </div>
@@ -94,7 +97,7 @@ const ArchiveInfo = () => {
       />
       <MatchReview review={review} setReview={handleReview} />
       <UploadPhotoButton />
-      <div className="mt-6 flex flex-col">
+      <div className="mt-4 flex flex-col">
         <label className="mb-2 text-base">공개 설정</label>
         <PickIsPublic isPublic={isPublic} setIsPublic={handleIsPublic} />
         <button

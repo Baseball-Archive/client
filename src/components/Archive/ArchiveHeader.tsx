@@ -1,32 +1,34 @@
-import { Weather } from "../../types/Weather";
-import ArchiveHandleButton from "../common/PostHandleButton";
-import { LockClosedIcon } from "@heroicons/react/20/solid";
+import { Weather } from '../../types/Weather';
+import ArchiveHandleButton from '../common/PostHandleButton';
+import { LockClosedIcon } from '@heroicons/react/20/solid';
 
 interface ArchiveHeaderProps {
   userId: string;
   weather: Weather;
   profileImage: string;
+  scheduleId: string;
 }
 
 const WeatherEmojis = {
-  sun: "🌞",
-  rain: "☂️",
-  cloud: "☁️",
-  snow: "❄️",
+  sun: '🌞',
+  rain: '☂️',
+  cloud: '☁️',
+  snow: '❄️',
 };
 const ArchiveHeader: React.FC<ArchiveHeaderProps> = ({
   userId,
   weather,
   profileImage,
+  scheduleId,
 }) => {
   const handleDelete = () => {
-    if (window.confirm("삭제 하시겠습니까?")) {
-      alert("삭제 되었습니다.");
+    if (window.confirm('삭제 하시겠습니까?')) {
+      alert('삭제 되었습니다.');
     }
   };
   const handleEdit = () => {
-    if (window.confirm("수정 하시겠습니까?")) {
-      alert("수정 되었습니다.");
+    if (window.confirm('수정 하시겠습니까?')) {
+      alert('수정 되었습니다.');
     }
   };
 
@@ -40,11 +42,18 @@ const ArchiveHeader: React.FC<ArchiveHeaderProps> = ({
         />
         <div className="flex-col">
           <div className="flex flex-row gap-2">
-            <div className="text-lg font-semibold">{userId}</div>
-            <div className="flex flex-row gap-2">
+            <div className="flex items-center text-lg font-semibold">
+              {userId} ·
+            </div>
+            <div className="flex items-center text-xs text-gray-400">
+              {' '}
+              {scheduleId}
+            </div>
+            <div className="flex flex-row items-center gap-2">
               {!isPublic && (
                 <>
-                  · <LockClosedIcon className="size-5" />
+                  <span className="text-lg">·</span>
+                  <LockClosedIcon className="size-5" />
                 </>
               )}
             </div>

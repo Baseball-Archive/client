@@ -1,8 +1,7 @@
-
-import { useState } from "react";
-import ReviewSection from "./ReviewSection";
-import ArchiveHeader from "./ArchiveHeader";
-import { ArchiveProps } from "../../types/ArchiveProps";
+import { useState } from 'react';
+import ReviewSection from './ReviewSection';
+import ArchiveHeader from './ArchiveHeader';
+import { ArchiveProps } from '../../types/ArchiveProps';
 
 const Archive = (props: ArchiveProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -14,6 +13,7 @@ const Archive = (props: ArchiveProps) => {
           userId={props.userId}
           weather={props.weather}
           profileImage={props.photo}
+          scheduleId={props.scheduleId}
         />
         <div className="w-full flex-col items-center">
           <img
@@ -23,7 +23,6 @@ const Archive = (props: ArchiveProps) => {
           <ReviewSection
             review={props.review}
             result={props.result}
-            scheduleId={props.scheduleId}
             isExpanded={isExpanded}
             onToggleExpand={() => setIsExpanded((prev) => !prev)}
           />

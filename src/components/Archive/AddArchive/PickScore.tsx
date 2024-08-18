@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import Badge from "../../common/Badge";
-import { MinusCircleIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
-import { MatchData } from "../../../types/MatchData";
+import React, { useState } from 'react';
+import Badge from '../../common/Badge';
+import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
+import { MatchData } from '../../../types/MatchData';
 
 interface PickScoreProps {
   homeScore: number;
@@ -44,8 +44,8 @@ const PickScore = ({
   };
 
   return (
-    <div className="mb-6 flex h-12 w-full flex-row justify-between rounded-md border px-4">
-      {selectedMatch && (
+    <div className="mb-4 flex h-12 w-full flex-row justify-between rounded-md border px-4">
+      {selectedMatch ? (
         <>
           <div className="flex items-center">
             <Badge scheme={selectedMatch?.homeTeam} />
@@ -98,6 +98,8 @@ const PickScore = ({
             </div>
           </div>
         </>
+      ) : (
+        <span className="self-center text-gray-400">경기를 선택하세요.</span>
       )}
     </div>
   );
