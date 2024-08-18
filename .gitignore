@@ -24,4 +24,7 @@ dist-ssr
 *.sln
 *.sw?
 
-image*.png
+*.png
+
+/public/mockServiceWorker.js
+/src/mocks/

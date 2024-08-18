@@ -1,17 +1,18 @@
-import { createBrowserRouter } from "react-router-dom";
-import Home from "./pages/Archive/Home";
-import Layout from "./components/layout/Layout";
-import AddArchive from "./pages/Archive/AddArchive";
-import Community from "./pages/Community/Community";
-import CommunityDetail from "./pages/Community/CommunityDetail";
-import AddPost from "./pages/Community/AddPost";
-import League from "./pages/League/League";
-import Schedule from "./pages/League/Schedule";
-import Standings from "./pages/League/Standings";
+import { createBrowserRouter } from 'react-router-dom';
+import Home from './pages/Archive/Home';
+import Layout from './components/layout/Layout';
+import AddArchive from './pages/Archive/AddArchive';
+import Community from './pages/Community/Community';
+import CommunityDetail from './pages/Community/CommunityDetail';
+import League from './pages/League/League';
+import Schedule from './pages/League/Schedule';
+import Standings from './pages/League/Standings';
 import User from './pages/User/User';
 import Login from './pages/User/Login';
 import Signup from './pages/User/Signup';
 import ResetPW from './components/common/ResetPW';
+import AddPost from './pages/Community/AddPost';
+// import KakaoCallback from './components/kakao/kakaoCallback';
 
 const router = createBrowserRouter([
   {
@@ -23,15 +24,15 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/archive",
+        path: '/archive',
         element: <AddArchive />,
       },
       {
-        path: "/posts",
+        path: '/posts',
         element: <Community />,
       },
       {
-        path: "/posts/:id",
+        path: '/posts/:id',
         element: <CommunityDetail />,
       },
       {
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: 'users/signup',
+        path: 'users/join',
         element: <Signup />,
       },
       {
@@ -55,15 +56,15 @@ const router = createBrowserRouter([
         element: <ResetPW />,
       },
       {
-        path: "league",
+        path: 'league',
         element: <League />,
         children: [
           {
-            path: "schedule",
+            path: 'schedule',
             element: <Schedule />,
           },
           {
-            path: "standings",
+            path: 'standings',
             element: <Standings />,
           },
         ],

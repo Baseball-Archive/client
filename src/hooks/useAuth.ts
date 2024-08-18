@@ -1,9 +1,9 @@
 import { LoginProps } from '../pages/User/Login';
 import { useAuthStore } from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
-import { login, resetPassword, resetRequest, signup } from '../apis/auth';
+import { login, resetPassword, resetRequest, join } from '../apis/auth';
 import { SignupProps } from '../pages/User/Signup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export const useAuth = () => {
   };
 
   const userSignup = (data: SignupProps) => {
-    signup(data).then(
+    join(data).then(
       (res) => {
         navigate('/users/login');
       },
@@ -55,16 +55,11 @@ export const useAuth = () => {
     );
   };
 
-  const userProfile = (data: SignupProps) => {
-    signup(data).then((res) => {});
-  };
-
   return {
     userLogin,
     userSignup,
     userResetPassword,
     userResetRequest,
     resetRequested,
-    userProfile,
   };
 };
