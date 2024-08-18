@@ -1,4 +1,4 @@
-import { TeamScheme } from "../../types/TeamScheme";
+import { TeamScheme } from '../../types/TeamScheme';
 
 interface Props {
   scheme: TeamScheme;

@@ -11,52 +11,95 @@ import { ref, set } from 'firebase/database';
 
 import firebaseApp, { db } from '../../service/firebase';
 import { useAuth } from '../../hooks/useAuth';
+import { useState } from 'react';
+import Badge from '../../components/common/Badge';
+import { TeamScheme } from '../../types/TeamScheme';
+
+interface OptionsProps {
+  value: string;
+  label: string;
+}
+const BASEBALL_TEAMS: OptionsProps[] = [
+  { value: 'kia', label: '기아' },
+  { value: 'samsung', label: '삼성' },
+  { value: 'lg', label: 'LG' },
+  { value: 'doosan', label: '두산' },
+  { value: 'ssg', label: 'SSG' },
+  { value: 'kt', label: 'KT' },
+  { value: 'nc', label: 'NC' },
+  { value: 'hanhwa', label: '한화' },
+  { value: 'lotte', label: '롯데' },
+  { value: 'kiwoom', label: '키움' },
+];
 
 export interface SignupProps extends LoginProps {
   passwordConfirm: string;
-  nickname: string;
+  nickname?: string;
+  team: string;
 }
 
 const Signup = () => {
   const auth = getAuth(firebaseApp);
   const { userSignup } = useAuth();
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [team, setTeam] = useState('');
+
   const {
     register,
     handleSubmit,
     watch,
+    trigger,
     formState: { errors },
-  } = useForm<SignupProps>();
+  } = useForm<SignupProps>({
+    defaultValues: {
+      nickname: '',
+    },
+  });
 
   const onSubmit = async (data: SignupProps) => {
     try {
-      // 사용자 생성
       const createdUser = await createUserWithEmailAndPassword(
         auth,
         data.email,
         data.password,
       );
 
-      // Firebase 사용자 프로필 업데이트
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, {
-          displayName: data.nickname,
+          displayName: data.nickname || '',
           photoURL:
             'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png',
         });
 
-        // 사용자 정보를 Firebase Realtime Database에 저장
         await set(ref(db, `users/${createdUser.user.uid}`), {
-          nickname: data.nickname, // SignupProps에서 nickname 가져오기
+          nickname: data.nickname || '',
           image: auth.currentUser.photoURL,
+          team: team,
         });
         userSignup(data);
-        // 로그인 페이지로 리디렉션
+
         navigate('/users/login');
-        console.log('createdUser', createdUser);
       }
     } catch (err) {
       console.error('firebase Server failed:', err);
+    }
+  };
+  const handleTeamSubmit = () => {
+    if (team) {
+      setIsOpen(false);
+      handleSubmit(onSubmit)();
+    } else {
+      alert('팀을 선택해주세요!');
+    }
+  };
+
+  const handleValidate = async () => {
+    const isValid = await trigger(['email', 'password', 'passwordConfirm']);
+    if (isValid) {
+      setIsOpen(true);
+    } else {
+      alert('정보를 입력하세요');
     }
   };
 
@@ -135,23 +178,17 @@ const Signup = () => {
               placeholder="닉네임"
               inputType="nickname"
               inputSize="medium"
-              scheme={errors.nickname ? 'danger' : 'primary'}
-              {...register('nickname', {
-                required: true,
-              })}
+              scheme="primary"
+              {...register('nickname')}
             />
-            {errors.nickname && (
-              <p className="error-text">닉네임을 입력해주세요.</p>
-            )}
           </fieldset>
-
-          <fieldset className="text-center">
-            <button
-              type="submit"
-              className="h-16 w-80 shrink-0 rounded-lg bg-black text-2xl not-italic text-white"
+          <fieldset className="flex flex-col text-center">
+            <div
+              onClick={handleValidate}
+              className="h-16 place-content-center rounded-lg bg-black text-2xl not-italic text-white"
             >
               회원가입
-            </button>
+            </div>
             <span className="flex place-content-center py-5">
               <p className="px-4 font-title font-light">
                 이미 아이디가 있으신가요?
@@ -159,6 +196,41 @@ const Signup = () => {
               <Link to={'/users/login'}>로그인</Link>
             </span>
           </fieldset>
+          {isOpen && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+              <div className="flex w-80 flex-col items-center rounded-lg bg-white p-5">
+                <div className="text-center">
+                  <span className="text-2xl font-black not-italic">
+                    응원하는 구단
+                  </span>
+                  <span className="text-2xl font-light not-italic">
+                    을<br /> 선택해주세요
+                  </span>
+                </div>
+                <div className="grid grid-cols-4 gap-4 py-10">
+                  {BASEBALL_TEAMS.map((item) => (
+                    <div
+                      key={item.value}
+                      onClick={() => setTeam(item.value)}
+                      className={`cursor-pointer rounded-lg text-center`}
+                    >
+                      <Badge scheme={item.value as TeamScheme} />
+                    </div>
+                  ))}
+                </div>
+                <button
+                  type="submit"
+                  className="h-12 w-40 shrink-0 rounded-lg bg-black text-white"
+                  onClick={handleTeamSubmit}
+                >
+                  선택완료
+                </button>
+                <button type="submit" onClick={handleTeamSubmit}>
+                  다음에 하기
+                </button>
+              </div>
+            </div>
+          )}
         </form>
       </div>
     </div>
