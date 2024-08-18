@@ -1,24 +1,41 @@
-import { useAuth } from '../../hooks/useAuth';
+import { Link } from 'react-router-dom';
+import Button from '../../components/common/Button';
 import Profile from '../../components/User/Profile';
 import UserEditForm from '../../components/User/UserEditForm';
-
-const dummyUserData = {
-  profile:
-    'https://firebasestorage.googleapis.com/v0/b/hotsix-blog-5f9b1.appspot.com/o/image%2F1723386154075?alt=media&token=04777f33-ef7b-4c50-bb0c-b748c2f6b8cf',
-  email: 'bigfan@baseball.com',
-  nickname: '닉네임',
-  team: 'ssg',
-};
+import { getAuth } from 'firebase/auth';
 
 const User = () => {
-  const { profile, nickname, email, team } = dummyUserData;
-  const { userProfile } = useAuth();
+  try {
+    const auth = getAuth();
+    const user = auth.currentUser;
 
-  return (
-    <div className="mx-auto max-w-md">
-      <Profile profile={profile} email={email} />
-      <UserEditForm nickname={nickname} team={team} />
-    </div>
-  );
+    if (user) {
+      return (
+        <div className="mx-auto max-w-md">
+          <Profile
+            profile={user.photoURL ? user.photoURL : ''}
+            email={user.email ? user.email : ''}
+          />
+
+          <UserEditForm
+            nickname={user.displayName ? user.displayName : ''}
+            team={''}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div className="mx-auto flex max-w-md flex-col">
+          유저 정보가 없습니다.
+          <Button scheme="primary" size="medium">
+            <Link to={'/users/login'}>다시 로그인</Link>
+          </Button>
+        </div>
+      );
+    }
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error;
+  }
 };
 export default User;

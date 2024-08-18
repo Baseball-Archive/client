@@ -99,7 +99,7 @@ const UserEditForm = ({ nickname, team }: Props) => {
               <InputText
                 {...field}
                 id="nickname"
-                inputType="username"
+                inputType="nickname"
                 inputSize="large"
                 scheme="primary"
                 placeholder="닉네임을 입력해주세요."

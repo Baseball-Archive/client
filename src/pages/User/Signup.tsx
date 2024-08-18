@@ -1,25 +1,63 @@
 import { useForm } from 'react-hook-form';
 import InputText from '../../components/common/InputText';
-import { useAuth } from '../../hooks/useAuth';
-import Button from '../../components/common/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LoginProps } from './Login';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  updateProfile,
+} from 'firebase/auth';
+import { ref, set } from 'firebase/database';
+
+import firebaseApp, { db } from '../../service/firebase';
+import { useAuth } from '../../hooks/useAuth';
 
 export interface SignupProps extends LoginProps {
-  username: string;
+  passwordConfirm: string;
+  nickname: string;
 }
 
 const Signup = () => {
+  const auth = getAuth(firebaseApp);
   const { userSignup } = useAuth();
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<SignupProps>();
 
-  const onSubmit = (data: SignupProps) => {
-    userSignup(data);
+  const onSubmit = async (data: SignupProps) => {
+    try {
+      // 사용자 생성
+      const createdUser = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password,
+      );
+
+      // Firebase 사용자 프로필 업데이트
+      if (auth.currentUser) {
+        await updateProfile(auth.currentUser, {
+          displayName: data.nickname,
+          photoURL:
+            'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png',
+        });
+
+        // 사용자 정보를 Firebase Realtime Database에 저장
+        await set(ref(db, `users/${createdUser.user.uid}`), {
+          nickname: data.nickname, // SignupProps에서 nickname 가져오기
+          image: auth.currentUser.photoURL,
+        });
+        userSignup(data);
+        // 로그인 페이지로 리디렉션
+        navigate('/users/login');
+        console.log('createdUser', createdUser);
+      }
+    } catch (err) {
+      console.error('firebase Server failed:', err);
+    }
   };
 
   return (
@@ -64,7 +102,7 @@ const Signup = () => {
               inputSize="medium"
               scheme={errors.password ? 'danger' : 'primary'}
               {...register('password', {
-                required: true,
+                required: '비밀번호를 입력해주세요.',
               })}
             />
             {errors.password && (
@@ -80,26 +118,29 @@ const Signup = () => {
               inputType="password"
               inputSize="medium"
               scheme={errors.password ? 'danger' : 'primary'}
-              {...register('password', {
-                required: true,
+              {...register('passwordConfirm', {
+                required: '비밀번호 확인을 입력해주세요.',
+                validate: (value) =>
+                  value === watch('password') ||
+                  '비밀번호가 일치하지 않습니다.',
               })}
             />
-            {errors.password && (
-              <p className="error-text">비밀번호을 입력해주세요.</p>
+            {errors.passwordConfirm && (
+              <p className="error-text">비밀번호 확인을 입력해주세요.</p>
             )}
           </fieldset>
           <fieldset className="p-3">
             <p>닉네임</p>
             <InputText
               placeholder="닉네임"
-              inputType="username"
+              inputType="nickname"
               inputSize="medium"
-              scheme={errors.username ? 'danger' : 'primary'}
-              {...register('username', {
+              scheme={errors.nickname ? 'danger' : 'primary'}
+              {...register('nickname', {
                 required: true,
               })}
             />
-            {errors.username && (
+            {errors.nickname && (
               <p className="error-text">닉네임을 입력해주세요.</p>
             )}
           </fieldset>
