@@ -1,4 +1,3 @@
-import Badge from "../common/Badge";
 import { dummyUser } from "../../pages/Community/dummyPostUser";
 import { Link } from "react-router-dom";
 
@@ -43,13 +42,23 @@ export interface PostType {
   comments: number;
   stadium: string;
   weather: string;
-  result: string;
+  result: TeamScheme;
   photo: number;
 }
 
 interface Props {
   post: PostType;
+  scheme?: TeamScheme;
 }
+
+const CHEER_TEAM_STYLE =
+  "inline-flex items-center rounded-lg px-1 py-0.3 text-sm font-bold text-white";
+
+const CheerTeamBadge = ({ scheme }: { scheme?: TeamScheme }) => {
+  if (!scheme) return null;
+  const { name, style } = SCHEME_MAP[scheme];
+  return <span className={` ${CHEER_TEAM_STYLE} ${style}`}>{name}</span>;
+};
 
 const Post = ({ post }: Props) => {
   const {
@@ -80,13 +89,13 @@ const Post = ({ post }: Props) => {
           <div className="pt-3 border-t-2 border-gray-300">
             <div className="flex items-center">
               <div
-                className={`p-2 text-white w-14 h-10 ${homeTeam.style} text-center rounded-l-full`}
-                style={{ minWidth: '3.5rem' }}
+                className={`p-1 text-white w-8 h-8 ${homeTeam.style} text-center rounded-l-full`}
+                style={{ minWidth: '3rem' }}
               >
                 {homeTeam.name}
               </div>
               <div
-                className={`p-2 text-white w-14 h-10 ${awayTeam.style} text-center rounded-r-full`}
+                className={`p-1 text-white w-8 h-8 ${awayTeam.style} text-center rounded-r-full`}
                 style={{ minWidth: '3.5rem' }}
               >
                 {awayTeam.name}
@@ -94,7 +103,7 @@ const Post = ({ post }: Props) => {
               <div className="pl-6 font-bold w-64 overflow-hidden text-ellipsis whitespace-nowrap">
                 {review_short}
               </div>
-              <div className="ml-auto text-right">
+              <div className="ml-auto">
                 <div className="text-sm text-gray-400 font-thin">
                   {match_date}
                 </div>
@@ -102,25 +111,27 @@ const Post = ({ post }: Props) => {
             </div>
             <div className="flex justify-between items-center mt-2">
               <div className="flex items-center font-normal text-gray-500">
-                <div className="flex items-center justify-center w-12 h-12 relative overflow-hidden">
-                  <Badge scheme={cheerTeam as TeamScheme} />
+                <div className="flex items-center justify-center w-10 h-12 relative overflow-hidden">
+                  <CheerTeamBadge scheme={cheerTeam as TeamScheme} />
                 </div>
-                <div className="ml-1 text-sm">{userName}</div>
+                <div className="text-sm">{userName}</div>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center">
                 <div className="flex items-center w-16 h-10">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="22" fill="none">
-                    <path fill="#5ACAD2" d="m5.062 17.51.67.336a.75.75 0 0 0-.256-.962l-.414.625Zm-1.373 2.736-.67-.337.67.337Zm.661.7.335.672-.335-.671Zm3.943-1.962.209-.72a.75.75 0 0 0-.543.05l.334.67Zm14.957-8.706c0 4.59-4.128 8.529-10.75 8.529v1.5c7.185 0 12.25-4.369 12.25-10.029h-1.5ZM12.5 1.75c6.622 0 10.75 3.94 10.75 8.528h1.5C24.75 4.618 19.685.25 12.5.25v1.5ZM1.75 10.278C1.75 5.69 5.878 1.75 12.5 1.75V.25C5.315.25.25 4.619.25 10.278h1.5Zm3.726 6.606C3.099 15.31 1.75 12.926 1.75 10.278H.25c0 3.199 1.642 6.03 4.397 7.856l.829-1.25Zm-1.117 3.698 1.373-2.736-1.34-.673-1.373 2.736 1.34.673Zm-.343-.307a.273.273 0 0 1 .304.052.233.233 0 0 1 .04.255l-1.341-.673a1.268 1.268 0 0 0 .21 1.448 1.23 1.23 0 0 0 1.456.261l-.669-1.343Zm3.943-1.962-3.943 1.962.669 1.343 3.942-1.962-.668-1.343Zm4.541.494c-1.457 0-2.796-.194-3.998-.543l-.419 1.44c1.346.392 2.828.603 4.417.603v-1.5Z"/>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="text-[#5ACAD2]" style={{ maxWidth: "24px" }}>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
                   </svg>
-                  <span className="text-[#5ACAD2] ml-2">
+
+                  <span className="text-[#5ACAD2] ml-1">
                     {displayComments}
                   </span>
                 </div>
                 <div className="flex items-center w-16 h-10">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" fill="none">
-                    <path stroke="#DC7B7C" strokeLinejoin="round" strokeWidth="1.5" d="M1.01 8.324c-.213-5.372 2.815-7.06 5.138-7.305C8.472.774 10.644 2.952 11.5 5.53c.856-2.579 3.012-4.67 5.352-4.512 2.339.157 5.351 1.933 5.137 7.305-.208 5.226-3.861 8.621-9.974 12.363a.988.988 0 0 1-1.03 0C4.872 16.945 1.219 13.55 1.01 8.324Z"/>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="text-[#DC7B7C]" style={{ maxWidth: "24px" }}>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                   </svg>
-                  <span className="text-[#DC7B7C] ml-2">
+
+                  <span className="text-[#DC7B7C] ml-1">
                     {displayLikes}
                   </span>
                 </div>

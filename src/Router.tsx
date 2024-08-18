@@ -11,6 +11,7 @@ import User from './pages/User/User';
 import Login from './pages/User/Login';
 import Signup from './pages/User/Signup';
 import ResetPW from './components/common/ResetPW';
+import AddPost from './pages/Community/AddPost';
 // import KakaoCallback from './components/kakao/kakaoCallback';
 
 
@@ -20,11 +21,11 @@ export const ROUTES = {
   ADD_ARCHIVE: "/addarchive",
   POSTS: "/posts",
   POST_DETAIL: "/posts/:id",
+  ADD_POST: "/post",
   LEAGUE: "/league",
   SCHEDULE: "schedule",
   STANDINGS: "standings",
 };
-
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
         path: ROUTES.POST_DETAIL,
 
         element: <CommunityDetail />,
+      },
+      {
+        path: ROUTES.ADD_POST,
+        element: <AddPost />,
       },
       {
         path: ROUTES.LEAGUE,
