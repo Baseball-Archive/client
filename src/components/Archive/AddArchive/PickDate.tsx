@@ -3,6 +3,11 @@ import DatePicker from "react-datepicker";
 import { CalendarDaysIcon } from "@heroicons/react/20/solid";
 import "react-datepicker/dist/react-datepicker.css";
 
+interface PickDateProps {
+  selectedDate: Date | null;
+  setSelectedDate: (date: Date | null) => void;
+}
+
 interface ShowInputDateProps {
   value?: string;
   onClick?: () => void;
@@ -18,8 +23,7 @@ const ShowInputDate = forwardRef<HTMLDivElement, ShowInputDateProps>(
   ),
 );
 
-const PickDate = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+const PickDate = ({ selectedDate, setSelectedDate }: PickDateProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
