@@ -1,5 +1,6 @@
 // import { db, collection, addDoc } from './firebaseConfig';
 import { useState } from 'react';
+
 import PostInfoSection from './PostInfoSection';
 import PostPickWeather from './PostPickWeather';
 import PostPickDate from './PostPickDate';

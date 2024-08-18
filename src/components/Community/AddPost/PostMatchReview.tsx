@@ -4,7 +4,7 @@ interface MatchReviewProps {
   onSetReview: (review: string) => void;
 }
 
-const PostMatchReview: React.FC<MatchReviewProps> = ({ onSetReview }) => {
+const PostMatchReview = ({ onSetReview }: MatchReviewProps) => {
   const handleReviewChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     onSetReview(event.target.value);
   };
