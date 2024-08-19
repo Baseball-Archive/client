@@ -4,17 +4,17 @@ import Badge from "../../common/Badge";
 import { MatchData } from "../../../types/MatchData";
 import { TeamScheme } from "../../../types/TeamScheme";
 
-interface PickMatchProps {
-  selectedMatch: MatchData | null;
-  setSelectedMatch: (option: MatchData | null) => void;
-}
-interface MatchProps {
+interface OptionProps {
   innerProps: React.HTMLAttributes<HTMLDivElement>;
   data: {
     homeTeam: TeamScheme;
     awayTeam: TeamScheme;
     stadium: string;
   };
+}
+
+interface PostPickMatchProps {
+  onSelectMatch: (match: { home: string; away: string }) => void;
 }
 
 const dummyData: MatchData[] = [
@@ -50,33 +50,38 @@ const dummyData: MatchData[] = [
   },
 ];
 
-const Option = (props: MatchProps) => {
-  return (
-    <div {...props.innerProps} className="flex items-center px-4 py-2">
-      <div>
-        <Badge scheme={props.data.homeTeam} /> <span> vs </span>
-        <Badge scheme={props.data.awayTeam} /> <span> </span>
-        {props.data.stadium}
-      </div>
+const Option = (props: OptionProps) => (
+  <div {...props.innerProps} className="flex items-center px-4 py-2">
+    <div>
+      <Badge scheme={props.data.homeTeam} /> <span> vs </span>
+      <Badge scheme={props.data.awayTeam} /> <span> </span>
+      {props.data.stadium}
     </div>
-  );
-};
-const SingleValue = (props: MatchProps) => {
-  return (
-    <div {...props.innerProps} className="px-2">
-      <div>
-        <Badge scheme={props.data.homeTeam} /> <span> vs </span>
-        <Badge scheme={props.data.awayTeam} />
-        <span> </span>
-        {props.data.stadium}
-      </div>
-    </div>
-  );
-};
+  </div>
+);
 
-const PickMatch = ({ selectedMatch, setSelectedMatch }: PickMatchProps) => {
+const SingleValue = (props: OptionProps) => (
+  <div {...props.innerProps} className="px-2">
+    <div>
+      <Badge scheme={props.data.homeTeam} /> <span> vs </span>
+      <Badge scheme={props.data.awayTeam} />
+      <span> </span>
+      {props.data.stadium}
+    </div>
+  </div>
+);
+
+const PostPickMatch: React.FC<PostPickMatchProps> = ({ onSelectMatch }) => {
+  const [selectedOption, setSelectedOption] = useState<MatchData | null>(null);
+
   const handleChange = (selected: MatchData | null) => {
-    setSelectedMatch(selected);
+    setSelectedOption(selected);
+    if (selected) {
+      onSelectMatch({
+        home: selected.homeTeam,
+        away: selected.awayTeam,
+      });
+    }
   };
 
   const customStyles: StylesConfig<MatchData, false> = {
@@ -108,7 +113,7 @@ const PickMatch = ({ selectedMatch, setSelectedMatch }: PickMatchProps) => {
       <Select
         placeholder="경기를 선택하세요."
         isSearchable={false}
-        value={selectedMatch}
+        value={selectedOption}
         onChange={handleChange}
         options={dummyData}
         components={{ Option, SingleValue }}
@@ -118,4 +123,4 @@ const PickMatch = ({ selectedMatch, setSelectedMatch }: PickMatchProps) => {
   );
 };
 
-export default PickMatch;
+export default PostPickMatch;

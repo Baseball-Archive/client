@@ -24,7 +24,7 @@ const PostHandleButton = ({ onEdit, onDelete }: PostHandleButtonProps) => {
       </button>
 
       {isDropdownView && (
-        <div className="z-1 absolute flex w-24 -translate-x-8 flex-col justify-center rounded-lg bg-white px-2 font-light shadow-lg">
+        <div className="z-1 absolute flex w-24 -translate-x-14 flex-col justify-center rounded-lg bg-white px-2 font-light shadow-lg">
           <button
             onClick={onEdit}
             className="rounded-t-lg border-b-2 px-3 py-2 text-sm"

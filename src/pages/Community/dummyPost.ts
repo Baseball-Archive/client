@@ -12,9 +12,9 @@ export const dummyPost: PostType[] = [
     likes: 0,
     comments: 1,
     result: "kia",
-    stadium: "lia경기장",
+    stadium: "kia경기장",
     weather: "맑음",
-    photo: 1,
+    photo: 11,
   },
   {
     id: 2,
@@ -29,7 +29,7 @@ export const dummyPost: PostType[] = [
     result: "lg",
     stadium: "lg경기장",
     weather: "흐림",
-    photo: 1,
+    photo: 12,
   },
   {
     id: 3,
@@ -44,7 +44,7 @@ export const dummyPost: PostType[] = [
     result: "ssg",
     stadium: "ssg경기장",
     weather: "비",
-    photo: 1,
+    photo: 13,
   },
   {
     id: 4,
@@ -59,7 +59,7 @@ export const dummyPost: PostType[] = [
     result: "nc",
     stadium: "nc경기장",
     weather: "맑음",
-    photo: 1,
+    photo: 14,
   },
   {
     id: 5,
@@ -74,7 +74,7 @@ export const dummyPost: PostType[] = [
     result: "lotte",
     stadium: "lotte경기장",
     weather: "맑음",
-    photo: 1,
+    photo: 15,
   },
   {
     id: 6,
@@ -89,7 +89,7 @@ export const dummyPost: PostType[] = [
     result: "samsung",
     stadium: "samsung경기장",
     weather: "맑음",
-    photo: 1,
+    photo: 16,
   },
   {
     id: 7,
@@ -104,7 +104,7 @@ export const dummyPost: PostType[] = [
     result: "doosan",
     stadium: "doosan경기장",
     weather: "맑음",
-    photo: 1,
+    photo: 17,
   },
   {
     id: 8,
@@ -119,7 +119,7 @@ export const dummyPost: PostType[] = [
     result: "kt",
     stadium: "kt경기장",
     weather: "맑음",
-    photo: 1,
+    photo: 18,
   },
   {
     id: 9,
@@ -134,7 +134,7 @@ export const dummyPost: PostType[] = [
     result: "hanhwa",
     stadium: "hanhwa경기장",
     weather: "맑음",
-    photo: 1,
+    photo: 19,
   },
   {
     id: 10,
@@ -149,6 +149,6 @@ export const dummyPost: PostType[] = [
     result: "kiwoom",
     stadium: "kiwoom경기장",
     weather: "맑음",
-    photo: 1,
+    photo: 20,
   },
 ];

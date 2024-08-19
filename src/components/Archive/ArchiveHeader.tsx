@@ -1,19 +1,22 @@
+import { Weather } from "../../types/Weather";
 import ArchiveHandleButton from "../common/PostHandleButton";
+import { LockClosedIcon } from "@heroicons/react/20/solid";
 
-type WeatherType = '맑음' | '비' | '흐림';
 interface ArchiveHeaderProps {
-  user_id: string;
-  schedule_id: string;
-  weather: WeatherType;
-  weatherEmojis: Record<WeatherType, string>;
+  userId: string;
+  weather: Weather;
   profileImage: string;
 }
 
+const WeatherEmojis = {
+  sun: "🌞",
+  rain: "☂️",
+  cloud: "☁️",
+  snow: "❄️",
+};
 const ArchiveHeader: React.FC<ArchiveHeaderProps> = ({
-  user_id,
-  schedule_id,
+  userId,
   weather,
-  weatherEmojis,
   profileImage,
 }) => {
   const handleDelete = () => {
@@ -27,6 +30,7 @@ const ArchiveHeader: React.FC<ArchiveHeaderProps> = ({
     }
   };
 
+  const isPublic = false;
   return (
     <div className="mb-5 flex items-center justify-between">
       <div className="flex">
@@ -35,13 +39,19 @@ const ArchiveHeader: React.FC<ArchiveHeaderProps> = ({
           className="mr-4 h-14 w-14 rounded-full bg-gray-200"
         />
         <div className="flex-col">
-          <div className="flex-row">
-            <span className="text-lg font-semibold">{user_id}</span>
-            <span className="text-sm text-gray-500"> · {schedule_id}</span>
+          <div className="flex flex-row gap-2">
+            <div className="text-lg font-semibold">{userId}</div>
+            <div className="flex flex-row gap-2">
+              {!isPublic && (
+                <>
+                  · <LockClosedIcon className="size-5" />
+                </>
+              )}
+            </div>
           </div>
           <div className="flex-row">
-            <span className="text-sm text-black">한밭종합운동장</span>
-            <span> {weatherEmojis[weather]}</span>
+            <span className="text-sm text-black">한화생명이글스파크</span>
+            <span> {weather && WeatherEmojis[weather]}</span>
           </div>
         </div>
       </div>
