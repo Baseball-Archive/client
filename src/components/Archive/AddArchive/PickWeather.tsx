@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Weather } from '../../../types/Weather';
+
 interface PickWeatherProps {
-  selectedEmoji: Weather | null;
-  setSelectedEmoji: (emoji: Weather) => void;
+  selectedWeather: Weather | null;
+  handleWeather: (emoji: Weather) => void;
 }
+
 const WeatherEmojis = [
   { weather: 'sun', emoji: '🌞' },
   { weather: 'cloud', emoji: '☁️' },
@@ -11,30 +13,31 @@ const WeatherEmojis = [
   { weather: 'snow', emoji: '❄️' },
 ];
 
-const PickWeather = ({ selectedEmoji, setSelectedEmoji }: PickWeatherProps) => {
+const PickWeather = ({ selectedWeather, handleWeather }: PickWeatherProps) => {
   const [isDropdownView, setDropdownView] = useState(false);
 
-  const handleWeather = (weather: Weather) => {
-    setSelectedEmoji(weather);
-  };
   const handleClickContainer = () => {
     setDropdownView((prev) => !prev);
   };
+
   const handleBlurContainer = () => {
     setTimeout(() => {
       setDropdownView(false);
     }, 200);
   };
-  const renderEmoji = (selectedEmoji: Weather) => {
-    switch (selectedEmoji) {
+
+  const renderEmoji = (selectedWeather: Weather) => {
+    switch (selectedWeather) {
       case 'cloud':
-        return <div>☁️</div>;
+        return <span>☁️</span>;
       case 'rain':
         return <span>☔</span>;
       case 'sun':
-        return <span>☀️</span>;
+        return <span>🌞</span>;
       case 'snow':
         return <span>❄️</span>;
+      default:
+        return null;
     }
   };
 
@@ -44,8 +47,8 @@ const PickWeather = ({ selectedEmoji, setSelectedEmoji }: PickWeatherProps) => {
         onClick={handleClickContainer}
         className="flex w-full items-center justify-start px-4 text-gray-400"
       >
-        {selectedEmoji ? (
-          renderEmoji(selectedEmoji)
+        {selectedWeather ? (
+          renderEmoji(selectedWeather)
         ) : (
           <span className="text-gray-400">날씨를 선택하세요</span>
         )}
@@ -59,7 +62,7 @@ const PickWeather = ({ selectedEmoji, setSelectedEmoji }: PickWeatherProps) => {
                 key={weather}
                 onClick={() => handleWeather(weather as Weather)}
                 className={
-                  selectedEmoji === weather
+                  selectedWeather === weather
                     ? ''
                     : 'cursor-pointer brightness-[0.5]'
                 }

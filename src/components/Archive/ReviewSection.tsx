@@ -1,33 +1,53 @@
+import { useNavigate, useParams } from 'react-router-dom';
+import { MatchData } from '../../types/MatchData';
+import Badge from '../common/Badge';
+
 interface ReviewSectionProps {
+  id: number;
+  matchData: MatchData;
+  title: string;
   review: string;
   result: { homeTeam: number; awayTeam: number };
-  isExpanded: boolean;
-  onToggleExpand: () => void;
 }
 
-const ReviewSection: React.FC<ReviewSectionProps> = ({
+const ReviewSection = ({
+  matchData,
   review,
   result,
-  isExpanded,
+  id,
+  title,
+}: ReviewSectionProps) => {
+  const { id: isDetail } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const handleMoreClick = () => {
+    navigate(`/archive/${id}`);
+  };
 
-  onToggleExpand,
-}) => (
-  <div className="w-full">
-    <div className="flex flex-row justify-between">
-      <p className="text-lg">
-        {result.homeTeam}:{result.awayTeam}
-      </p>
-      {/* <p className="text-sm text-gray-400">{scheduleId}</p> */}
+  return (
+    <div className="w-full">
+      <div className="flex flex-row justify-between">
+        <p className="flex items-center text-lg">
+          <Badge scheme={matchData.homeTeam} />
+          <span className="mx-4 font-semibold">
+            {result.homeTeam} : {result.awayTeam}
+          </span>
+          <Badge scheme={matchData.awayTeam} />
+        </p>
+      </div>
+      <div className="mt-4 flex flex-col">
+        <p className="">{title}</p>
+      </div>
+      <div>
+        {!isDetail && (
+          <>
+            <p className="mt-4 truncate">{review}</p>
+            <button className="text-gray-400" onClick={handleMoreClick}>
+              ...더보기
+            </button>
+          </>
+        )}
+      </div>
     </div>
-
-    <p
-      className={`text-gray-500 ${isExpanded ? 'line-clamp-none' : 'line-clamp-1'}`}
-    >
-      {review}
-    </p>
-    <button onClick={onToggleExpand} className="mt-5 text-sm text-gray-500">
-      {isExpanded ? '' : '더 보기'}
-    </button>
-  </div>
-);
+  );
+};
 export default ReviewSection;

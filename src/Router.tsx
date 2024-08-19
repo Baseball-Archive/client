@@ -1,31 +1,21 @@
+import React, { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './components/layout/Layout';
-import Archives from './pages/Archive/Archives';
-import AddArchive from './pages/Archive/AddArchive';
-import Community from './pages/Community/Community';
-import CommunityDetail from './pages/Community/CommunityDetail';
-import League from './pages/League/League';
-import Schedule from './pages/League/Schedule';
-import Standings from './pages/League/Standings';
-import User from './pages/User/User';
-import Login from './pages/User/Login';
-import Signup from './pages/User/Signup';
-import ResetPW from './components/common/ResetPW';
-// import KakaoCallback from './components/kakao/kakaoCallback';
+import { ROUTES } from './constant/route';
+import Loading from './components/common/Loading';
 
-export const ROUTES = {
-  HOME: '/',
-  ADD_ARCHIVE: '/addarchive',
-  POSTS: '/posts',
-  POST_DETAIL: '/posts/:id',
-  LEAGUE: '/league',
-  SCHEDULE: 'schedule',
-  STANDINGS: 'standings',
-  LOGIN: '/users/login',
-  JOIN: '/users/join',
-  USER: '/users/user',
-  RESET: '/users/reset',
-};
+const Archives = lazy(() => import('./pages/Archive/Archives'));
+const AddArchive = lazy(() => import('./pages/Archive/AddArchive'));
+const Community = lazy(() => import('./pages/Community/Community'));
+const CommunityDetail = lazy(() => import('./pages/Community/CommunityDetail'));
+const League = lazy(() => import('./pages/League/League'));
+const Schedule = lazy(() => import('./pages/League/Schedule'));
+const Standings = lazy(() => import('./pages/League/Standings'));
+const User = lazy(() => import('./pages/User/User'));
+const Login = lazy(() => import('./pages/User/Login'));
+const Signup = lazy(() => import('./pages/User/Signup'));
+const ResetPW = lazy(() => import('./components/common/ResetPW'));
+const ArchiveDetail = lazy(() => import('./pages/Archive/ArchiveDetail'));
 
 const router = createBrowserRouter([
   {
@@ -34,50 +24,101 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Archives />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Archives />
+          </Suspense>
+        ),
       },
       {
         path: ROUTES.ADD_ARCHIVE,
-        element: <AddArchive />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <AddArchive />
+          </Suspense>
+        ),
+      },
+      {
+        path: ROUTES.ARCHIVE_DETAIL,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ArchiveDetail />
+          </Suspense>
+        ),
       },
       {
         path: ROUTES.POSTS,
-        element: <Community />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Community />
+          </Suspense>
+        ),
       },
       {
         path: ROUTES.POST_DETAIL,
-
-        element: <CommunityDetail />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CommunityDetail />
+          </Suspense>
+        ),
       },
       {
         path: ROUTES.LEAGUE,
-        element: <League />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <League />
+          </Suspense>
+        ),
         children: [
           {
             path: ROUTES.SCHEDULE,
-            element: <Schedule />,
+            element: (
+              <Suspense fallback={<Loading />}>
+                <Schedule />
+              </Suspense>
+            ),
           },
           {
             path: ROUTES.STANDINGS,
-            element: <Standings />,
+            element: (
+              <Suspense fallback={<Loading />}>
+                <Standings />
+              </Suspense>
+            ),
           },
         ],
       },
       {
         path: ROUTES.LOGIN,
-        element: <Login />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Login />
+          </Suspense>
+        ),
       },
       {
         path: ROUTES.JOIN,
-        element: <Signup />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Signup />
+          </Suspense>
+        ),
       },
       {
         path: ROUTES.USER,
-        element: <User />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <User />
+          </Suspense>
+        ),
       },
       {
         path: ROUTES.RESET,
-        element: <ResetPW />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ResetPW />
+          </Suspense>
+        ),
       },
     ],
   },

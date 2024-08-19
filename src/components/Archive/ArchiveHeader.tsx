@@ -1,3 +1,4 @@
+import { MatchData } from '../../types/MatchData';
 import { Weather } from '../../types/Weather';
 import ArchiveHandleButton from '../common/PostHandleButton';
 import { LockClosedIcon } from '@heroicons/react/20/solid';
@@ -6,7 +7,7 @@ interface ArchiveHeaderProps {
   userId: string;
   weather: Weather;
   profileImage: string;
-  scheduleId: string;
+  matchData: MatchData;
 }
 
 const WeatherEmojis = {
@@ -19,20 +20,20 @@ const ArchiveHeader: React.FC<ArchiveHeaderProps> = ({
   userId,
   weather,
   profileImage,
-  scheduleId,
+  matchData,
 }) => {
   const handleDelete = () => {
-    if (window.confirm('삭제 하시겠습니까?')) {
+    if (confirm('삭제 하시겠습니까?')) {
       alert('삭제 되었습니다.');
     }
   };
   const handleEdit = () => {
-    if (window.confirm('수정 하시겠습니까?')) {
+    if (confirm('수정 하시겠습니까?')) {
       alert('수정 되었습니다.');
     }
   };
 
-  const isPublic = false;
+  const isPublic = false; // 임시값 설정
   return (
     <div className="mb-5 flex items-center justify-between">
       <div className="flex">
@@ -46,20 +47,11 @@ const ArchiveHeader: React.FC<ArchiveHeaderProps> = ({
               {userId} ·
             </div>
             <div className="flex items-center text-xs text-gray-400">
-              {' '}
-              {scheduleId}
-            </div>
-            <div className="flex flex-row items-center gap-2">
-              {!isPublic && (
-                <>
-                  <span className="text-lg">·</span>
-                  <LockClosedIcon className="size-5" />
-                </>
-              )}
+              {matchData.matchDate}
             </div>
           </div>
           <div className="flex-row">
-            <span className="text-sm text-black">한화생명이글스파크</span>
+            <span className="text-sm text-black">{matchData.stadium}</span>
             <span> {weather && WeatherEmojis[weather]}</span>
           </div>
         </div>

@@ -5,9 +5,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 interface PickDateProps {
   selectedDate: Date | null;
-  setSelectedDate: (date: Date | null) => void;
+  handleDate: (date: Date | null) => void;
 }
-
 interface ShowInputDateProps {
   value?: string;
   onClick?: () => void;
@@ -23,12 +22,13 @@ const ShowInputDate = forwardRef<HTMLDivElement, ShowInputDateProps>(
   ),
 );
 
-const PickDate = ({ selectedDate, setSelectedDate }: PickDateProps) => {
+const PickDate = ({ selectedDate, handleDate }: PickDateProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <div className="relative flex w-full items-center">
       <DatePicker
+        showPopperArrow={false}
         className="w-full"
         wrapperClassName="w-full"
         dateFormat="yyy/MM/dd"
@@ -36,11 +36,12 @@ const PickDate = ({ selectedDate, setSelectedDate }: PickDateProps) => {
         minDate={new Date('2000-01-01')}
         maxDate={new Date()}
         selected={selectedDate}
-        onChange={(date: Date | null) => setSelectedDate(date)}
+        onChange={handleDate}
         open={isOpen}
         onCalendarOpen={() => setIsOpen(true)}
         onCalendarClose={() => setIsOpen(false)}
         customInput={<ShowInputDate />}
+        popperPlacement="bottom-end"
       />
     </div>
   );

@@ -6,40 +6,34 @@ import { MatchData } from '../../../types/MatchData';
 interface PickScoreProps {
   homeScore: number;
   awayScore: number;
-  setHomeScore: (score: number) => void;
-  setAwayScore: (score: number) => void;
+  handleHomeScore: (score: number) => void;
+  handleAwayScore: (score: number) => void;
   selectedMatch: MatchData | null;
 }
 
 const PickScore = ({
   homeScore,
   awayScore,
-  setHomeScore,
-  setAwayScore,
+  handleHomeScore,
+  handleAwayScore,
   selectedMatch,
 }: PickScoreProps) => {
-  const handleHomeScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHomeScore(Number(e.target.value));
-  };
-  const handleAwayScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAwayScore(Number(e.target.value));
-  };
-  const incrementScore = (
-    setter: (score: number) => void,
-    score: number,
-    max: number,
-  ) => {
-    if (score < max) {
-      setter(score + 1);
+  const incrementScore = (isHome: boolean, score: number) => {
+    if (score < 30) {
+      if (isHome === true) {
+        handleHomeScore(score + 1);
+      } else {
+        handleAwayScore(score + 1);
+      }
     }
   };
-  const decrementScore = (
-    setter: (score: number) => void,
-    score: number,
-    min: number,
-  ) => {
-    if (score > min) {
-      setter(score - 1);
+  const decrementScore = (isHome: boolean, score: number) => {
+    if (score > 30) {
+      if (isHome === true) {
+        handleHomeScore(score - 1);
+      } else {
+        handleAwayScore(score - 1);
+      }
     }
   };
 
@@ -52,47 +46,33 @@ const PickScore = ({
             <input
               id="homeScore"
               value={homeScore}
-              onChange={handleHomeScoreChange}
               className="flex w-12 text-center text-lg outline-none"
-              min={0}
-              max={30}
               readOnly
             />
             <div className="flex flex-col rounded-2xl border text-gray-400">
-              <button
-                onClick={() => incrementScore(setHomeScore, homeScore, 30)}
-              >
+              <button onClick={() => incrementScore(true, homeScore)}>
                 <PlusCircleIcon className="size-4" />
               </button>
-              <button
-                onClick={() => decrementScore(setHomeScore, homeScore, 0)}
-              >
+              <button onClick={() => decrementScore(true, homeScore)}>
                 <MinusCircleIcon className="size-4" />
               </button>
             </div>
           </div>
-
+          <span className="self-center font-bold">:</span>
           <div className="flex items-center">
             <Badge scheme={selectedMatch.awayTeam} />
 
             <input
               id="awayScore"
               value={awayScore}
-              onChange={handleAwayScoreChange}
               className="flex w-12 text-center text-lg outline-none"
-              min={0}
-              max={30}
               readOnly
             />
             <div className="flex flex-col rounded-2xl border text-gray-400">
-              <button
-                onClick={() => incrementScore(setAwayScore, awayScore, 30)}
-              >
+              <button onClick={() => incrementScore(false, awayScore)}>
                 <PlusCircleIcon className="size-4" />
               </button>
-              <button
-                onClick={() => decrementScore(setAwayScore, awayScore, 0)}
-              >
+              <button onClick={() => decrementScore(false, awayScore)}>
                 <MinusCircleIcon className="size-4" />
               </button>
             </div>
