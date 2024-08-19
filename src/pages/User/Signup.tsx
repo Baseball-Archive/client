@@ -2,18 +2,14 @@ import { useForm } from 'react-hook-form';
 import InputText from '../../components/common/InputText';
 import { Link, useNavigate } from 'react-router-dom';
 import { LoginProps } from './Login';
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  updateProfile,
-} from 'firebase/auth';
-import { ref, set } from 'firebase/database';
-
-import firebaseApp, { db } from '../../service/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../service/firebase';
 import { useAuth } from '../../hooks/useAuth';
 import { useState } from 'react';
 import Badge from '../../components/common/Badge';
 import { TeamScheme } from '../../types/TeamScheme';
+import GoogleButton from '../../components/User/GoogleButton';
+import GithubButton from '../../components/User/GithubButton';
 
 interface OptionsProps {
   value: string;
@@ -39,7 +35,6 @@ export interface SignupProps extends LoginProps {
 }
 
 const Signup = () => {
-  const auth = getAuth(firebaseApp);
   const { userSignup } = useAuth();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -51,11 +46,7 @@ const Signup = () => {
     watch,
     trigger,
     formState: { errors },
-  } = useForm<SignupProps>({
-    defaultValues: {
-      nickname: '',
-    },
-  });
+  } = useForm<SignupProps>();
 
   const onSubmit = async (data: SignupProps) => {
     try {
@@ -66,18 +57,15 @@ const Signup = () => {
       );
 
       if (auth.currentUser) {
-        await updateProfile(auth.currentUser, {
-          displayName: data.nickname || '',
-          photoURL:
-            'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png',
-        });
-
-        await set(ref(db, `users/${createdUser.user.uid}`), {
+        const userData = {
+          uid: auth.currentUser.uid,
           nickname: data.nickname || '',
-          image: auth.currentUser.photoURL,
+          image:
+            'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png',
           team: team,
-        });
-        userSignup(data);
+        };
+
+        userSignup(userData);
 
         navigate('/users/login');
       }
@@ -111,15 +99,21 @@ const Signup = () => {
         </div>
         <div className="pt-6 text-center font-title font-light">
           SNS 계정으로 간편하게 로그인
+          <div className="flex pb-3 text-center">
+            <div className="px-5">
+              <GoogleButton />
+            </div>
+            <div className="px-5">
+              <GithubButton />
+            </div>
+          </div>
         </div>
-        <div className="flex pb-5 text-center">
-          <div className="flex-1">구글</div>
-          <div className="flex-1">애플</div>
-          <div className="flex-1">페이스북</div>
-        </div>
-        <form className="border-t-4 pt-5" onSubmit={handleSubmit(onSubmit)}>
-          <fieldset className="p-3">
-            <p>
+        <form
+          className="border-t-4 pt-5 text-center"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <fieldset className="flex flex-col items-center p-3">
+            <p className="w-80 text-left">
               이메일<span className="text-blue-600">*</span>
             </p>
             <InputText
@@ -135,8 +129,8 @@ const Signup = () => {
               <p className="error-text">이메일을 입력해주세요.</p>
             )}
           </fieldset>
-          <fieldset className="p-3">
-            <p>
+          <fieldset className="flex flex-col items-center p-3">
+            <p className="w-80 text-left">
               비밀번호<span className="text-blue-600">*</span>
             </p>
             <InputText
@@ -152,8 +146,8 @@ const Signup = () => {
               <p className="error-text">비밀번호을 입력해주세요.</p>
             )}
           </fieldset>
-          <fieldset className="p-3">
-            <p>
+          <fieldset className="flex flex-col items-center p-3">
+            <p className="w-80 text-left">
               비밀번호 확인<span className="text-blue-600">*</span>
             </p>
             <InputText
@@ -172,8 +166,8 @@ const Signup = () => {
               <p className="error-text">비밀번호 확인을 입력해주세요.</p>
             )}
           </fieldset>
-          <fieldset className="p-3">
-            <p>닉네임</p>
+          <fieldset className="flex flex-col items-center p-3">
+            <p className="w-80 text-left">닉네임</p>
             <InputText
               placeholder="닉네임"
               inputType="nickname"
@@ -182,10 +176,10 @@ const Signup = () => {
               {...register('nickname')}
             />
           </fieldset>
-          <fieldset className="flex flex-col text-center">
+          <fieldset className="flex flex-col items-center">
             <div
               onClick={handleValidate}
-              className="h-16 place-content-center rounded-lg bg-black text-2xl not-italic text-white"
+              className="h-16 w-80 place-content-center rounded-lg bg-black text-2xl not-italic text-white"
             >
               회원가입
             </div>
@@ -196,6 +190,7 @@ const Signup = () => {
               <Link to={'/users/login'}>로그인</Link>
             </span>
           </fieldset>
+
           {isOpen && (
             <div className="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
               <div className="flex w-80 flex-col items-center rounded-lg bg-white p-5">
@@ -212,22 +207,19 @@ const Signup = () => {
                     <div
                       key={item.value}
                       onClick={() => setTeam(item.value)}
-                      className={`cursor-pointer rounded-lg text-center`}
+                      className="cursor-pointer rounded-lg text-center"
                     >
                       <Badge scheme={item.value as TeamScheme} />
                     </div>
                   ))}
                 </div>
-                <button
-                  type="submit"
-                  className="h-12 w-40 shrink-0 rounded-lg bg-black text-white"
+                <div
                   onClick={handleTeamSubmit}
+                  className="h-12 w-40 shrink-0 rounded-lg bg-black text-center text-white"
                 >
                   선택완료
-                </button>
-                <button type="submit" onClick={handleTeamSubmit}>
-                  다음에 하기
-                </button>
+                </div>
+                <div onClick={handleTeamSubmit}>다음에 하기</div>
               </div>
             </div>
           )}
