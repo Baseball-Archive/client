@@ -1,4 +1,5 @@
 import { MatchData } from './MatchData';
+import { TeamScheme } from './TeamScheme';
 import { Weather } from './Weather';
 
 export interface Archive {
@@ -14,4 +15,5 @@ export interface Archive {
   review: string;
   photo: string;
   isPublic: boolean;
+  myTeam?: TeamScheme;
 }

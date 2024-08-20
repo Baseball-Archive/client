@@ -1,4 +1,4 @@
-import Archive from '../../components/Archive/Archive';
+import ArchiveContent from '../../components/Archive/ArchiveDetail/ArchiveContent';
 import LikeButton from '../../components/common/LikeButton';
 import AddComment from '../../components/Community/Comment/AddComment';
 import Comment from '../../components/Community/Comment/Comment';
@@ -8,10 +8,7 @@ import { dummyComment } from './dummyComment';
 const ArchiveDetail = () => {
   return (
     <div className="container relative mb-32 px-2 pt-7">
-      <Archive data={dummyData} />
-      <pre className="w-full whitespace-pre-wrap font-title text-sm">
-        {dummyData.review}
-      </pre>
+      <ArchiveContent ArchiveContent={dummyData} />
       <div className="mt-8 border-t-2">
         {dummyComment.map((comment) => (
           <Comment key={comment.id} comment={comment} />

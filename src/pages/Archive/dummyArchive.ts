@@ -17,4 +17,5 @@ export const dummyData: Archive = {
   },
   result: { homeTeam: 7, awayTeam: 5 },
   isPublic: false,
+  myTeam: 'hanhwa',
 };
