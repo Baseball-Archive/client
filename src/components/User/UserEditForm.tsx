@@ -1,32 +1,23 @@
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Select, {
   OptionProps,
   components,
   SingleValueProps,
   StylesConfig,
 } from 'react-select';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+
 import InputText from '../../components/common/InputText';
 import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
 
-// 공통 type으로 수정 예정
-type TeamScheme =
-  | 'kia'
-  | 'samsung'
-  | 'lg'
-  | 'doosan'
-  | 'ssg'
-  | 'kt'
-  | 'nc'
-  | 'hanhwa'
-  | 'lotte'
-  | 'kiwoom';
+import { TeamScheme } from '../Community/Post';
+import { BASEBALL_TEAMS } from '../../constants/baseballTeams';
 
 interface Props {
   nickname: string;
   team: string;
 }
-interface OptionsProps {
+export interface OptionsProps {
   value: string;
   label: string;
 }
@@ -34,19 +25,6 @@ interface Form {
   nickname: string | null;
   team: OptionsProps | null;
 }
-
-const BASEBALL_TEAMS: OptionsProps[] = [
-  { value: 'kia', label: '기아' },
-  { value: 'samsung', label: '삼성' },
-  { value: 'lg', label: 'LG' },
-  { value: 'doosan', label: '두산' },
-  { value: 'ssg', label: 'SSG' },
-  { value: 'kt', label: 'KT' },
-  { value: 'nc', label: 'NC' },
-  { value: 'hanhwa', label: '한화' },
-  { value: 'lotte', label: '롯데' },
-  { value: 'kiwoom', label: '키움' },
-];
 
 const Option = (props: OptionProps<OptionsProps>) => {
   return (

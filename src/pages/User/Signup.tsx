@@ -1,32 +1,20 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import InputText from '../../components/common/InputText';
 import { Link, useNavigate } from 'react-router-dom';
-import { LoginProps } from './Login';
+
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../service/firebase';
+
 import { useAuth } from '../../hooks/useAuth';
-import { useState } from 'react';
+
+import InputText from '../../components/common/InputText';
 import Badge from '../../components/common/Badge';
-import { TeamScheme } from '../../types/TeamScheme';
 import GoogleButton from '../../components/User/GoogleButton';
 import GithubButton from '../../components/User/GithubButton';
 
-interface OptionsProps {
-  value: string;
-  label: string;
-}
-const BASEBALL_TEAMS: OptionsProps[] = [
-  { value: 'kia', label: '기아' },
-  { value: 'samsung', label: '삼성' },
-  { value: 'lg', label: 'LG' },
-  { value: 'doosan', label: '두산' },
-  { value: 'ssg', label: 'SSG' },
-  { value: 'kt', label: 'KT' },
-  { value: 'nc', label: 'NC' },
-  { value: 'hanhwa', label: '한화' },
-  { value: 'lotte', label: '롯데' },
-  { value: 'kiwoom', label: '키움' },
-];
+import { LoginProps } from './Login';
+import { TeamScheme } from '../../types/TeamScheme';
+import { BASEBALL_TEAMS } from '../../constants/baseballTeams';
 
 export interface SignupProps extends LoginProps {
   passwordConfirm: string;
