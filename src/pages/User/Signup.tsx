@@ -1,19 +1,19 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import InputText from '../../components/common/InputText';
 import { Link, useNavigate } from 'react-router-dom';
 import { LoginProps } from './Login';
 import { AuthErrorCodes, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../service/firebase';
 import { useAuth } from '../../hooks/useAuth';
-import { useState } from 'react';
+import InputText from '../../components/common/InputText';
 import Badge from '../../components/common/Badge';
-import { TeamScheme } from '../../types/TeamScheme';
 import GoogleButton from '../../components/User/GoogleButton';
 import GithubButton from '../../components/User/GithubButton';
 import ROUTES from '../../constants/router';
 import DEFAULT_IMAGE from '../../constants/image';
 import { FirebaseError } from 'firebase/app';
 import { toast } from 'react-toastify';
+import { TeamScheme } from '../../types/TeamScheme';
 
 interface OptionsProps {
   key: number;
