@@ -35,7 +35,7 @@ const ArchiveHeader: React.FC<ArchiveHeaderProps> = ({
 
   const isPublic = false; // 임시값 설정
   return (
-    <div className="mb-5 flex items-center justify-between">
+    <div className="mb-5 flex justify-between">
       <div className="flex">
         <img
           src={profileImage}
@@ -56,6 +56,7 @@ const ArchiveHeader: React.FC<ArchiveHeaderProps> = ({
           </div>
         </div>
       </div>
+
       <ArchiveHandleButton onEdit={handleEdit} onDelete={handleDelete} />
     </div>
   );

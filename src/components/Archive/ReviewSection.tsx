@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { MatchData } from '../../types/MatchData';
 import Badge from '../common/Badge';
+import { useState } from 'react';
 
 interface ReviewSectionProps {
   id: number;
@@ -8,6 +9,7 @@ interface ReviewSectionProps {
   title: string;
   review: string;
   result: { homeTeam: number; awayTeam: number };
+  isCommunityArchives?: boolean;
 }
 
 const ReviewSection = ({
@@ -16,11 +18,16 @@ const ReviewSection = ({
   result,
   id,
   title,
+  isCommunityArchives,
 }: ReviewSectionProps) => {
-  const { id: isDetail } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const handleMoreClick = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleCommunityMoreButton = () => {
     navigate(`/archive/${id}`);
+  };
+  const handlePrivateMoreButton = () => {
+    setIsExpanded((prev) => !prev);
   };
 
   return (
@@ -34,19 +41,23 @@ const ReviewSection = ({
           <Badge scheme={matchData.awayTeam} />
         </p>
       </div>
-      <div className="mt-4 flex flex-col">
-        <p className="">{title}</p>
+      <div className="my-4 flex flex-col">
+        <p className="font-medium">{title}</p>
       </div>
-      <div>
-        {!isDetail && (
-          <>
-            <p className="mt-4 truncate">{review}</p>
-            <button className="text-gray-400" onClick={handleMoreClick}>
-              ...더보기
-            </button>
-          </>
-        )}
-      </div>
+      {isExpanded ? (
+        <pre className="whitespace-pre-wrap font-title text-sm">{review}</pre>
+      ) : (
+        <button
+          className="text-gray-400"
+          onClick={
+            isCommunityArchives
+              ? () => handleCommunityMoreButton()
+              : () => handlePrivateMoreButton()
+          }
+        >
+          ...더보기
+        </button>
+      )}
     </div>
   );
 };

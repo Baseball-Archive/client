@@ -1,27 +1,9 @@
 import Archive from '../../components/Archive/Archive';
+import LikeButton from '../../components/common/LikeButton';
 import AddComment from '../../components/Community/Comment/AddComment';
 import Comment from '../../components/Community/Comment/Comment';
-import { ArchiveInfo } from '../../types/Archive';
+import { dummyData } from './dummyArchive';
 import { dummyComment } from './dummyComment';
-
-const dummyData: ArchiveInfo = {
-  id: 1,
-  title: '제목 요약ㅇㅇㅇㅇㅇ 관련된 내용',
-  photo:
-    'https://firebasestorage.googleapis.com/v0/b/hotsix-blog-5f9b1.appspot.com/o/image%2F1723386154075?alt=media&token=04777f33-ef7b-4c50-bb0c-b748c2f6b8cf',
-  weather: 'cloud',
-  review:
-    '한화 연승?       한화연승!!!!    한화연승!     한화연승!    한화연승!    한화연승! \n     한화연승!    한화연승! \n     한화연승!    한화연승!    한화연승!    한화연승!    한화연승!\n',
-  userId: 'baseball.lover',
-  matchData: {
-    homeTeam: 'hanhwa',
-    awayTeam: 'nc',
-    matchDate: '2023-08-01',
-    stadium: '광주기아챔피언스필드',
-  },
-  result: { homeTeam: 7, awayTeam: 5 },
-  isPublic: false,
-};
 
 const ArchiveDetail = () => {
   return (
@@ -36,6 +18,7 @@ const ArchiveDetail = () => {
         ))}
         <AddComment />
       </div>
+      <LikeButton onClick={() => console.log('test')} isLiked={true} />
     </div>
   );
 };

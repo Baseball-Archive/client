@@ -3,6 +3,9 @@ import Badge from '../../common/Badge';
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 import { MatchData } from '../../../types/MatchData';
 
+const MIN_SCORE = 0;
+const MAX_SCORE = 30;
+
 interface PickScoreProps {
   homeScore: number;
   awayScore: number;
@@ -19,7 +22,7 @@ const PickScore = ({
   selectedMatch,
 }: PickScoreProps) => {
   const incrementScore = (isHome: boolean, score: number) => {
-    if (score < 30) {
+    if (score < MAX_SCORE) {
       if (isHome === true) {
         handleHomeScore(score + 1);
       } else {
@@ -28,7 +31,7 @@ const PickScore = ({
     }
   };
   const decrementScore = (isHome: boolean, score: number) => {
-    if (score > 30) {
+    if (score > MIN_SCORE) {
       if (isHome === true) {
         handleHomeScore(score - 1);
       } else {

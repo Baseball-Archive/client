@@ -5,10 +5,10 @@ import type { Archive } from '../../types/Archive';
 
 interface ArchiveProps {
   data: Archive;
+  isCommunityArchives?: boolean;
 }
 
-const Archive = ({ data }: ArchiveProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
   const {
     id,
     userId,
@@ -37,6 +37,7 @@ const Archive = ({ data }: ArchiveProps) => {
             title={title}
             review={review}
             result={result}
+            isCommunityArchives={isCommunityArchives}
           />
         </div>
       </div>
