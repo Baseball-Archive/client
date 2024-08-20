@@ -1,28 +1,27 @@
+import { UserProps } from '../hooks/useAuth';
 import { LoginProps } from '../pages/User/Login';
-import { SignupProps } from '../pages/User/Signup';
 import { httpClient } from './http';
 
-export const join = async (userData: SignupProps) => {
+export const join = async (userData: UserProps) => {
   try {
-    const response = await httpClient.post(`/users/join`, userData);
-    console.log(httpClient);
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${userData.uid}`,
+    };
+    const body = {
+      nickname: userData.nickname,
+      image: userData.image,
+      team: userData.team,
+    };
+    const response = await httpClient.post(`/users/join`, body, {
+      headers,
+    });
+    console.log('Signup successful: ', response);
 
     return response.data;
   } catch (err) {
     console.error('Signup failed: ' + err);
   }
-};
-
-export const resetRequest = async (data: SignupProps) => {
-  const response = await httpClient.post('/users/reset', data);
-
-  return response.data;
-};
-
-export const resetPassword = async (data: SignupProps) => {
-  const response = await httpClient.put('/users/reset', data);
-
-  return response.data;
 };
 
 interface LoginResponse {

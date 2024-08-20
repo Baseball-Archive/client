@@ -1,9 +1,14 @@
 import { LoginProps } from '../pages/User/Login';
 import { useAuthStore } from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
-import { login, resetPassword, resetRequest, join } from '../apis/auth';
-import { SignupProps } from '../pages/User/Signup';
-import { useEffect, useState } from 'react';
+import { login, join } from '../apis/auth';
+
+export interface UserProps {
+  uid: string;
+  nickname: string;
+  image: string;
+  team: string;
+}
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -21,45 +26,20 @@ export const useAuth = () => {
     );
   };
 
-  const userSignup = (data: SignupProps) => {
-    join(data).then(
-      (res) => {
+  const userSignup = async (data: UserProps) => {
+    join(data)
+      .then((res) => {
+        // 성공적으로 가입 후 처리할 로직
+        console.log('useAuth join(data): ', join(data));
         navigate('/users/login');
-      },
-      (error) => {
+      })
+      .catch((error) => {
         console.error('Signup failed:', error);
-      },
-    );
-  };
-
-  const userResetPassword = (data: SignupProps) => {
-    resetPassword(data).then(
-      () => {
-        navigate('/users/login');
-      },
-      (error) => {
-        console.error('Password reset failed:', error);
-      },
-    );
-  };
-
-  const [resetRequested, setResetRequested] = useState(false);
-  const userResetRequest = (data: SignupProps) => {
-    resetRequest(data).then(
-      () => {
-        setResetRequested(true);
-      },
-      (error) => {
-        console.error('Reset request failed:', error);
-      },
-    );
+      });
   };
 
   return {
     userLogin,
     userSignup,
-    userResetPassword,
-    userResetRequest,
-    resetRequested,
   };
 };

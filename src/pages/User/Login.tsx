@@ -2,8 +2,10 @@ import { useForm } from 'react-hook-form';
 import InputText from '../../components/common/InputText';
 import Button from '../../components/common/Button';
 import { Link, useNavigate } from 'react-router-dom';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import firebaseApp from '../../service/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import firebaseApp, { auth } from '../../service/firebase';
+import GithubButton from '../../components/User/GithubButton';
+import GoogleButton from '../../components/User/GoogleButton';
 
 // import KakaoLogin from '../../components/kakao/KakaoLogin';
 export interface LoginProps {
@@ -12,7 +14,6 @@ export interface LoginProps {
 }
 
 const Login = () => {
-  const auth = getAuth(firebaseApp);
   const navigate = useNavigate();
   const {
     register,
@@ -36,8 +37,11 @@ const Login = () => {
       <div className="mx-auto my-0 max-w-screen-md">
         <div className="py-10 text-center font-logo text-3xl">야구볼램</div>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <fieldset className="p-3">
+        <form
+          className="flex flex-col items-center p-5 text-center"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <fieldset className="py-2">
             <InputText
               placeholder="이메일"
               inputType="email"
@@ -51,7 +55,7 @@ const Login = () => {
               <p className="error-text">이메일을 입력해주세요.</p>
             )}
           </fieldset>
-          <fieldset className="p-3">
+          <fieldset className="py-2">
             <InputText
               placeholder="비밀번호"
               inputType="password"
@@ -65,26 +69,25 @@ const Login = () => {
               <p className="error-text">비밀번호를 입력해주세요.</p>
             )}
           </fieldset>
-          <div className="flex flex-col items-center text-center">
-            {/* <button className='w-64 h-16 flex shrink-0 rounded bg-black text-white bg-center'> */}
+          <div className="flex flex-col items-center py-5 text-center">
             <Button size="large" scheme="primary">
               로그인
             </Button>
-            {/* </button> */}
-
-            <div className="pt-6">
-              <div className="flex gap-6">
-                <Link to="/users/reset">비밀번호 찾기 </Link>
-                <Link to="/users/join">회원가입</Link>
+          </div>
+          <div className="flex flex-col items-center text-center">
+            <div className="flex gap-6">
+              <Link to="/users/reset">비밀번호 찾기 </Link>
+              <Link to="/users/join">회원가입</Link>
+            </div>
+            <div className="pt-20 text-center font-title font-light">
+              SNS 계정으로 간편하게 로그인
+            </div>
+            <div className="flex justify-between pb-5 text-center">
+              <div className="px-5">
+                <GoogleButton />
               </div>
-              <div className="pt-20 text-center font-title font-light">
-                SNS 계정으로 간편하게 로그인
-              </div>
-              <div className="flex pb-5 text-center">
-                {/* <KakaoLogin /> */}
-
-                <div className="flex-1">애플</div>
-                <div className="flex-1">페이스북</div>
+              <div className="px-5">
+                <GithubButton />
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyDl48YcpOHWi2YT_0YBEE3mtBf96_kici0',
@@ -13,9 +13,10 @@ export const firebaseConfig = {
     'https://baseball-archive-default-rtdb.asia-southeast1.firebasedatabase.app/',
 };
 const firebaseApp = initializeApp(firebaseConfig);
-
-export const db = getDatabase(firebaseApp);
 export default firebaseApp;
+
+export const auth = getAuth(firebaseApp);
+
 // apiKey: import.meta.env.FIREBASE_API_KEY,
 // authDomain: import.meta.env.FIREBASE_AUTH_DOMAIN,
 // projectId: import.meta.env.FIREBASE_PROJECT_ID,

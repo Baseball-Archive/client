@@ -3,6 +3,7 @@ export const ROUTES = {
   ARCHIVE_DETAIL: '/archive/:id',
   ADD_ARCHIVE: '/archive/add',
   POSTS: '/posts',
+  ADD_POST: '/posts/add',
   POST_DETAIL: '/posts/:id',
   LEAGUE: '/league',
   SCHEDULE: 'schedule',

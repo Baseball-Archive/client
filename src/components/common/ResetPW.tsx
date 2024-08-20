@@ -1,9 +1,9 @@
-import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
+import { sendPasswordResetEmail } from 'firebase/auth';
 import InputText from './InputText';
+import { auth } from '../../service/firebase';
 
 const ResetPW = () => {
   const handlePasswordReset = () => {
-    const auth = getAuth();
     const user = auth.currentUser;
     try {
       if (user && user.email) {

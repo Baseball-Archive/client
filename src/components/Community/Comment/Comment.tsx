@@ -20,8 +20,8 @@ const Comment = ({ comment }: Props) => {
   };
 
   return (
-    <div className="flex justify-center overflow-hidden bg-white pt-4">
-      <div className="flex w-full">
+    <div className="ml-6 mr-6 flex justify-center overflow-hidden bg-white pt-4">
+      <div className="flex w-full max-w-lg">
         <div className="pr-2 pt-1">
           <div
             className="overflow-hidden rounded-full"
@@ -32,6 +32,7 @@ const Comment = ({ comment }: Props) => {
         </div>
         <div>
           <div className="text-sm font-bold">{nickname}</div>
+
           <div className="pb-1 pt-1 text-sm leading-none">{content}</div>
           <div className="flex flex-row items-center space-x-[4px] text-[12px] text-gray-400">
             <div className="">{comment_date}</div>

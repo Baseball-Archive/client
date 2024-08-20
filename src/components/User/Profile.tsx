@@ -1,8 +1,8 @@
 import { CameraIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
-import { getAuth, signOut } from 'firebase/auth';
-import firebaseApp from '../../service/firebase';
+import { signOut } from 'firebase/auth';
+import firebaseApp, { auth } from '../../service/firebase';
 
 export interface Props {
   profile: string;
@@ -10,11 +10,19 @@ export interface Props {
 }
 
 const Profile = ({ profile, email }: Props) => {
+  const navigate = useNavigate();
+
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log('UPLOAD', event.target.files);
+    // try {
+    //   if (auth.currentUser)
+    //     updateProfile(auth.currentUser, {
+    //       photoURL: `${event.target.files}`,
+    //     });
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
-  const navigate = useNavigate();
-  const auth = getAuth(firebaseApp);
 
   const onSignOut = async () => {
     try {

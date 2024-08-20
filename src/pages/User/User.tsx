@@ -2,11 +2,10 @@ import { Link } from 'react-router-dom';
 import Button from '../../components/common/Button';
 import Profile from '../../components/User/Profile';
 import UserEditForm from '../../components/User/UserEditForm';
-import { getAuth } from 'firebase/auth';
+import { auth } from '../../service/firebase';
 
 const User = () => {
   try {
-    const auth = getAuth();
     const user = auth.currentUser;
 
     if (user) {

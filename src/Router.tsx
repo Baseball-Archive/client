@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import { ROUTES } from './constant/route';
 import Loading from './components/common/Loading';
+import AddPost from './pages/Community/AddPost';
 
 const Archives = lazy(() => import('./pages/Archive/Archives'));
 const AddArchive = lazy(() => import('./pages/Archive/AddArchive'));
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
             <CommunityDetail />
           </Suspense>
         ),
+      },
+      {
+        path: ROUTES.ADD_POST,
+        element: <AddPost />,
       },
       {
         path: ROUTES.LEAGUE,
