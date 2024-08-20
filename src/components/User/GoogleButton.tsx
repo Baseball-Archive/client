@@ -1,12 +1,8 @@
-import {
-  signInWithPopup,
-  GoogleAuthProvider,
-  GithubAuthProvider,
-  linkWithCredential,
-} from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../../service/firebase';
 import { useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
+import ROUTES from '../../constants/router';
 
 const GoogleButton = () => {
   const navigate = useNavigate();
@@ -16,7 +12,7 @@ const GoogleButton = () => {
     try {
       await signInWithPopup(auth, provider);
 
-      navigate('/');
+      navigate(ROUTES.HOME);
     } catch (error) {
       console.error(error);
     }
