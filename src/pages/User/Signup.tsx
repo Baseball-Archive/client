@@ -10,7 +10,7 @@ import Badge from '../../components/common/Badge';
 import GoogleButton from '../../components/User/GoogleButton';
 import GithubButton from '../../components/User/GithubButton';
 import ROUTES from '../../constants/router';
-import DEFAULT_IMAGE from '../../constants/image';
+import { DEFAULT_IMAGE } from '../../constants/image';
 import { FirebaseError } from 'firebase/app';
 import { toast } from 'react-toastify';
 import { TeamScheme } from '../../types/TeamScheme';
