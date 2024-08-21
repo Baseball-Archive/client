@@ -18,6 +18,7 @@ interface Props {
   team: string;
 }
 export interface OptionsProps {
+  key: number;
   value: string;
   label: string;
 }
