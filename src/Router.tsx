@@ -1,7 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './components/layout/Layout';
-import { ROUTES } from './constant/route';
 import Loading from './components/common/Loading';
 import AddPost from './pages/Community/AddPost';
 import ROUTES from './constants/router';
@@ -18,7 +17,6 @@ const Login = lazy(() => import('./pages/User/Login'));
 const Signup = lazy(() => import('./pages/User/Signup'));
 const ResetPW = lazy(() => import('./components/common/ResetPW'));
 const ArchiveDetail = lazy(() => import('./pages/Archive/ArchiveDetail'));
-
 
 const router = createBrowserRouter([
   {
@@ -98,18 +96,18 @@ const router = createBrowserRouter([
       {
         path: ROUTES.LOGIN,
         element: (
-              <Suspense fallback={<Loading />}>
-                <Login/>
-              </Suspense>
-            ),
+          <Suspense fallback={<Loading />}>
+            <Login />
+          </Suspense>
+        ),
       },
       {
         path: ROUTES.JOIN,
         element: (
-              <Suspense fallback={<Loading />}>
-                <SignUp />
-              </Suspense>
-            ),
+          <Suspense fallback={<Loading />}>
+            <Signup />
+          </Suspense>
+        ),
       },
       {
         path: ROUTES.USER,
