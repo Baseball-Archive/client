@@ -1,45 +1,54 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import InputText from '../../components/common/InputText';
 import { Link, useNavigate } from 'react-router-dom';
 import { LoginProps } from './Login';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { AuthErrorCodes, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../service/firebase';
 import { useAuth } from '../../hooks/useAuth';
-import { useState } from 'react';
+import InputText from '../../components/common/InputText';
 import Badge from '../../components/common/Badge';
-import { TeamScheme } from '../../types/TeamScheme';
 import GoogleButton from '../../components/User/GoogleButton';
 import GithubButton from '../../components/User/GithubButton';
+import ROUTES from '../../constants/router';
+import DEFAULT_IMAGE from '../../constants/image';
+import { FirebaseError } from 'firebase/app';
+import { toast } from 'react-toastify';
+import { TeamScheme } from '../../types/TeamScheme';
 
 interface OptionsProps {
+  key: number;
   value: string;
   label: string;
 }
+export interface User {
+  nickname: string;
+  image: string;
+  team: number | null;
+}
+
 const BASEBALL_TEAMS: OptionsProps[] = [
-  { value: 'kia', label: '기아' },
-  { value: 'samsung', label: '삼성' },
-  { value: 'lg', label: 'LG' },
-  { value: 'doosan', label: '두산' },
-  { value: 'ssg', label: 'SSG' },
-  { value: 'kt', label: 'KT' },
-  { value: 'nc', label: 'NC' },
-  { value: 'hanhwa', label: '한화' },
-  { value: 'lotte', label: '롯데' },
-  { value: 'kiwoom', label: '키움' },
+  { key: 1, value: 'kia', label: '기아' },
+  { key: 2, value: 'samsung', label: '삼성' },
+  { key: 3, value: 'lg', label: 'LG' },
+  { key: 4, value: 'doosan', label: '두산' },
+  { key: 5, value: 'ssg', label: 'SSG' },
+  { key: 6, value: 'kt', label: 'KT' },
+  { key: 7, value: 'nc', label: 'NC' },
+  { key: 8, value: 'hanhwa', label: '한화' },
+  { key: 9, value: 'lotte', label: '롯데' },
+  { key: 10, value: 'kiwoom', label: '키움' },
 ];
 
 export interface SignupProps extends LoginProps {
   passwordConfirm: string;
-  nickname?: string;
-  team: string;
+  nickname: string;
 }
 
 const Signup = () => {
   const { userSignup } = useAuth();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const [team, setTeam] = useState('');
-
+  const [team, setTeam] = useState<number | null>(null);
   const {
     register,
     handleSubmit,
@@ -57,29 +66,46 @@ const Signup = () => {
       );
 
       if (auth.currentUser) {
-        const userData = {
-          uid: auth.currentUser.uid,
+        const userData: User = {
           nickname: data.nickname || '',
-          image:
-            'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png',
-          team: team,
+          image: DEFAULT_IMAGE,
+          team: team || null,
         };
-
         userSignup(userData);
-
-        navigate('/users/login');
+        navigate(ROUTES.LOGIN);
+        return userData;
       }
-    } catch (err) {
-      console.error('firebase Server failed:', err);
+    } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        switch (err.code) {
+          case AuthErrorCodes.INVALID_EMAIL:
+            toast.error('잘못된 이메일 형식입니다.');
+            break;
+          case AuthErrorCodes.EMAIL_EXISTS:
+            toast.error('이미 사용 중인 이메일입니다.');
+            break;
+          case AuthErrorCodes.WEAK_PASSWORD:
+            toast.error('비밀번호는 6글자 이상이어야 합니다.');
+            break;
+          case AuthErrorCodes.NETWORK_REQUEST_FAILED:
+            toast.error('네트워크 연결에 실패하였습니다.');
+            break;
+          case AuthErrorCodes.USER_DISABLED:
+            toast.error('해당 계정은 비활성화되었습니다.');
+            break;
+          default:
+            toast.error('회원가입에 실패했습니다.');
+            break;
+        }
+      } else {
+        toast.error('회원가입중 예기치 않은 오류가 발생했습니다.');
+      }
     }
   };
+
   const handleTeamSubmit = () => {
-    if (team) {
-      setIsOpen(false);
-      handleSubmit(onSubmit)();
-    } else {
-      alert('팀을 선택해주세요!');
-    }
+    setIsOpen(false);
+    handleSubmit(onSubmit)();
   };
 
   const handleValidate = async () => {
@@ -187,10 +213,9 @@ const Signup = () => {
               <p className="px-4 font-title font-light">
                 이미 아이디가 있으신가요?
               </p>
-              <Link to={'/users/login'}>로그인</Link>
+              <Link to={ROUTES.LOGIN}>로그인</Link>
             </span>
           </fieldset>
-
           {isOpen && (
             <div className="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
               <div className="flex w-80 flex-col items-center rounded-lg bg-white p-5">
@@ -202,12 +227,14 @@ const Signup = () => {
                     을<br /> 선택해주세요
                   </span>
                 </div>
-                <div className="grid grid-cols-4 gap-4 py-10">
+                <div className="grid grid-cols-4 gap-2 py-5">
                   {BASEBALL_TEAMS.map((item) => (
                     <div
-                      key={item.value}
-                      onClick={() => setTeam(item.value)}
-                      className="cursor-pointer rounded-lg text-center"
+                      key={item.key}
+                      onClick={() => {
+                        setTeam(item.key);
+                      }}
+                      className={`cursor-pointer rounded-lg text-center ${team === item.key ? 'border-8 bg-gray-600' : ''}`}
                     >
                       <Badge scheme={item.value as TeamScheme} />
                     </div>
@@ -215,7 +242,7 @@ const Signup = () => {
                 </div>
                 <div
                   onClick={handleTeamSubmit}
-                  className="h-12 w-40 shrink-0 rounded-lg bg-black text-center text-white"
+                  className="flex h-11 w-40 flex-col justify-center rounded-lg bg-black text-center align-middle text-white"
                 >
                   선택완료
                 </div>

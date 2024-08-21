@@ -1,27 +1,27 @@
-import { UserProps } from '../hooks/useAuth';
 import { LoginProps } from '../pages/User/Login';
+import ROUTES from '../constants/router';
 import { httpClient } from './http';
+import { auth } from '../service/firebase';
+import { User } from '../pages/User/Signup';
 
-export const join = async (userData: UserProps) => {
-  try {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${userData.uid}`,
-    };
-    const body = {
-      nickname: userData.nickname,
-      image: userData.image,
-      team: userData.team,
-    };
-    const response = await httpClient.post(`/users/join`, body, {
-      headers,
-    });
-    console.log('Signup successful: ', response);
+export const join = async (userData: User) => {
+  const { nickname, image, team } = userData;
 
-    return response.data;
-  } catch (err) {
-    console.error('Signup failed: ' + err);
-  }
+  const response = await httpClient.post(
+    ROUTES.JOIN,
+    {
+      nickname,
+      image,
+      team,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${await auth.currentUser?.getIdToken()}`,
+      },
+    },
+  );
+  return response.data;
 };
 
 interface LoginResponse {
@@ -29,7 +29,7 @@ interface LoginResponse {
 }
 
 export const login = async (data: LoginProps) => {
-  const response = await httpClient.post<LoginResponse>('/users/login', data);
+  const response = await httpClient.post<LoginResponse>(ROUTES.LOGIN, data);
 
   return response.data;
 };

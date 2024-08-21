@@ -2,13 +2,8 @@ import { LoginProps } from '../pages/User/Login';
 import { useAuthStore } from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
 import { login, join } from '../apis/auth';
-
-export interface UserProps {
-  uid: string;
-  nickname: string;
-  image: string;
-  team: string;
-}
+import ROUTES from '../constants/router';
+import { User } from '../pages/User/Signup';
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -18,7 +13,7 @@ export const useAuth = () => {
     login(data).then(
       (res) => {
         storeLogin(res.token);
-        navigate('/');
+        navigate(ROUTES.HOME);
       },
       (error) => {
         console.error('Login failed:', error);
@@ -26,12 +21,10 @@ export const useAuth = () => {
     );
   };
 
-  const userSignup = async (data: UserProps) => {
+  const userSignup = async (data: User) => {
     join(data)
       .then((res) => {
-        // 성공적으로 가입 후 처리할 로직
-        console.log('useAuth join(data): ', join(data));
-        navigate('/users/login');
+        navigate(ROUTES.LOGIN);
       })
       .catch((error) => {
         console.error('Signup failed:', error);

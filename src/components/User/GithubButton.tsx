@@ -2,6 +2,7 @@ import { GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../service/firebase';
 import { useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
+import ROUTES from '../../constants/router';
 
 const GithubButton = () => {
   const navigate = useNavigate();
@@ -10,7 +11,9 @@ const GithubButton = () => {
   const onClick = async () => {
     try {
       await signInWithPopup(auth, provider);
-      navigate('/');
+      console.log(auth.currentUser?.getIdToken());
+
+      navigate(ROUTES.HOME);
     } catch (error) {
       console.error(error);
     }
