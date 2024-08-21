@@ -10,6 +10,7 @@ import NavigationItem from './NavigationItem';
 import PostsMenu from './PostsMenu';
 import Logo from '/images/logo.png';
 import Icon from '/images/icon.png';
+import { ROUTES } from '../../constant/route';
 
 const ICON_SIZE = 'size-8';
 const LIST_STYLE = 'py-4';
@@ -40,7 +41,7 @@ const Navigation = () => {
           <li className={LIST_STYLE}>
             <NavigationItem
               title="홈"
-              link="/"
+              link={ROUTES.HOME}
               icon={<HomeIcon className={ICON_SIZE} />}
             />
           </li>
@@ -62,14 +63,14 @@ const Navigation = () => {
           <li className={LIST_STYLE}>
             <NavigationItem
               title="커뮤니티"
-              link="/posts"
+              link={ROUTES.POSTS}
               icon={<ChatBubbleOvalLeftEllipsisIcon className={ICON_SIZE} />}
             />
           </li>
           <li className={`hidden md:block ${LIST_STYLE}`}>
             <NavigationItem
               title="프로필"
-              link="/users/user"
+              link={ROUTES.USER}
               icon={<UserCircleIcon className={ICON_SIZE} />}
             />
           </li>

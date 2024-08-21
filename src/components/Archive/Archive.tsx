@@ -1,31 +1,43 @@
+import { useState } from 'react';
+import ReviewSection from './ReviewSection';
+import ArchiveHeader from './ArchiveHeader';
+import type { Archive } from '../../types/Archive';
 
-import { useState } from "react";
-import ReviewSection from "./ReviewSection";
-import ArchiveHeader from "./ArchiveHeader";
-import { ArchiveProps } from "../../types/ArchiveProps";
+interface ArchiveProps {
+  data: Archive;
+  isCommunityArchives?: boolean;
+}
 
-const Archive = (props: ArchiveProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
+const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
+  const {
+    id,
+    userId,
+    weather,
+    photo,
+    matchData,
+    review,
+    isPublic,
+    title,
+    result,
+  } = data;
   return (
     <div className="mb-6 flex justify-center overflow-hidden bg-white">
       <div className="w-full">
         <ArchiveHeader
-          userId={props.userId}
-          weather={props.weather}
-          profileImage={props.photo}
+          userId={userId}
+          weather={weather}
+          profileImage={photo}
+          matchData={matchData}
         />
         <div className="w-full flex-col items-center">
-          <img
-            src={props.photo}
-            className="mb-4 aspect-square w-full object-cover"
-          />
+          <img src={photo} className="mb-4 aspect-square w-full object-cover" />
           <ReviewSection
-            review={props.review}
-            result={props.result}
-            scheduleId={props.scheduleId}
-            isExpanded={isExpanded}
-            onToggleExpand={() => setIsExpanded((prev) => !prev)}
+            matchData={matchData}
+            id={id}
+            title={title}
+            review={review}
+            result={result}
+            isCommunityArchives={isCommunityArchives}
           />
         </div>
       </div>

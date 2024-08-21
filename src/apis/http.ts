@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { getToken, removeToken } from '../store/authStore';
 import ROUTES from '../constants/router';
 
+
 export const createClient = (config?: AxiosRequestConfig) => {
   const axiosInstance = axios.create({
     baseURL: import.meta.env.BASE_URL,

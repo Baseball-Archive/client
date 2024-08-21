@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { CheckCircleIcon, FaceSmileIcon } from "@heroicons/react/20/solid";
-interface PickIsPublicProps {
+import { useState } from 'react';
+import { CheckCircleIcon, FaceSmileIcon } from '@heroicons/react/20/solid';
+
+interface PublicPrivateToggleProps {
   isPublic: boolean | null;
-  setIsPublic: (option: boolean | null) => void;
+  handleOptionClick: (option: boolean | null) => void;
 }
 
-const PickIsPublic = ({ isPublic, setIsPublic }: PickIsPublicProps) => {
-  const handleOptionClick = (option: boolean) => {
-    setIsPublic(option);
-  };
-
+const PublicPrivateToggle = ({
+  isPublic,
+  handleOptionClick,
+}: PublicPrivateToggleProps) => {
   return (
     <div className="flex items-center space-x-4">
       <div
         className="flex cursor-pointer items-center"
         onClick={() => handleOptionClick(true)}
       >
-        {isPublic == true ? (
+        {isPublic === true ? (
           <CheckCircleIcon className="h-6 w-6 text-black" />
         ) : (
           <FaceSmileIcon className="h-6 w-6 text-gray-400" />
@@ -27,7 +27,7 @@ const PickIsPublic = ({ isPublic, setIsPublic }: PickIsPublicProps) => {
         className="flex cursor-pointer items-center"
         onClick={() => handleOptionClick(false)}
       >
-        {isPublic == false ? (
+        {isPublic === false ? (
           <CheckCircleIcon className="black h-6 w-6" />
         ) : (
           <FaceSmileIcon className="h-6 w-6 text-gray-400" />
@@ -38,4 +38,4 @@ const PickIsPublic = ({ isPublic, setIsPublic }: PickIsPublicProps) => {
   );
 };
 
-export default PickIsPublic;
+export default PublicPrivateToggle;

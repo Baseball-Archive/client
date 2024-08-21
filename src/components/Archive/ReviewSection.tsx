@@ -1,34 +1,64 @@
+import { useNavigate, useParams } from 'react-router-dom';
+import { MatchData } from '../../types/MatchData';
+import Badge from '../common/Badge';
+import { useState } from 'react';
+
 interface ReviewSectionProps {
+  id: number;
+  matchData: MatchData;
+  title: string;
   review: string;
   result: { homeTeam: number; awayTeam: number };
-  isExpanded: boolean;
-  scheduleId: string;
-  onToggleExpand: () => void;
+  isCommunityArchives?: boolean;
 }
 
-const ReviewSection: React.FC<ReviewSectionProps> = ({
+const ReviewSection = ({
+  matchData,
   review,
   result,
-  isExpanded,
-  scheduleId,
-  onToggleExpand,
-}) => (
-  <div className="w-full">
-    <div className="flex flex-row justify-between">
-      <p className="text-lg">
-        {result.homeTeam}:{result.awayTeam}
-      </p>
-      <p className="text-sm text-gray-400">{scheduleId}</p>
-    </div>
+  id,
+  title,
+  isCommunityArchives,
+}: ReviewSectionProps) => {
+  const navigate = useNavigate();
+  const [isExpanded, setIsExpanded] = useState(false);
 
-    <p
-      className={`text-gray-500 ${isExpanded ? "line-clamp-none" : "line-clamp-1"}`}
-    >
-      {review}
-    </p>
-    <button onClick={onToggleExpand} className="mt-5 text-sm text-gray-500">
-      {isExpanded ? "" : "더 보기"}
-    </button>
-  </div>
-);
+  const handleCommunityMoreButton = () => {
+    navigate(`/archive/${id}`);
+  };
+  const handlePrivateMoreButton = () => {
+    setIsExpanded((prev) => !prev);
+  };
+
+  return (
+    <div className="w-full">
+      <div className="flex flex-row justify-between">
+        <p className="flex items-center text-lg">
+          <Badge scheme={matchData.homeTeam} />
+          <span className="mx-4 font-semibold">
+            {result.homeTeam} : {result.awayTeam}
+          </span>
+          <Badge scheme={matchData.awayTeam} />
+        </p>
+      </div>
+      <div className="my-4 flex flex-col">
+        <p className="font-medium">{title}</p>
+      </div>
+      {isExpanded ? (
+        <pre className="whitespace-pre-wrap font-title text-sm">{review}</pre>
+      ) : (
+        <button
+          className="text-gray-400"
+          onClick={
+            isCommunityArchives
+              ? () => handleCommunityMoreButton()
+              : () => handlePrivateMoreButton()
+          }
+        >
+          ...더보기
+        </button>
+      )}
+    </div>
+  );
+};
 export default ReviewSection;
