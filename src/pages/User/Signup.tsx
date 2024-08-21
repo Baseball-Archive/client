@@ -22,8 +22,8 @@ interface OptionsProps {
 }
 export interface User {
   nickname: string;
-  image: string;
-  team: number | null;
+  profileImageUrl: string;
+  myTeam: number | null;
 }
 
 const BASEBALL_TEAMS: OptionsProps[] = [
@@ -68,8 +68,8 @@ const Signup = () => {
       if (auth.currentUser) {
         const userData: User = {
           nickname: data.nickname || '',
-          image: DEFAULT_IMAGE,
-          team: team || null,
+          profileImageUrl: DEFAULT_IMAGE,
+          myTeam: team || null,
         };
         userSignup(userData);
         navigate(ROUTES.LOGIN);

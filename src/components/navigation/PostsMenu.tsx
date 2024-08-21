@@ -7,7 +7,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/20/solid';
 import { useClickOutside } from '../../hooks/useClickOutside';
-import { ROUTES } from '../../constant/route';
+import ROUTES from '../../constants/router';
 
 interface Props {
   togglePostModal: () => void;
