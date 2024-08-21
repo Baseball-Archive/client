@@ -4,8 +4,8 @@ import { CalendarDaysIcon } from '@heroicons/react/20/solid';
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface PickDateProps {
-  selectedDate: Date | null;
-  handleDate: (date: Date | null) => void;
+  selectedDate?: string;
+  handleDate: (date: string) => void;
 }
 interface ShowInputDateProps {
   value?: string;
@@ -25,18 +25,26 @@ const ShowInputDate = forwardRef<HTMLDivElement, ShowInputDateProps>(
 const PickDate = ({ selectedDate, handleDate }: PickDateProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  const handleDateChange = (date: Date | null) => {
+    if (date) {
+      handleDate(date.toISOString().split('T')[0]);
+    } else {
+      handleDate('');
+    }
+  };
+
   return (
     <div className="relative flex w-full items-center">
       <DatePicker
         showPopperArrow={false}
         className="w-full"
         wrapperClassName="w-full"
-        dateFormat="yyy/MM/dd"
+        dateFormat="yyy-MM-dd"
         shouldCloseOnSelect
         minDate={new Date('2000-01-01')}
         maxDate={new Date()}
-        selected={selectedDate}
-        onChange={handleDate}
+        selected={selectedDate ? new Date(selectedDate) : null}
+        onChange={handleDateChange}
         open={isOpen}
         onCalendarOpen={() => setIsOpen(true)}
         onCalendarClose={() => setIsOpen(false)}

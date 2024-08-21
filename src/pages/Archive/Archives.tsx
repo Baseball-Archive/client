@@ -1,4 +1,5 @@
 import Archive from '../../components/Archive/Archive';
+import { auth } from '../../service/firebase';
 import { dummyData } from './dummyArchive';
 
 const Archives = () => {

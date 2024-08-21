@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Badge from '../../common/Badge';
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 import { MatchData } from '../../../types/MatchData';
+import { getTeamValueByKey } from '../../../utils/getTeamValueByKey';
+import { TeamScheme } from '../../../types/TeamScheme';
 
 const MIN_SCORE = 0;
 const MAX_SCORE = 30;
@@ -45,7 +47,9 @@ const PickScore = ({
       {selectedMatch ? (
         <>
           <div className="flex items-center">
-            <Badge scheme={selectedMatch?.homeTeam} />
+            <Badge
+              scheme={getTeamValueByKey(selectedMatch.homeTeamId) as TeamScheme}
+            />
             <input
               id="homeScore"
               value={homeScore}
@@ -53,17 +57,25 @@ const PickScore = ({
               readOnly
             />
             <div className="flex flex-col rounded-2xl border text-gray-400">
-              <button onClick={() => incrementScore(true, homeScore)}>
+              <button
+                type="button"
+                onClick={() => incrementScore(true, homeScore)}
+              >
                 <PlusCircleIcon className="size-4" />
               </button>
-              <button onClick={() => decrementScore(true, homeScore)}>
+              <button
+                type="button"
+                onClick={() => decrementScore(true, homeScore)}
+              >
                 <MinusCircleIcon className="size-4" />
               </button>
             </div>
           </div>
           <span className="self-center font-bold">:</span>
           <div className="flex items-center">
-            <Badge scheme={selectedMatch.awayTeam} />
+            <Badge
+              scheme={getTeamValueByKey(selectedMatch.awayTeamId) as TeamScheme}
+            />
 
             <input
               id="awayScore"
@@ -72,10 +84,16 @@ const PickScore = ({
               readOnly
             />
             <div className="flex flex-col rounded-2xl border text-gray-400">
-              <button onClick={() => incrementScore(false, awayScore)}>
+              <button
+                type="button"
+                onClick={() => incrementScore(false, awayScore)}
+              >
                 <PlusCircleIcon className="size-4" />
               </button>
-              <button onClick={() => decrementScore(false, awayScore)}>
+              <button
+                type="button"
+                onClick={() => decrementScore(false, awayScore)}
+              >
                 <MinusCircleIcon className="size-4" />
               </button>
             </div>
