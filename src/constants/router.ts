@@ -12,6 +12,7 @@ const ROUTES = {
   JOIN: '/users/join',
   RESET: '/users/reset',
   USER: '/users',
+  UPLOAD_IMAGE_URL: '/upload',
 };
 
 export default ROUTES;
