@@ -4,6 +4,7 @@ import Layout from './components/layout/Layout';
 import { ROUTES } from './constant/route';
 import Loading from './components/common/Loading';
 import AddPost from './pages/Community/AddPost';
+import ROUTES from './constants/router';
 
 const Archives = lazy(() => import('./pages/Archive/Archives'));
 const AddArchive = lazy(() => import('./pages/Archive/AddArchive'));
@@ -17,6 +18,7 @@ const Login = lazy(() => import('./pages/User/Login'));
 const Signup = lazy(() => import('./pages/User/Signup'));
 const ResetPW = lazy(() => import('./components/common/ResetPW'));
 const ArchiveDetail = lazy(() => import('./pages/Archive/ArchiveDetail'));
+
 
 const router = createBrowserRouter([
   {
@@ -96,18 +98,18 @@ const router = createBrowserRouter([
       {
         path: ROUTES.LOGIN,
         element: (
-          <Suspense fallback={<Loading />}>
-            <Login />
-          </Suspense>
-        ),
+              <Suspense fallback={<Loading />}>
+                <Login/>
+              </Suspense>
+            ),
       },
       {
         path: ROUTES.JOIN,
         element: (
-          <Suspense fallback={<Loading />}>
-            <Signup />
-          </Suspense>
-        ),
+              <Suspense fallback={<Loading />}>
+                <SignUp />
+              </Suspense>
+            ),
       },
       {
         path: ROUTES.USER,

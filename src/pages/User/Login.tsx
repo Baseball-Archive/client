@@ -3,11 +3,10 @@ import InputText from '../../components/common/InputText';
 import Button from '../../components/common/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import firebaseApp, { auth } from '../../service/firebase';
+import { auth } from '../../service/firebase';
 import GithubButton from '../../components/User/GithubButton';
 import GoogleButton from '../../components/User/GoogleButton';
-
-// import KakaoLogin from '../../components/kakao/KakaoLogin';
+import ROUTES from '../../constants/router';
 export interface LoginProps {
   email: string;
   password: string;
@@ -24,8 +23,8 @@ const Login = () => {
   const onSubmit = async (data: LoginProps) => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
-      navigate('/');
-      console.log('Login successful', auth.currentUser?.getIdToken());
+      navigate(ROUTES.HOME);
+      console.log('Login successful');
     } catch (err) {
       console.error('Login failed:', err);
       alert('비밀번호 또는 아이디가 틀립니다.');
@@ -76,8 +75,8 @@ const Login = () => {
           </div>
           <div className="flex flex-col items-center text-center">
             <div className="flex gap-6">
-              <Link to="/users/reset">비밀번호 찾기 </Link>
-              <Link to="/users/join">회원가입</Link>
+              <Link to={ROUTES.RESET_PW}>비밀번호 찾기 </Link>
+              <Link to={ROUTES.JOIN}>회원가입</Link>
             </div>
             <div className="pt-20 text-center font-title font-light">
               SNS 계정으로 간편하게 로그인
