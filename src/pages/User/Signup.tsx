@@ -14,30 +14,13 @@ import DEFAULT_IMAGE from '../../constants/image';
 import { FirebaseError } from 'firebase/app';
 import { toast } from 'react-toastify';
 import { TeamScheme } from '../../types/TeamScheme';
+import { BASEBALL_TEAMS } from '../../constants/baseballTeams';
 
-interface OptionsProps {
-  key: number;
-  value: string;
-  label: string;
-}
 export interface User {
   nickname: string;
-  image: string;
-  team: number | null;
+  profileImageUrl: string;
+  myTeam: number | null;
 }
-
-const BASEBALL_TEAMS: OptionsProps[] = [
-  { key: 1, value: 'kia', label: '기아' },
-  { key: 2, value: 'samsung', label: '삼성' },
-  { key: 3, value: 'lg', label: 'LG' },
-  { key: 4, value: 'doosan', label: '두산' },
-  { key: 5, value: 'ssg', label: 'SSG' },
-  { key: 6, value: 'kt', label: 'KT' },
-  { key: 7, value: 'nc', label: 'NC' },
-  { key: 8, value: 'hanhwa', label: '한화' },
-  { key: 9, value: 'lotte', label: '롯데' },
-  { key: 10, value: 'kiwoom', label: '키움' },
-];
 
 export interface SignupProps extends LoginProps {
   passwordConfirm: string;
@@ -68,8 +51,8 @@ const Signup = () => {
       if (auth.currentUser) {
         const userData: User = {
           nickname: data.nickname || '',
-          image: DEFAULT_IMAGE,
-          team: team || null,
+          profileImageUrl: DEFAULT_IMAGE,
+          myTeam: team || null,
         };
         userSignup(userData);
         navigate(ROUTES.LOGIN);

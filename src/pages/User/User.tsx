@@ -25,8 +25,8 @@ const User = () => {
       );
     } else {
       return (
-        <div className="mx-auto flex max-w-md flex-col">
-          유저 정보가 없습니다.
+        <div className="mx-auto flex h-[calc(100vh-200px)] max-w-md flex-col items-center justify-center">
+          <p className="pb-3">유저 정보가 없습니다.</p>
           <Button scheme="primary" size="medium">
             <Link to={ROUTES.LOGIN}>다시 로그인</Link>
           </Button>
