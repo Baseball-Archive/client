@@ -25,7 +25,7 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       navigate('/');
-      console.log('Login successful');
+      console.log('Login successful', auth.currentUser?.getIdToken());
     } catch (err) {
       console.error('Login failed:', err);
       alert('비밀번호 또는 아이디가 틀립니다.');

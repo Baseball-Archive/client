@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { getToken, removeToken } from '../store/authStore';
 
-const BASE_URL = 'http://localhost:5555/api';
+const BASE_URL = 'http://localhost:5000';
 const DEFAULT_TIMEOUT = 30000;
 
 export const createClient = (config?: AxiosRequestConfig) => {
@@ -34,7 +34,7 @@ export const createClient = (config?: AxiosRequestConfig) => {
 };
 
 axios
-  .get('http://localhost:5555/api')
+  .get(BASE_URL)
   .then((response) => console.log(response))
   .catch((error) => console.error(error));
 

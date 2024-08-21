@@ -20,8 +20,8 @@ const Comment = ({ comment }: Props) => {
   };
 
   return (
-    <div className="ml-6 mr-6 flex justify-center overflow-hidden bg-white pt-4">
-      <div className="flex w-full max-w-lg">
+    <div className="flex justify-center overflow-hidden bg-white pt-4">
+      <div className="flex w-full">
         <div className="pr-2 pt-1">
           <div
             className="overflow-hidden rounded-full"

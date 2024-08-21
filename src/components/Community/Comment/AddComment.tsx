@@ -25,10 +25,10 @@ const AddComment = () => {
   };
 
   return (
-    <div className="ml-6 mr-6 flex justify-center bg-white pt-4">
+    <div className="flex justify-center bg-white pt-4">
       <form
         onSubmit={handleSubmit}
-        className="flex w-full max-w-lg overflow-hidden rounded-md border"
+        className="flex w-full overflow-hidden rounded-md border"
       >
         <input
           type="text"

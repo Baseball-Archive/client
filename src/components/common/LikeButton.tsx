@@ -11,14 +11,14 @@ const LikeButton = ({ isLiked, onClick }: LikeButtonProps) => {
       {isLiked ? (
         <button
           onClick={onClick}
-          className="group fixed bottom-32 right-10 rounded-full bg-white p-3 text-red-500 shadow-lg"
+          className="group fixed bottom-32 right-4 rounded-full bg-white p-3 text-red-500 shadow-lg"
         >
           <SolidHeartIcon className="size-8 transition duration-300 group-hover:scale-105" />
         </button>
       ) : (
         <button
           onClick={onClick}
-          className="group fixed bottom-32 right-10 rounded-full bg-white p-3 text-black shadow-lg"
+          className="group fixed bottom-32 right-4 rounded-full bg-white p-3 text-black shadow-lg"
         >
           <OutlineHeartIcon className="size-8 transition duration-300 group-hover:scale-105" />
         </button>
