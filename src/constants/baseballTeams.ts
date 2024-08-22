@@ -1,6 +1,11 @@
-import { OptionsProps } from '../components/User/UserEditForm';
+interface OptionsProps {
+  key: number;
+  value: string;
+  label: string;
+}
 
 export const BASEBALL_TEAMS: OptionsProps[] = [
+
   { key: 1, value: 'doosan', label: '두산' },
   { key: 2, value: 'lotte', label: '롯데' },
   { key: 3, value: 'samsung', label: '삼성' },

@@ -10,7 +10,7 @@ const ROUTES = {
   STANDINGS: 'standings',
   LOGIN: '/users/login',
   JOIN: '/users/join',
-  RESET: '/users/reset',
+  RESET_PW: '/users/reset',
   USER: '/users',
 };
 

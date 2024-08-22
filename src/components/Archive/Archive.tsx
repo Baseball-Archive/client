@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReviewSection from './ReviewSection';
 import ArchiveHeader from './ArchiveHeader';
 import type { Archive } from '../../types/Archive';
+import { getArchives } from '../../apis/archive';
 
 interface ArchiveProps {
   data: Archive;
@@ -20,6 +21,7 @@ const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
     title,
     result,
   } = data;
+
   return (
     <div className="mb-6 flex justify-center overflow-hidden bg-white">
       <div className="w-full">

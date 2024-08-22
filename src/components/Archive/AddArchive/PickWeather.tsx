@@ -45,6 +45,7 @@ const PickWeather = ({ selectedWeather, handleWeather }: PickWeatherProps) => {
     <div className="relative flex h-full w-full" onBlur={handleBlurContainer}>
       <button
         onClick={handleClickContainer}
+        type="button"
         className="flex w-full items-center justify-start px-4 text-gray-400"
       >
         {selectedWeather ? (

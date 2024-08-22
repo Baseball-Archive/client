@@ -6,6 +6,7 @@ import { User } from '../pages/User/Signup';
 const JOIN_URL = `http://localhost:5000${ROUTES.JOIN}`;
 const LOGIN_URL = `http://localhost:5000${ROUTES.LOGIN}`;
 
+
 export const join = async (userData: User) => {
   const { nickname, profileImageUrl, myTeam } = userData;
   const response = await fetch(JOIN_URL, {
@@ -35,7 +36,6 @@ export const login = async (data: LoginProps) => {
     },
     body: JSON.stringify(data),
   });
-  console.log('response', response);
 
   return response.json();
 };

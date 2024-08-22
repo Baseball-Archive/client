@@ -1,9 +1,8 @@
 import type { Archive } from '../../../types/Archive';
 import { TeamScheme } from '../../../types/TeamScheme';
+import { getTeamLabelByKey } from '../../../utils/getTeamValueByKey';
 import Badge from '../../common/Badge';
-import LikeButton from '../../common/LikeButton';
 import PostHandleButton from '../../common/PostHandleButton';
-import { transformTeamName } from '../../Community/Post';
 
 interface ArchiveContentProps {
   ArchiveContent: Archive;
@@ -79,13 +78,13 @@ const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
           <div className="flex items-center">
             <p className="min-w-[4rem] text-xs font-light text-black">홈</p>
             <p className="min-w-[4rem] text-xs font-medium">
-              {transformTeamName(matchData.homeTeam).name}
+              {getTeamLabelByKey(matchData.homeTeamId)}
             </p>
           </div>
           <div className="flex items-center">
             <p className="min-w-[4rem] text-xs font-light text-black">어웨이</p>
             <p className="min-w-[4rem] text-xs font-medium text-black">
-              {transformTeamName(matchData.awayTeam).name}
+              {getTeamLabelByKey(matchData.awayTeamId)}
             </p>
           </div>
         </div>

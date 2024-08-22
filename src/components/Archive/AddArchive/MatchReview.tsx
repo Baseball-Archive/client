@@ -1,9 +1,9 @@
 interface MatchReviewProps {
-  review: string;
+  content: string;
   onChangeReview: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-const MatchReview = ({ review, onChangeReview }: MatchReviewProps) => {
+const MatchReview = ({ content, onChangeReview }: MatchReviewProps) => {
   return (
     <div className="flex flex-col">
       <label htmlFor="review" className="">
@@ -14,7 +14,7 @@ const MatchReview = ({ review, onChangeReview }: MatchReviewProps) => {
           id="review"
           className="h-full w-full resize-none overflow-hidden bg-transparent p-4 outline-none"
           placeholder="내용을 입력하세요."
-          value={review}
+          value={content}
           onChange={onChangeReview}
         />
       </div>
