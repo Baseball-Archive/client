@@ -2,7 +2,10 @@ import { CameraIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { signOut } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../../service/firebase';
+import { removeToken } from '../../store/authStore';
+import ROUTES from '../../constants/router';
 import Button from '../common/Button';
+import { DEFAULT_IMAGE } from '../../constants/image';
 
 export interface Props {
   profile: string;
@@ -27,7 +30,8 @@ const Profile = ({ profile, email }: Props) => {
   const onSignOut = async () => {
     try {
       await signOut(auth);
-      navigate('/');
+      removeToken();
+      navigate(ROUTES.LOGIN);
     } catch (error) {
       console.log(error);
     }
@@ -38,7 +42,10 @@ const Profile = ({ profile, email }: Props) => {
         <form className="relative cursor-pointer">
           <fieldset>
             <label htmlFor="image" className="cursor-pointer">
-              <img className="h-32 w-32 rounded-full" src={profile} />
+              <img
+                className="h-32 w-32 rounded-full"
+                src={profile || DEFAULT_IMAGE}
+              />
               <CameraIcon className="absolute bottom-0 right-0 size-10 rounded-full border-[3px] bg-black p-1 text-white" />
             </label>
             <input

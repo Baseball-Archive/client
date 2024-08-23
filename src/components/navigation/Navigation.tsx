@@ -23,7 +23,7 @@ const Navigation = () => {
   };
 
   return (
-    <>
+    <div className="fixed bottom-0 top-auto z-10 h-[100px] w-full border bg-white md:top-0 md:h-screen md:w-[100px] xl:w-1/4">
       <nav className="px-6 md:py-4">
         <div className="hidden py-8 md:block md:text-center xl:text-left">
           <img
@@ -76,7 +76,7 @@ const Navigation = () => {
           </li>
         </ul>
       </nav>
-    </>
+    </div>
   );
 };
 export default Navigation;

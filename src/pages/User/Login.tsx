@@ -1,12 +1,14 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
-import Button from '../../components/common/Button';
 import InputText from '../../components/common/InputText';
+import Button from '../../components/common/Button';
+import { Link, useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../service/firebase';
 import GithubButton from '../../components/User/GithubButton';
 import GoogleButton from '../../components/User/GoogleButton';
 import ROUTES from '../../constants/router';
-import { auth } from '../../service/firebase';
+import { useAuth } from '../../hooks/useAuth';
+
 export interface LoginProps {
   email: string;
   password: string;
@@ -14,6 +16,7 @@ export interface LoginProps {
 
 const Login = () => {
   const navigate = useNavigate();
+  const { userLogin } = useAuth();
   const {
     register,
     handleSubmit,
@@ -24,7 +27,10 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       navigate(ROUTES.HOME);
-      console.log('Login successful');
+      userLogin({
+        email: data.email,
+        password: data.password,
+      });
     } catch (err) {
       console.error('Login failed:', err);
       alert('비밀번호 또는 아이디가 틀립니다.');
@@ -75,7 +81,7 @@ const Login = () => {
           </div>
           <div className="flex flex-col items-center text-center">
             <div className="flex gap-6">
-              <Link to={ROUTES.RESET_PW}>비밀번호 찾기 </Link>
+              <Link to={ROUTES.RESET}>비밀번호 찾기 </Link>
               <Link to={ROUTES.JOIN}>회원가입</Link>
             </div>
             <div className="pt-20 text-center font-title font-light">

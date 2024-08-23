@@ -1,43 +1,26 @@
-import { FirebaseError } from 'firebase/app';
-import { AuthErrorCodes, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import Badge from '../../components/common/Badge';
-import InputText from '../../components/common/InputText';
-import GithubButton from '../../components/User/GithubButton';
-import GoogleButton from '../../components/User/GoogleButton';
-import DEFAULT_IMAGE from '../../constants/image';
-import ROUTES from '../../constants/router';
-import { useAuth } from '../../hooks/useAuth';
-import { auth } from '../../service/firebase';
-import { TeamScheme } from '../../types/TeamScheme';
 import { LoginProps } from './Login';
+import { AuthErrorCodes, createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../service/firebase';
+import { useAuth } from '../../hooks/useAuth';
+import InputText from '../../components/common/InputText';
+import Badge from '../../components/common/Badge';
+import GoogleButton from '../../components/User/GoogleButton';
+import GithubButton from '../../components/User/GithubButton';
+import ROUTES from '../../constants/router';
+import { DEFAULT_IMAGE } from '../../constants/image';
+import { FirebaseError } from 'firebase/app';
+import { toast } from 'react-toastify';
+import { TeamScheme } from '../../types/TeamScheme';
+import { BASEBALL_TEAMS } from '../../constants/baseballTeams';
 
-interface OptionsProps {
-  key: number;
-  value: string;
-  label: string;
-}
 export interface User {
   nickname: string;
   profileImageUrl: string;
   myTeam: number | null;
 }
-
-const BASEBALL_TEAMS: OptionsProps[] = [
-  { key: 1, value: 'kia', label: '기아' },
-  { key: 2, value: 'samsung', label: '삼성' },
-  { key: 3, value: 'lg', label: 'LG' },
-  { key: 4, value: 'doosan', label: '두산' },
-  { key: 5, value: 'ssg', label: 'SSG' },
-  { key: 6, value: 'kt', label: 'KT' },
-  { key: 7, value: 'nc', label: 'NC' },
-  { key: 8, value: 'hanhwa', label: '한화' },
-  { key: 9, value: 'lotte', label: '롯데' },
-  { key: 10, value: 'kiwoom', label: '키움' },
-];
 
 export interface SignupProps extends LoginProps {
   passwordConfirm: string;
