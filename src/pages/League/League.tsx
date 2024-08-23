@@ -9,12 +9,12 @@ const Matches = () => {
         <li
           className={`${location.pathname.includes('schedule') ? 'border-b-2 border-black font-medium' : 'font-light'}`}
         >
-          <Link to={ROUTES.SCHEDULE}>일정</Link>
+          <Link to={`${ROUTES.LEAGUE}/${ROUTES.SCHEDULE}`}>일정</Link>
         </li>
         <li
           className={`${location.pathname.includes('standings') ? 'border-b-2 border-black font-medium' : 'font-light'}`}
         >
-          <Link to={ROUTES.SCHEDULE}>순위</Link>
+          <Link to={`${ROUTES.LEAGUE}/${ROUTES.STANDINGS}`}>순위</Link>
         </li>
       </ul>
       <Outlet />
