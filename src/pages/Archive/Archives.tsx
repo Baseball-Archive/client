@@ -17,13 +17,15 @@ const Archives = () => {
   if (error) return <div>error:{error.message}</div>;
 
   return (
-    <div className="container relative mb-32 pt-7">
-      {archivesQuery ? (
+    <div className="container mb-32 flex pt-7">
+      {archivesQuery && archivesQuery.length > 0 ? (
         archivesQuery.map((archive) => (
           <Archive key={archive.id} data={archive} />
         ))
       ) : (
-        <div>데이터가 없습니다.</div>
+        <div className="mt-16 flex w-full items-center justify-center text-2xl font-bold text-gray-400">
+          아카이브를 작성해주세요
+        </div>
       )}
     </div>
   );
