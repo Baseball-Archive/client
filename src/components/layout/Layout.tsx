@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import ROUTES from '../../constants/router';
 import { useAuthStore } from '../../store/authStore';
 import Header from '../header/Header';
 import Navigation from '../navigation/Navigation';
-import ROUTES from '../../constants/router';
 import Content from './Content';
 
 const Layout = () => {

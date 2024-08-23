@@ -10,16 +10,19 @@ interface ArchiveContentProps {
 
 const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
   const {
+    nickname,
     id,
-    userId,
     weather,
-    matchData,
-    result,
     title,
-    review,
-    photo,
-    isPublic,
-    myTeam,
+    content,
+    homeTeamScore,
+    awayTeamScore,
+    picUrl,
+    homeTeamId,
+    awayTeamId,
+    matchDate,
+    updatedAt,
+    stadium,
   } = ArchiveContent;
 
   const handleDelete = () => {
@@ -44,32 +47,28 @@ const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center font-normal">
               <div className="relative flex h-12 w-12 items-center justify-center overflow-hidden">
-                <Badge scheme={myTeam as TeamScheme} />
+                <Badge scheme={'hanhwa'} />
               </div>
-              <div className="ml-1 text-sm">{userId}</div>
+              <div className="ml-1 text-sm">{'TEST'}</div>
             </div>
           </div>
         </div>
         <div className="mt-2 grid grid-cols-2 gap-1 border-b border-gray-300 pb-3 text-sm">
           <div className="flex items-start">
             <p className="min-w-[4rem] text-xs font-light">경기 날짜</p>
-            <p className="min-w-[4rem] text-xs font-medium">
-              {matchData.matchDate}
-            </p>
+            <p className="min-w-[4rem] text-xs font-medium">{matchDate}</p>
           </div>
           <div className="flex items-center">
             <p className="min-w-[4rem] text-xs font-light text-black">
               경기 결과
             </p>
             <p className="min-w-[4rem] text-xs font-medium">
-              {result.homeTeam}:{result.awayTeam}
+              {homeTeamScore}:{awayTeamScore}
             </p>
           </div>
           <div className="flex items-center">
             <p className="min-w-[4rem] text-xs font-light text-black">경기장</p>
-            <p className="min-w-[4rem] text-xs font-medium">
-              {matchData.stadium}
-            </p>
+            <p className="min-w-[4rem] text-xs font-medium">{stadium}</p>
           </div>
           <div className="flex items-center">
             <p className="min-w-[4rem] text-xs font-light text-black">날씨</p>
@@ -78,23 +77,23 @@ const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
           <div className="flex items-center">
             <p className="min-w-[4rem] text-xs font-light text-black">홈</p>
             <p className="min-w-[4rem] text-xs font-medium">
-              {getTeamLabelByKey(matchData.homeTeamId)}
+              {getTeamLabelByKey(homeTeamId as number)}
             </p>
           </div>
           <div className="flex items-center">
             <p className="min-w-[4rem] text-xs font-light text-black">어웨이</p>
             <p className="min-w-[4rem] text-xs font-medium text-black">
-              {getTeamLabelByKey(matchData.awayTeamId)}
+              {getTeamLabelByKey(awayTeamId as number)}
             </p>
           </div>
         </div>
         <div className="pb-2 pt-6">
           <div>
             <pre className="whitespace-pre-wrap font-title text-xs">
-              {review}
+              {content}
             </pre>
             <div className="pb-4">
-              <img src={photo} alt="Post Photo" />
+              <img src={picUrl} alt="Post Photo" />
             </div>
           </div>
         </div>

@@ -1,32 +1,70 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import {
+  addArchiveLike,
+  getArchiveDetailWithComments,
+} from '../../apis/archive';
+import ArchiveComment from '../../components/Archive/ArchiveDetail/ArchiveComment';
 import ArchiveContent from '../../components/Archive/ArchiveDetail/ArchiveContent';
 import LikeButton from '../../components/common/LikeButton';
+import Loading from '../../components/common/Loading';
 import AddComment from '../../components/Community/Comment/AddComment';
-import Comment from '../../components/Community/Comment/Comment';
-import { dummyData } from './dummyArchive';
-import { dummyComment } from './dummyComment';
-
-const ARCHIVE_DETAIL = {
-  post: dummyData,
-  comments: dummyComment,
-};
+import type { Archive, ArchiveDetail } from '../../types/Archive';
 
 const ArchiveDetail = () => {
   const [isLiked, setIsLiked] = useState(false);
 
-  const handleLike = () => {
-    setIsLiked((prev) => !prev);
+  const {
+    data: archiveWithCommentsQuery,
+    error: archiveWithCommentError,
+    isLoading,
+  } = useQuery<ArchiveDetail>({
+    queryKey: ['archiveWithComments'],
+    queryFn: getArchiveDetailWithComments,
+  });
+  const { mutate: addArchiveLikeMutate } = useMutation({
+    mutationFn: addArchiveLike,
+    onSuccess: () => {
+      setIsLiked((prev) => !prev);
+    },
+    onError: () => {
+      alert('좋아요 실패');
+    },
+  });
+  const { mutate: subArchiveLikeMutate } = useMutation({
+    mutationFn: addArchiveLike,
+    onSuccess: () => {
+      setIsLiked((prev) => !prev);
+    },
+    onError: () => {
+      alert('좋아요 취소 실패');
+    },
+  });
+
+  const handleLike = (isLiked: boolean) => {
+    if (isLiked === true) {
+      addArchiveLikeMutate(archiveWithCommentsQuery?.post.id as number);
+    } else if (isLiked === false) {
+      subArchiveLikeMutate(archiveWithCommentsQuery?.post.id as number);
+    }
   };
+
+  if (isLoading) return <Loading />;
+  if (archiveWithCommentError)
+    return <div>error:{archiveWithCommentError.message}</div>;
+
   return (
     <div className="relative mb-32 h-full w-full pt-7">
-      <ArchiveContent ArchiveContent={dummyData} />
+      <ArchiveContent
+        ArchiveContent={archiveWithCommentsQuery?.post as Archive}
+      />
       <div className="mt-8 border-t-2">
-        {dummyComment.map((comment) => (
-          <Comment key={comment.id} comment={comment} />
+        {archiveWithCommentsQuery?.comments.map((comment, index) => (
+          <ArchiveComment key={index} comment={comment} />
         ))}
         <AddComment />
       </div>
-      <LikeButton onClick={() => handleLike()} isLiked={isLiked} />
+      <LikeButton onClick={() => handleLike(isLiked)} isLiked={isLiked} />
     </div>
   );
 };

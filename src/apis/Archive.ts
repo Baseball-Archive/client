@@ -1,14 +1,29 @@
-import { snakeToCamel } from '../utils/snakeToCamel';
 import { PostArchiveProps } from '../types/Archive';
+import { snakeToCamel } from '../utils/snakeToCamel';
 import apiClient from './apiClient';
 
 export const getArchives = async () => {
   const response = await apiClient.get('/archive');
   return snakeToCamel(response.data);
 };
+export const getArchiveDetailWithComments = async () => {
+  const response = await apiClient.get('/archive/detail');
+  return snakeToCamel(response.data);
+  //TODO : 서버 API 엔드포인트 확정되면 수정
+};
 
 export const postArchive = async (data: PostArchiveProps) => {
   const response = await apiClient.post('/archive', data);
+  return response.data;
+};
+export const addArchiveLike = async (id: number) => {
+  const response = await apiClient.post(`/archive/like/${id}`);
+  return response.data;
+  //TODO: 서버 API 엔드포인트 확정되면 수정
+};
+
+export const editArchive = async (id: number) => {
+  const response = await apiClient.put(`/archive/${id}`);
   return response.data;
 };
 
@@ -16,7 +31,7 @@ export const deleteArchive = async (id: number) => {
   const response = await apiClient.delete(`/archive/${id}`);
   return response.data;
 };
-export const editArchive = async (id: number) => {
-  const response = await apiClient.put(`/archive/${id}`);
+export const subArchiveLike = async (id: number) => {
+  const response = await apiClient.delete(`/archive/like/${id}`);
   return response.data;
 };

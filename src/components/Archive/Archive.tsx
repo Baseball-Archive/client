@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react';
-import { getArchives } from '../../apis/archive';
+import { Weather } from '../../types/Weather';
 import ArchiveHeader from './ArchiveHeader';
 import ReviewSection from './ReviewSection';
 import type { Archive } from '../../types/Archive';
-import { Weather } from '../../types/Weather';
 
 interface ArchiveProps {
   data: Archive;
@@ -22,6 +20,7 @@ const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
     picUrl,
     homeTeamId,
     awayTeamId,
+    matchDate,
   } = data;
 
   return (
@@ -32,8 +31,9 @@ const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
           nickname={nickname as string}
           weather={weather as Weather}
           profileImage={picUrl}
-          matchDate={'2024-01-01'}
+          matchDate={matchDate || '2024-01-01'}
           stadium={'포항야구장'}
+          isCommunityArchives={isCommunityArchives}
         />
         <div className="w-full flex-col items-center">
           <img

@@ -11,6 +11,7 @@ interface ArchiveHeaderProps {
   matchDate: string;
   stadium: string;
   profileImage: string;
+  isCommunityArchives?: boolean;
 }
 
 const WeatherEmojis = {
@@ -26,6 +27,7 @@ const ArchiveHeader = ({
   profileImage,
   matchDate,
   stadium,
+  isCommunityArchives,
 }: ArchiveHeaderProps) => {
   const queryClient = useQueryClient();
 
@@ -85,8 +87,9 @@ const ArchiveHeader = ({
           </div>
         </div>
       </div>
-
-      <ArchiveHandleButton onEdit={handleEdit} onDelete={handleDelete} />
+      {isCommunityArchives && (
+        <ArchiveHandleButton onEdit={handleEdit} onDelete={handleDelete} />
+      )}
     </div>
   );
 };

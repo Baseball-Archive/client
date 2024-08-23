@@ -1,5 +1,4 @@
-import { MatchData } from './MatchData';
-import { TeamScheme } from './TeamScheme';
+import { Comment } from './Comment';
 import { Weather } from './Weather';
 
 export interface Archive {
@@ -13,12 +12,12 @@ export interface Archive {
   content: string;
   picUrl: string;
   isPublic: boolean | null;
-  created_at?: string;
-  updated_at?: string;
+  createdAt?: string;
+  updatedAt?: string;
   homeTeamId?: number;
   awayTeamId?: number;
   matchDate?: string | null;
-  staitium?: string;
+  stadium?: string;
 }
 
 export interface PostArchiveProps {
@@ -31,4 +30,9 @@ export interface PostArchiveProps {
   pic_url: string;
   is_public: boolean | null;
   created_at?: string;
+}
+
+export interface ArchiveDetail {
+  post: Archive;
+  comments: Comment[];
 }
