@@ -1,22 +1,37 @@
 // import { db, collection, addDoc } from './firebaseConfig';
 import { useState } from 'react';
-
 import PostInfoSection from './PostInfoSection';
-import PostPickWeather from './PostPickWeather';
+import PostMatchReview from './PostMatchReview';
 import PostPickDate from './PostPickDate';
 import PostPickMatch from './PostPickMatch';
-import PostMatchReview from './PostMatchReview';
+import PostPickWeather from './PostPickWeather';
 
 const PostInfo = () => {
   const [title, setTitle] = useState('');
   const [weather, setWeather] = useState<string | null>(null);
   const [date, setDate] = useState<string>('');
-  const [match, setMatch] = useState<{ home: string; away: string }>({ home: '', away: '' });
+  const [match, setMatch] = useState<{ home: string; away: string }>({
+    home: '',
+    away: '',
+  });
   const [winningTeam, setWinningTeam] = useState<string>('');
   const [review, setReview] = useState<string>('');
 
-  const teams = ['kia', 'samsung', 'lg', 'doosan', 'ssg', 'kt', 'nc', 'hanhwa', 'lotte', 'kiwoom'];
-  const filteredTeams = teams.filter(team => team === match.home || team === match.away);
+  const teams = [
+    'kia',
+    'samsung',
+    'lg',
+    'doosan',
+    'ssg',
+    'kt',
+    'nc',
+    'hanhwa',
+    'lotte',
+    'kiwoom',
+  ];
+  const filteredTeams = teams.filter(
+    (team) => team === match.home || team === match.away,
+  );
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -73,14 +88,16 @@ const PostInfo = () => {
         <div className="relative">
           <select
             name="승리 팀"
-            className={`w-full h-12 px-4 appearance-none rounded-[4px] border text-lg ${!match.home || !match.away ? 'bg-gray-200 cursor-not-allowed' : ''}`}
+            className={`h-12 w-full appearance-none rounded-[4px] border px-4 text-lg ${!match.home || !match.away ? 'cursor-not-allowed bg-gray-200' : ''}`}
             value={winningTeam}
             onChange={(e) => setWinningTeam(e.target.value)}
             onClick={handleSelectClick}
             disabled={!match.home || !match.away}
           >
             {filteredTeams.length === 0 ? (
-              <option value="" disabled>경기를 먼저 선택하세요.</option>
+              <option value="" disabled>
+                경기를 먼저 선택하세요.
+              </option>
             ) : (
               filteredTeams.map((team) => (
                 <option key={team} value={team}>
@@ -96,7 +113,12 @@ const PostInfo = () => {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 9l-7 7-7-7"
+              />
             </svg>
           </div>
         </div>
@@ -105,7 +127,10 @@ const PostInfo = () => {
       <PostMatchReview onSetReview={setReview} />
 
       <div className="mb-10 mt-6 flex flex-col">
-        <button type="submit" className="my-10 h-20 rounded-[10px] bg-black text-2xl font-medium text-white">
+        <button
+          type="submit"
+          className="my-10 h-20 rounded-[10px] bg-black text-2xl font-medium text-white"
+        >
           게시글 등록
         </button>
       </div>

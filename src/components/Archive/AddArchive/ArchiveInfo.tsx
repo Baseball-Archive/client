@@ -1,34 +1,22 @@
+import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import PickWeather from './PickWeather';
-import InfoSection from './InfoSection';
-import PickDate from './PickDate';
-import MatchReview from './MatchReview';
-import PickMatch from './PickMatch';
-import UploadPhotoButton from './UploadPhotoButton';
-import PickScore from './PickScore';
-import { Weather } from '../../../types/Weather';
-import { MatchData } from '../../../types/MatchData';
-import PublicPrivateToggle from './PublicPrivateToggle';
-import { postArchive } from '../../../apis/archive';
 import { useNavigate } from 'react-router-dom';
-
-interface Archive {
-  title: string;
-  scheduleId: number;
-  homeTeamId?: number;
-  awayTeamId?: number;
-  matchDate: string;
-  weather: Weather | null;
-  homeTeamScore: number;
-  awayTeamScore: number;
-  content: string;
-  picUrl: string;
-  isPublic: boolean | null;
-  matchData: MatchData | null;
-}
+import { postArchive } from '../../../apis/archive';
+import { MatchData } from '../../../types/MatchData';
+import { Weather } from '../../../types/Weather';
+import InfoSection from './InfoSection';
+import MatchReview from './MatchReview';
+import PickDate from './PickDate';
+import PickMatch from './PickMatch';
+import PickScore from './PickScore';
+import PickWeather from './PickWeather';
+import PublicPrivateToggle from './PublicPrivateToggle';
+import UploadPhotoButton from './UploadPhotoButton';
+import type { Archive } from '../../../types/Archive';
 
 const ArchiveInfo = () => {
   const navigate = useNavigate();
+  const [matchData, setMatchData] = useState<MatchData | null>(null);
   const { register, handleSubmit, setValue, watch } = useForm<Archive>({
     defaultValues: {
       title: '',
@@ -40,17 +28,20 @@ const ArchiveInfo = () => {
       isPublic: null,
       matchData: null,
       matchDate: new Date().toISOString().split('T')[0],
+      scheduleId: 0,
     },
   });
-
+  const handleMatchData = (match: MatchData | null) => {
+    setMatchData(match);
+  };
   const onChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue('content', e.target.value);
   };
+  const handlePicUrl = (picUrl: string) => {
+    setValue('picUrl', picUrl);
+  };
   const handleDate = (date: string) => {
     setValue('matchDate', date);
-  };
-  const handleMatchData = (match: MatchData | null) => {
-    setValue('matchData', match);
   };
   const handleWeather = (weather: Weather | null) => {
     setValue('weather', weather);
@@ -64,11 +55,14 @@ const ArchiveInfo = () => {
   const handleAwayScore = (awayTeamScore: number) => {
     setValue('awayTeamScore', awayTeamScore);
   };
+  const handleScheduleId = (scheduleId: number) => {
+    setValue('scheduleId', scheduleId);
+  };
 
   const onSubmit: SubmitHandler<Archive> = async (archiveData) => {
     try {
       await postArchive({
-        schedule_id: archiveData.matchData?.scheduleId ?? 0,
+        schedule_id: archiveData.scheduleId,
         weather: archiveData.weather,
         home_team_score: archiveData.homeTeamScore,
         away_team_score: archiveData.awayTeamScore,
@@ -115,8 +109,9 @@ const ArchiveInfo = () => {
       <InfoSection label="경기 선택">
         <PickMatch
           selectedDate={watch('matchDate')}
-          selectedMatch={watch('matchData')}
+          selectedMatch={matchData}
           handleMatchData={handleMatchData}
+          handleSelectedScheduleId={handleScheduleId}
         />
       </InfoSection>
       <div className="flex flex-col">
@@ -127,13 +122,13 @@ const ArchiveInfo = () => {
         awayScore={watch('awayTeamScore')}
         handleHomeScore={handleHomeScore}
         handleAwayScore={handleAwayScore}
-        selectedMatch={watch('matchData')}
+        selectedMatch={matchData}
       />
       <MatchReview
         content={watch('content')}
         onChangeReview={onChangeContent}
       />
-      <UploadPhotoButton />
+      <UploadPhotoButton handlePicUrl={handlePicUrl} />
       <div className="mt-4 flex flex-col">
         <label className="mb-2 text-base">공개 설정</label>
         <PublicPrivateToggle

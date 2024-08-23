@@ -1,8 +1,8 @@
-import type { Archive } from '../../../types/Archive';
 import { TeamScheme } from '../../../types/TeamScheme';
 import { getTeamLabelByKey } from '../../../utils/getTeamValueByKey';
 import Badge from '../../common/Badge';
 import PostHandleButton from '../../common/PostHandleButton';
+import type { Archive } from '../../../types/Archive';
 
 interface ArchiveContentProps {
   ArchiveContent: Archive;

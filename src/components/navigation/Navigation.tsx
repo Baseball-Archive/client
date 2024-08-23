@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   HomeIcon,
   CalendarDaysIcon,
@@ -6,11 +5,12 @@ import {
   ChatBubbleOvalLeftEllipsisIcon,
   UserCircleIcon,
 } from '@heroicons/react/20/solid';
+import { useState } from 'react';
+import ROUTES from '../../constants/router';
 import NavigationItem from './NavigationItem';
 import PostsMenu from './PostsMenu';
 import Logo from '/images/logo.png';
 import Icon from '/images/icon.png';
-import ROUTES from '../../constants/router';
 
 const ICON_SIZE = 'size-8';
 const LIST_STYLE = 'py-4';

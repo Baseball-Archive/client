@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
+import { EllipsisHorizontalIcon } from '@heroicons/react/20/solid';
+import { useState } from 'react';
 
 interface PostHandleButtonProps {
   onEdit: () => void;

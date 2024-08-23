@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { auth } from '../service/firebase';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;

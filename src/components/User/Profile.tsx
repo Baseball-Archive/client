@@ -1,8 +1,8 @@
 import { CameraIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
-import { Link, useNavigate } from 'react-router-dom';
-import Button from '../common/Button';
 import { signOut } from 'firebase/auth';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../../service/firebase';
+import Button from '../common/Button';
 
 export interface Props {
   profile: string;

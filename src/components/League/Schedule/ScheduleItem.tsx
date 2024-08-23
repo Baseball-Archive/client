@@ -1,6 +1,6 @@
-import dayjs from "dayjs";
-import Badge from "../../common/Badge";
-import { TeamScheme } from "../../../types/TeamScheme";
+import dayjs from 'dayjs';
+import { TeamScheme } from '../../../types/TeamScheme';
+import Badge from '../../common/Badge';
 
 interface Props {
   match_date: string;
@@ -16,7 +16,7 @@ const ScheduleItem = ({ match_date, home_team, away_team, stadium }: Props) => {
         <Badge scheme={home_team as TeamScheme} />
       </div>
       <div className="text-center">
-        <p className="font-bold">{dayjs(match_date).format("HH:mm")}</p>
+        <p className="font-bold">{dayjs(match_date).format('HH:mm')}</p>
         <p>{stadium}</p>
       </div>
       <div>

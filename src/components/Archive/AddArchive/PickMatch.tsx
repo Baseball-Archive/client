@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import Select, { StylesConfig } from 'react-select';
-import Badge from '../../common/Badge';
 import { MatchData } from '../../../types/MatchData';
 import { TeamScheme } from '../../../types/TeamScheme';
 import { getTeamValueByKey } from '../../../utils/getTeamValueByKey';
+import Badge from '../../common/Badge';
 
 interface PickMatchProps {
   selectedDate: string;
   selectedMatch: MatchData | null;
   handleMatchData: (option: MatchData | null) => void;
+  handleSelectedScheduleId: (scheduleId: number) => void;
 }
 interface MatchProps {
   innerProps: React.HTMLAttributes<HTMLDivElement>;
@@ -23,32 +24,36 @@ interface MatchProps {
 
 const DUMMY_SCHEDULE: MatchData[] = [
   {
-    scheduleId: 6,
+    scheduleId: 1,
     matchDate: '2024-08-22',
     homeTeamId: 1,
     awayTeamId: 3,
     stadium: '포항야구장',
+    time: '18:30:00',
   },
   {
-    scheduleId: 5,
+    scheduleId: 2,
     matchDate: '2024-08-22',
     homeTeamId: 2,
     awayTeamId: 6,
     stadium: '광주기아챔피언스필드',
+    time: '18:30:00',
   },
   {
-    scheduleId: 5,
+    scheduleId: 3,
     matchDate: '2024-08-22',
     homeTeamId: 4,
     awayTeamId: 7,
     stadium: '수원KT위즈파크',
+    time: '18:30:00',
   },
   {
-    scheduleId: 6,
+    scheduleId: 4,
     matchDate: '2024-08-22',
     homeTeamId: 5,
     awayTeamId: 9,
     stadium: '청주야구장',
+    time: '18:30:00',
   },
   {
     scheduleId: 7,
@@ -56,6 +61,7 @@ const DUMMY_SCHEDULE: MatchData[] = [
     homeTeamId: 8,
     awayTeamId: 10,
     stadium: '잠실야구장',
+    time: '18:30:00',
   },
 ];
 
@@ -123,14 +129,20 @@ const PickMatch = ({
   selectedDate,
   selectedMatch,
   handleMatchData,
+  handleSelectedScheduleId,
 }: PickMatchProps) => {
+  const handleMatchSelect = (seletedOption: MatchData | null) => {
+    handleMatchData(seletedOption);
+    handleSelectedScheduleId(seletedOption?.scheduleId || 0);
+  };
+
   return (
     <div className="w-full">
       <Select
         placeholder="경기를 선택하세요."
         isSearchable={false}
         value={selectedMatch}
-        onChange={handleMatchData}
+        onChange={handleMatchSelect}
         options={DUMMY_SCHEDULE}
         components={{ Option, SingleValue }}
         styles={customStyles}

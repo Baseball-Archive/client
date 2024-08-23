@@ -1,23 +1,29 @@
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MatchData } from '../../types/MatchData';
 import Badge from '../common/Badge';
-import { useState } from 'react';
+import { getTeamValueByKey } from '../../utils/getTeamValueByKey';
+import { TeamScheme } from '../../types/TeamScheme';
 
 interface ReviewSectionProps {
   id: number;
-  matchData: MatchData;
+  homeTeamId: number;
+  awayTeamId: number;
   title: string;
-  review: string;
-  result: { homeTeam: number; awayTeam: number };
+  content: string;
+  homeTeamScore: number;
+  awayTeamScore: number;
   isCommunityArchives?: boolean;
 }
 
 const ReviewSection = ({
-  matchData,
-  review,
-  result,
+  homeTeamId,
+  awayTeamId,
+  homeTeamScore,
+  awayTeamScore,
   id,
   title,
+  content,
   isCommunityArchives,
 }: ReviewSectionProps) => {
   const navigate = useNavigate();
@@ -34,18 +40,22 @@ const ReviewSection = ({
     <div className="w-full">
       <div className="flex flex-row justify-between">
         <p className="flex items-center text-lg">
-          <Badge scheme={matchData.homeTeam} />
+          <Badge
+            scheme={(getTeamValueByKey(homeTeamId) as TeamScheme) || 'nc'}
+          />
           <span className="mx-4 font-semibold">
-            {result.homeTeam} : {result.awayTeam}
+            {homeTeamScore || 1} : {awayTeamScore || 2}
           </span>
-          <Badge scheme={matchData.awayTeam} />
+          <Badge
+            scheme={(getTeamValueByKey(awayTeamId) as TeamScheme) || 'nc'}
+          />
         </p>
       </div>
       <div className="my-4 flex flex-col">
         <p className="font-medium">{title}</p>
       </div>
       {isExpanded ? (
-        <pre className="whitespace-pre-wrap font-title text-sm">{review}</pre>
+        <pre className="whitespace-pre-wrap font-title text-sm">{content}</pre>
       ) : (
         <button
           className="text-gray-400"

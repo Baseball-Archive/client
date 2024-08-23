@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import ReviewSection from './ReviewSection';
-import ArchiveHeader from './ArchiveHeader';
-import type { Archive } from '../../types/Archive';
 import { getArchives } from '../../apis/archive';
+import ArchiveHeader from './ArchiveHeader';
+import ReviewSection from './ReviewSection';
+import type { Archive } from '../../types/Archive';
+import { Weather } from '../../types/Weather';
 
 interface ArchiveProps {
   data: Archive;
@@ -11,34 +12,42 @@ interface ArchiveProps {
 
 const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
   const {
+    nickname,
     id,
-    userId,
     weather,
-    photo,
-    matchData,
-    review,
-    isPublic,
     title,
-    result,
+    content,
+    homeTeamScore,
+    awayTeamScore,
+    picUrl,
+    homeTeamId,
+    awayTeamId,
   } = data;
 
   return (
     <div className="mb-6 flex justify-center overflow-hidden bg-white">
       <div className="w-full">
         <ArchiveHeader
-          userId={userId}
-          weather={weather}
-          profileImage={photo}
-          matchData={matchData}
+          id={id as number}
+          nickname={nickname as string}
+          weather={weather as Weather}
+          profileImage={picUrl}
+          matchDate={'2024-01-01'}
+          stadium={'포항야구장'}
         />
         <div className="w-full flex-col items-center">
-          <img src={photo} className="mb-4 aspect-square w-full object-cover" />
+          <img
+            src={picUrl}
+            className="mb-4 aspect-square w-full object-cover"
+          />
           <ReviewSection
-            matchData={matchData}
-            id={id}
+            id={id as number}
             title={title}
-            review={review}
-            result={result}
+            content={content}
+            homeTeamId={homeTeamId as number}
+            awayTeamId={awayTeamId as number}
+            homeTeamScore={homeTeamScore}
+            awayTeamScore={awayTeamScore}
             isCommunityArchives={isCommunityArchives}
           />
         </div>

@@ -1,6 +1,6 @@
 import { sendPasswordResetEmail } from 'firebase/auth';
-import InputText from './InputText';
 import { auth } from '../../service/firebase';
+import InputText from './InputText';
 
 const ResetPW = () => {
   const handlePasswordReset = () => {
