@@ -1,7 +1,5 @@
 import ROUTES from '../constants/router';
-import { useAuth } from '../hooks/useAuth';
 import { User } from '../pages/User/Signup';
-import { auth } from '../service/firebase';
 import apiClient from './apiClient';
 
 export const join = async (userData: User) => {
@@ -12,17 +10,6 @@ export const join = async (userData: User) => {
     throw new Error(`Error status: ${error}`);
   }
 };
-
-// const { userLogin } = useAuth();
-// export const login = async () => {
-//   try {
-//     const response = await auth.currentUser?.getIdToken();
-//     userLogin(response);
-//     return response;
-//   } catch (error) {
-//     throw new Error(`Error status: ${error}`);
-//   }
-// };
 
 export const nickname = async (data: Pick<User, 'nickname'>) => {
   try {

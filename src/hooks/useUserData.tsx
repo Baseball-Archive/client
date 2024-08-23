@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { auth } from '../service/firebase';
 import { getUser } from '../apis/auth';
 import { BASEBALL_TEAMS, OptionsProps } from '../constants/baseballTeams';
+import { useAuthStore } from '../store/authStore';
 
 interface IUserData {
   pic_url: string;
@@ -15,11 +16,12 @@ const useUserData = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [myTeam, setMyTeam] = useState<OptionsProps | undefined>(undefined);
-
+  const { isloggedIn } = useAuthStore();
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const user = auth.currentUser;
+
         if (user) {
           const result = await getUser();
           setUserData({ ...user, ...result.data });
