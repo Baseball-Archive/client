@@ -7,6 +7,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/20/solid';
 import { useClickOutside } from '../../hooks/useClickOutside';
+import ROUTES from '../../constants/router';
 
 interface Props {
   togglePostModal: () => void;
@@ -17,8 +18,7 @@ const PostsMenu = ({ togglePostModal }: Props) => {
   useClickOutside(menuRef, togglePostModal);
 
   return (
-
-    <div className="bg-background-overlay fixed bottom-0 left-0 right-0 top-0 z-10 backdrop-blur-sm md:absolute md:bg-transparent md:backdrop-blur-none">
+    <div className="fixed bottom-0 left-0 right-0 top-0 z-10 bg-background-overlay backdrop-blur-sm md:absolute md:bg-transparent md:backdrop-blur-none">
       <div
         ref={menuRef}
         className="absolute bottom-0 left-0 z-20 w-full border bg-white px-6 pb-16 md:bottom-auto md:top-[100%] md:w-[240px] md:pb-0 xl:w-full"
@@ -35,14 +35,14 @@ const PostsMenu = ({ togglePostModal }: Props) => {
           <li className="py-4" onClick={togglePostModal}>
             <PostsMenuItem
               title="일기 쓰기"
-              link="/archive"
+              link={ROUTES.ADD_ARCHIVE}
               icon={<BookOpenIcon className="size-8" />}
             />
           </li>
           <li className="py-4" onClick={togglePostModal}>
             <PostsMenuItem
               title="커뮤니티 글쓰기"
-              link="/post"
+              link={ROUTES.POSTS}
               icon={<ChatBubbleLeftRightIcon className="size-8" />}
             />
           </li>

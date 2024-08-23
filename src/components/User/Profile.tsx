@@ -1,8 +1,13 @@
-import { CameraIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Button from '../common/Button';
+import { CameraIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../service/firebase';
+import { removeToken } from '../../store/authStore';
+import ROUTES from '../../constants/router';
+import Button from '../common/Button';
+import { DEFAULT_IMAGE } from '../../constants/image';
+import { uploadImage } from '../../apis/uploadImage';
 
 export interface Props {
   profile: string;
@@ -11,23 +16,38 @@ export interface Props {
 
 const Profile = ({ profile, email }: Props) => {
   const navigate = useNavigate();
+  const [profileImage, setProfileImage] = useState(profile);
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('UPLOAD', event.target.files);
-    // try {
-    //   if (auth.currentUser)
-    //     updateProfile(auth.currentUser, {
-    //       photoURL: `${event.target.files}`,
-    //     });
-    // } catch (err) {
-    //   console.error(err);
-    // }
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files;
+
+    if (!file) {
+      window.alert('선택된 파일이 없습니다.');
+      console.error('선택된 파일이 없습니다.');
+      return;
+    }
+    try {
+      if (auth.currentUser) {
+        const formData = new FormData();
+        formData.append('profileImage', file[0]);
+
+        const result = await uploadImage(formData);
+        setProfileImage(result.fileUrl);
+      } else {
+        console.error('토큰이 없습니다.');
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const onSignOut = async () => {
     try {
       await signOut(auth);
-      navigate('/');
+      removeToken();
+      navigate(ROUTES.LOGIN);
     } catch (error) {
       console.log(error);
     }
@@ -38,7 +58,10 @@ const Profile = ({ profile, email }: Props) => {
         <form className="relative cursor-pointer">
           <fieldset>
             <label htmlFor="image" className="cursor-pointer">
-              <img className="h-32 w-32 rounded-full" src={profile} />
+              <img
+                className="h-32 w-32 rounded-full"
+                src={profileImage || DEFAULT_IMAGE}
+              />
               <CameraIcon className="absolute bottom-0 right-0 size-10 rounded-full border-[3px] bg-black p-1 text-white" />
             </label>
             <input

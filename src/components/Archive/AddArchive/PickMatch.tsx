@@ -1,72 +1,99 @@
-import React, { useState } from "react";
-import Select, { StylesConfig } from "react-select";
-import Badge from "../../common/Badge";
-import { MatchData } from "../../../types/MatchData";
-import { TeamScheme } from "../../../types/TeamScheme";
+import React, { useState } from 'react';
+import Select, { StylesConfig } from 'react-select';
+import Badge from '../../common/Badge';
+import { MatchData } from '../../../types/MatchData';
+import { TeamScheme } from '../../../types/TeamScheme';
+import { getTeamValueByKey } from '../../../utils/getTeamValueByKey';
 
 interface PickMatchProps {
+  selectedDate: string;
   selectedMatch: MatchData | null;
-  setSelectedMatch: (option: MatchData | null) => void;
+  handleMatchData: (option: MatchData | null) => void;
 }
 interface MatchProps {
   innerProps: React.HTMLAttributes<HTMLDivElement>;
   data: {
-    homeTeam: TeamScheme;
-    awayTeam: TeamScheme;
+    matchDate: string;
+    scheduleId: number;
+    homeTeamId: number;
+    awayTeamId: number;
     stadium: string;
   };
 }
 
-const dummyData: MatchData[] = [
+const DUMMY_SCHEDULE: MatchData[] = [
   {
-    matchDate: "2024-08-14",
-    homeTeam: "hanhwa",
-    awayTeam: "lg",
-    stadium: "한밭종합운동장",
+    scheduleId: 6,
+    matchDate: '2024-08-22',
+    homeTeamId: 1,
+    awayTeamId: 3,
+    stadium: '포항야구장',
   },
   {
-    matchDate: "2024-08-14",
-    homeTeam: "samsung",
-    awayTeam: "kt",
-    stadium: "대구 삼성 라이온즈 파크",
+    scheduleId: 5,
+    matchDate: '2024-08-22',
+    homeTeamId: 2,
+    awayTeamId: 6,
+    stadium: '광주기아챔피언스필드',
   },
   {
-    matchDate: "2024-08-14",
-    homeTeam: "kiwoom",
-    awayTeam: "kia",
-    stadium: "고척돔",
+    scheduleId: 5,
+    matchDate: '2024-08-22',
+    homeTeamId: 4,
+    awayTeamId: 7,
+    stadium: '수원KT위즈파크',
   },
   {
-    matchDate: "2024-08-14",
-    homeTeam: "doosan",
-    awayTeam: "lotte",
-    stadium: "서울종합운동장",
+    scheduleId: 6,
+    matchDate: '2024-08-22',
+    homeTeamId: 5,
+    awayTeamId: 9,
+    stadium: '청주야구장',
   },
   {
-    matchDate: "2024-08-14",
-    homeTeam: "nc",
-    awayTeam: "ssg",
-    stadium: "창원NC파크",
+    scheduleId: 7,
+    matchDate: '2024-08-22',
+    homeTeamId: 8,
+    awayTeamId: 10,
+    stadium: '잠실야구장',
   },
 ];
+
+const customStyles: StylesConfig<MatchData, false> = {
+  control: (provided) => ({
+    ...provided,
+    outline: 'none',
+    boxShadow: 'none',
+    border: 'none',
+    backgroundColor: 'white',
+  }),
+  valueContainer: (provided) => ({
+    ...provided,
+    display: 'flex',
+    alignItems: 'center',
+  }),
+  indicatorsContainer: (provided) => ({
+    ...provided,
+    display: 'none',
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    color: '#9ca3af',
+    marginLeft: '8px',
+  }),
+};
 
 const Option = (props: MatchProps) => {
   return (
     <div {...props.innerProps} className="flex items-center px-4 py-2">
       <div>
-        <Badge scheme={props.data.homeTeam} /> <span> vs </span>
-        <Badge scheme={props.data.awayTeam} /> <span> </span>
-        {props.data.stadium}
-      </div>
-    </div>
-  );
-};
-const SingleValue = (props: MatchProps) => {
-  return (
-    <div {...props.innerProps} className="px-2">
-      <div>
-        <Badge scheme={props.data.homeTeam} /> <span> vs </span>
-        <Badge scheme={props.data.awayTeam} />
+        <Badge
+          scheme={getTeamValueByKey(props.data.homeTeamId) as TeamScheme}
+        />
+        <span> vs </span>
+        <Badge
+          scheme={getTeamValueByKey(props.data.awayTeamId) as TeamScheme}
+        />
         <span> </span>
         {props.data.stadium}
       </div>
@@ -74,43 +101,37 @@ const SingleValue = (props: MatchProps) => {
   );
 };
 
-const PickMatch = ({ selectedMatch, setSelectedMatch }: PickMatchProps) => {
-  const handleChange = (selected: MatchData | null) => {
-    setSelectedMatch(selected);
-  };
+const SingleValue = (props: MatchProps) => {
+  return (
+    <div {...props.innerProps} className="px-2">
+      <div>
+        <Badge
+          scheme={getTeamValueByKey(props.data.homeTeamId) as TeamScheme}
+        />
+        <span> vs </span>
+        <Badge
+          scheme={getTeamValueByKey(props.data.awayTeamId) as TeamScheme}
+        />
+        <span> </span>
+        {props.data.stadium}
+      </div>
+    </div>
+  );
+};
 
-  const customStyles: StylesConfig<MatchData, false> = {
-    control: (provided) => ({
-      ...provided,
-      outline: "none",
-      boxShadow: "none",
-      border: "none",
-      backgroundColor: "white",
-    }),
-    valueContainer: (provided) => ({
-      ...provided,
-      display: "flex",
-      alignItems: "center",
-    }),
-    indicatorsContainer: (provided) => ({
-      ...provided,
-      display: "none",
-    }),
-    placeholder: (provided) => ({
-      ...provided,
-      color: "#9ca3af",
-      marginLeft: "8px",
-    }),
-  };
-
+const PickMatch = ({
+  selectedDate,
+  selectedMatch,
+  handleMatchData,
+}: PickMatchProps) => {
   return (
     <div className="w-full">
       <Select
         placeholder="경기를 선택하세요."
         isSearchable={false}
         value={selectedMatch}
-        onChange={handleChange}
-        options={dummyData}
+        onChange={handleMatchData}
+        options={DUMMY_SCHEDULE}
         components={{ Option, SingleValue }}
         styles={customStyles}
       />
@@ -119,3 +140,4 @@ const PickMatch = ({ selectedMatch, setSelectedMatch }: PickMatchProps) => {
 };
 
 export default PickMatch;
+//@TODO: 스케쥴 API 구현 안된 상태라 더미데이터로 대체함. 추후 받은 matchdate로 스케쥴 API 호출

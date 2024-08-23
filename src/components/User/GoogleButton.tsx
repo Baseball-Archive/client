@@ -11,7 +11,6 @@ const GoogleButton = () => {
   const onClick = async () => {
     try {
       await signInWithPopup(auth, provider);
-
       navigate(ROUTES.HOME);
     } catch (error) {
       console.error(error);

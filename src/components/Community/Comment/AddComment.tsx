@@ -25,19 +25,22 @@ const AddComment = () => {
   };
 
   return (
-    <div className="ml-6 mr-6 pt-4 flex justify-center bg-white">
-      <form onSubmit={handleSubmit} className="w-full max-w-lg flex border rounded-md overflow-hidden">
+    <div className="flex justify-center bg-white pt-4">
+      <form
+        onSubmit={handleSubmit}
+        className="flex w-full overflow-hidden rounded-md border"
+      >
         <input
           type="text"
           value={comment}
           onChange={handleInputChange}
           placeholder="댓글을 입력하세요"
-          className="flex-grow pl-4 border-none focus:outline-none"
+          className="flex-grow border-none pl-4 focus:outline-none"
         />
         <button
           type="submit"
-          className="text-black font-bold py-2 px-4 border-none focus:outline-none"
-          style={{ minWidth: "60px" }}
+          className="border-none px-4 py-2 font-bold text-black focus:outline-none"
+          style={{ minWidth: '60px' }}
         >
           등록
         </button>

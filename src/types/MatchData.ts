@@ -1,8 +1,9 @@
-import { TeamScheme } from "./TeamScheme";
+import { TeamScheme } from './TeamScheme';
 
 export interface MatchData {
-  matchDate?: string;
-  homeTeam: TeamScheme;
-  awayTeam: TeamScheme;
+  matchDate: string;
+  scheduleId: number;
+  homeTeamId: number;
+  awayTeamId: number;
   stadium: string;
 }

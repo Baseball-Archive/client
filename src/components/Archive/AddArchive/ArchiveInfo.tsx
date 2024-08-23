@@ -1,102 +1,145 @@
-import PickWeather from "./PickWeather";
-import InfoSection from "./InfoSection";
-import PickDate from "./PickDate";
-import MatchReview from "./MatchReview";
-import PickMatch from "./PickMatch";
-import UploadPhotoButton from "./UploadPhotoButton";
-import PickScore from "./PickScore";
-import { useState } from "react";
-import { Weather } from "../../../types/Weather";
-import { MatchData } from "../../../types/MatchData";
-import PickIsPublic from "./PickIsPublic";
-import { set } from "date-fns";
+import { useForm, SubmitHandler } from 'react-hook-form';
+import PickWeather from './PickWeather';
+import InfoSection from './InfoSection';
+import PickDate from './PickDate';
+import MatchReview from './MatchReview';
+import PickMatch from './PickMatch';
+import UploadPhotoButton from './UploadPhotoButton';
+import PickScore from './PickScore';
+import { Weather } from '../../../types/Weather';
+import { MatchData } from '../../../types/MatchData';
+import PublicPrivateToggle from './PublicPrivateToggle';
+import { postArchive } from '../../../apis/archive';
+import { useNavigate } from 'react-router-dom';
+
+interface Archive {
+  title: string;
+  scheduleId: number;
+  homeTeamId?: number;
+  awayTeamId?: number;
+  matchDate: string;
+  weather: Weather | null;
+  homeTeamScore: number;
+  awayTeamScore: number;
+  content: string;
+  picUrl: string;
+  isPublic: boolean | null;
+  matchData: MatchData | null;
+}
 
 const ArchiveInfo = () => {
-  const [homeScore, setHomeScore] = useState<number>(0);
-  const [awayScore, setAwayScore] = useState<number>(0);
-  const [selectedEmoji, setSelectedEmoji] = useState<Weather | null>(null);
-  const [selectedMatch, setSelectedMatch] = useState<MatchData | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [review, setReview] = useState("");
-  const [isPublic, setIsPublic] = useState<boolean | null>(null);
-  const [title, setTitle] = useState("");
+  const navigate = useNavigate();
+  const { register, handleSubmit, setValue, watch } = useForm<Archive>({
+    defaultValues: {
+      title: '',
+      weather: null,
+      homeTeamScore: 0,
+      awayTeamScore: 0,
+      picUrl: '',
+      content: '',
+      isPublic: null,
+      matchData: null,
+      matchDate: new Date().toISOString().split('T')[0],
+    },
+  });
 
-  const handleHomeScore = (score: number) => {
-    setHomeScore(score);
+  const onChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue('content', e.target.value);
   };
-  const handleAwayScore = (score: number) => {
-    setAwayScore(score);
+  const handleDate = (date: string) => {
+    setValue('matchDate', date);
   };
-  const handleSelectedEmoji = (emoji: Weather | null) => {
-    setSelectedEmoji(emoji);
+  const handleMatchData = (match: MatchData | null) => {
+    setValue('matchData', match);
   };
-  const handleSelectedMatch = (match: MatchData | null) => {
-    setSelectedMatch(match);
+  const handleWeather = (weather: Weather | null) => {
+    setValue('weather', weather);
   };
-  const handleSelectedDate = (date: Date | null) => {
-    setSelectedDate(date);
+  const handleOptionClick = (option: boolean | null) => {
+    setValue('isPublic', option);
   };
-  const handleReview = (reviewText: string) => {
-    setReview(reviewText);
+  const handleHomeScore = (homeTeamScore: number) => {
+    setValue('homeTeamScore', homeTeamScore);
   };
-  const handleIsPublic = (isPublicStatus: boolean | null) => {
-    setIsPublic(isPublicStatus);
+  const handleAwayScore = (awayTeamScore: number) => {
+    setValue('awayTeamScore', awayTeamScore);
   };
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+
+  const onSubmit: SubmitHandler<Archive> = async (archiveData) => {
+    try {
+      await postArchive({
+        schedule_id: archiveData.matchData?.scheduleId ?? 0,
+        weather: archiveData.weather,
+        home_team_score: archiveData.homeTeamScore,
+        away_team_score: archiveData.awayTeamScore,
+        title: archiveData.title,
+        content: archiveData.content,
+        pic_url: archiveData.picUrl,
+        is_public: archiveData.isPublic,
+      });
+      alert('Archive submitted successfully!');
+      navigate('/');
+    } catch (error) {
+      if (error instanceof Error) {
+        alert('Error submitting archive: ' + error.message);
+      } else {
+        alert('An unknown error occurred.');
+      }
+      //TODO: toast나 모달 추가
+    }
   };
-  console.log(
-    homeScore,
-    awayScore,
-    selectedEmoji,
-    selectedMatch,
-    selectedDate,
-    review,
-    isPublic,
-    title,
-  );
+
   return (
-    <div className="container pt-6 scrollbar-hide">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="container pt-6 scrollbar-hide"
+    >
       <InfoSection label="제목 ">
         <input
           className="w-full px-4 outline-none"
           placeholder="제목을 입력하세요."
-          onChange={handleTitleChange}
-        ></input>
-      </InfoSection>
-      <InfoSection label="직관한 날짜">
-        <PickDate
-          selectedDate={selectedDate}
-          setSelectedDate={handleSelectedDate}
+          {...register('title')}
         />
       </InfoSection>
+      <div className="flex space-x-2">
+        <InfoSection half={true} label="직관한 날짜">
+          <PickDate selectedDate={watch('matchDate')} handleDate={handleDate} />
+        </InfoSection>
+        <InfoSection half={true} label="날씨">
+          <PickWeather
+            selectedWeather={watch('weather')}
+            handleWeather={handleWeather}
+          />
+        </InfoSection>
+      </div>
       <InfoSection label="경기 선택">
         <PickMatch
-          selectedMatch={selectedMatch}
-          setSelectedMatch={handleSelectedMatch}
-        />
-      </InfoSection>
-      <InfoSection label="날씨">
-        <PickWeather
-          selectedEmoji={selectedEmoji}
-          setSelectedEmoji={handleSelectedEmoji}
+          selectedDate={watch('matchDate')}
+          selectedMatch={watch('matchData')}
+          handleMatchData={handleMatchData}
         />
       </InfoSection>
       <div className="flex flex-col">
         <label className="mb-1 text-base">경기 결과</label>
       </div>
       <PickScore
-        homeScore={homeScore}
-        awayScore={awayScore}
-        setHomeScore={handleHomeScore}
-        setAwayScore={handleAwayScore}
-        selectedMatch={selectedMatch}
+        homeScore={watch('homeTeamScore')}
+        awayScore={watch('awayTeamScore')}
+        handleHomeScore={handleHomeScore}
+        handleAwayScore={handleAwayScore}
+        selectedMatch={watch('matchData')}
       />
-      <MatchReview review={review} setReview={handleReview} />
+      <MatchReview
+        content={watch('content')}
+        onChangeReview={onChangeContent}
+      />
       <UploadPhotoButton />
-      <div className="mt-6 flex flex-col">
+      <div className="mt-4 flex flex-col">
         <label className="mb-2 text-base">공개 설정</label>
-        <PickIsPublic isPublic={isPublic} setIsPublic={handleIsPublic} />
+        <PublicPrivateToggle
+          isPublic={watch('isPublic')}
+          handleOptionClick={handleOptionClick}
+        />
         <button
           type="submit"
           className="mt-6 h-20 rounded-[10px] bg-black text-2xl font-medium text-white"
@@ -104,7 +147,7 @@ const ArchiveInfo = () => {
           기록하기
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 

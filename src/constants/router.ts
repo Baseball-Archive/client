@@ -4,6 +4,7 @@ const ROUTES = {
   POSTS: '/posts',
   POST_DETAIL: '/posts/:id',
   ADD_POST: '/post',
+  ARCHIVE_DETAIL: '/archives/:id',
   LEAGUE: '/league',
   SCHEDULE: 'schedule',
   STANDINGS: 'standings',
@@ -11,6 +12,8 @@ const ROUTES = {
   JOIN: '/users/join',
   RESET_PW: '/users/reset',
   CHECK_NICKNAME: '/users/checkNickname',
+  USER: '/users',
+  UPLOAD_IMAGE_URL: '/upload',
 };
 
 export default ROUTES;

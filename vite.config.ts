@@ -7,20 +7,14 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: "autoUpdate",
+      registerType: 'autoUpdate',
       devOptions: {
         enabled: true,
       },
     }),
   ],
   server: {
+    host: true,
     port: 3000,
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://localhost:9999',
-    //     changeOrigin: true,
-    //     secure: false,
-    //   },
-    // },
   },
 });

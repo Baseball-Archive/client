@@ -10,6 +10,7 @@ import NavigationItem from './NavigationItem';
 import PostsMenu from './PostsMenu';
 import Logo from '/images/logo.png';
 import Icon from '/images/icon.png';
+import ROUTES from '../../constants/router';
 
 const ICON_SIZE = 'size-8';
 const LIST_STYLE = 'py-4';
@@ -22,7 +23,7 @@ const Navigation = () => {
   };
 
   return (
-    <>
+    <div className="fixed bottom-0 top-auto z-10 h-[100px] w-full border bg-white md:top-0 md:h-screen md:w-[100px] xl:w-1/4">
       <nav className="px-6 md:py-4">
         <div className="hidden py-8 md:block md:text-center xl:text-left">
           <img
@@ -40,7 +41,7 @@ const Navigation = () => {
           <li className={LIST_STYLE}>
             <NavigationItem
               title="홈"
-              link="/"
+              link={ROUTES.HOME}
               icon={<HomeIcon className={ICON_SIZE} />}
             />
           </li>
@@ -62,20 +63,20 @@ const Navigation = () => {
           <li className={LIST_STYLE}>
             <NavigationItem
               title="커뮤니티"
-              link="/posts"
+              link={ROUTES.POSTS}
               icon={<ChatBubbleOvalLeftEllipsisIcon className={ICON_SIZE} />}
             />
           </li>
           <li className={`hidden md:block ${LIST_STYLE}`}>
             <NavigationItem
               title="프로필"
-              link="/users/user"
+              link={ROUTES.USER}
               icon={<UserCircleIcon className={ICON_SIZE} />}
             />
           </li>
         </ul>
       </nav>
-    </>
+    </div>
   );
 };
 export default Navigation;
