@@ -1,10 +1,9 @@
 import { LoginProps } from '../pages/User/Login';
 import { useAuthStore } from '../store/authStore';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { login, join, nickname } from '../apis/auth';
 import ROUTES from '../constants/router';
 import { User } from '../pages/User/Signup';
-import { useQuery } from '@tanstack/react-query';
 
 export const useAuth = () => {
   const navigate = useNavigate();
