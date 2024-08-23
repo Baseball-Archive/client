@@ -24,23 +24,44 @@ const dummyDataList = [
     stadium: '광주',
   },
 ];
+
 const Schedule = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [date, setDate] = useState('');
-  const today = dayjs().format('YYYY.MM.DD');
 
   useEffect(() => {
-    if (searchParams.size === 0) {
-      setDate(today);
-    } else {
-      const queryDate = dayjs(searchParams.get('date')).format('YYYY.MM.DD');
-      setDate(queryDate);
-    }
-  }, [searchParams, today]);
+    const queryDate = searchParams.get('date');
+    const displayDate = queryDate
+      ? dayjs(queryDate).format('YYYY.MM.DD')
+      : dayjs().format('YYYY.MM.DD');
+    setDate(displayDate);
+  }, [searchParams]);
+
+  const handlePreviousDate = () => {
+    const newSearchParms = new URLSearchParams(searchParams);
+
+    const previousDate = dayjs(date).subtract(1, 'day').format('YYYYMMDD');
+
+    newSearchParms.set('date', previousDate);
+    setSearchParams(newSearchParms);
+  };
+
+  const handleNextDate = () => {
+    const newSearchParms = new URLSearchParams(searchParams);
+
+    const NextDate = dayjs(date).add(1, 'day').format('YYYYMMDD');
+
+    newSearchParms.set('date', NextDate);
+    setSearchParams(newSearchParms);
+  };
 
   return (
     <>
-      <DateNavigator date={date} />
+      <DateNavigator
+        date={date}
+        onPreviousDate={handlePreviousDate}
+        onNextDate={handleNextDate}
+      />
       {dummyDataList.map((item, index) => (
         <ScheduleItem
           key={index}

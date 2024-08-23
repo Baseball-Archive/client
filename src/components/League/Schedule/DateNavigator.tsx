@@ -1,19 +1,20 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
-import dayjs from 'dayjs';
 
 interface Props {
   date: string;
+  onPreviousDate: () => void;
+  onNextDate: () => void;
 }
 
-const DateNavigator = ({ date }: Props) => {
+const DateNavigator = ({ date, onPreviousDate, onNextDate }: Props) => {
   return (
     <div className="flex justify-center bg-gray-100 py-4 text-center text-2xl font-bold">
       <ChevronLeftIcon
         className="size-8 text-gray-500"
-        onClick={() => dayjs(date).add(1, 'day')}
+        onClick={onPreviousDate}
       />
       <h1>{date}</h1>
-      <ChevronRightIcon className="size-8 text-gray-500" />
+      <ChevronRightIcon className="size-8 text-gray-500" onClick={onNextDate} />
     </div>
   );
 };
