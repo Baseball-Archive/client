@@ -1,9 +1,10 @@
 import { LoginProps } from '../pages/User/Login';
 import { useAuthStore } from '../store/authStore';
-import { useNavigate } from 'react-router-dom';
-import { login, join } from '../apis/auth';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { login, join, nickname } from '../apis/auth';
 import ROUTES from '../constants/router';
 import { User } from '../pages/User/Signup';
+import { useQuery } from '@tanstack/react-query';
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -22,17 +23,20 @@ export const useAuth = () => {
   };
 
   const userSignup = async (data: User) => {
-    join(data)
-      .then((res) => {
-        navigate(ROUTES.LOGIN);
-      })
-      .catch((error) => {
-        console.error('Signup failed:', error);
-      });
+    const response = await join(data);
+    navigate(ROUTES.LOGIN);
+    return response;
+  };
+
+  const userNickname = async (data: Pick<User, 'nickname'>) => {
+    const response = await nickname(data);
+
+    return response;
   };
 
   return {
     userLogin,
     userSignup,
+    userNickname,
   };
 };

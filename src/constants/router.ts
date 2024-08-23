@@ -10,6 +10,7 @@ const ROUTES = {
   LOGIN: '/users/login',
   JOIN: '/users/join',
   RESET_PW: '/users/reset',
+  CHECK_NICKNAME: '/users/checkNickname',
 };
 
 export default ROUTES;

@@ -11,16 +11,13 @@ import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
 
 import { TeamScheme } from '../Community/Post';
-import { BASEBALL_TEAMS } from '../../constants/baseballTeams';
+import { BASEBALL_TEAMS, OptionsProps } from '../../constants/baseballTeams';
 
 interface Props {
   nickname: string;
   team: string;
 }
-export interface OptionsProps {
-  value: string;
-  label: string;
-}
+
 interface Form {
   nickname: string | null;
   team: OptionsProps | null;

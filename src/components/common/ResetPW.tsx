@@ -8,7 +8,6 @@ const ResetPW = () => {
     try {
       if (user && user.email) {
         sendPasswordResetEmail(auth, user.email);
-        console.log(user.email);
 
         alert('해당 메일로 메시지를 보냈습니다!');
       }
