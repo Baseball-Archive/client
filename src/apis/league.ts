@@ -1,10 +1,8 @@
 import apiClient from './apiClient';
 
-export const getScehdule = async (date: string) => {
+export const getSchedule = async (date: string) => {
   try {
-    const response = await apiClient.get('/schedule', {
-      params: { date },
-    });
+    const response = await apiClient.get(`/schedules/${date}`);
     return response.data;
   } catch (error) {
     console.error('스케줄 조회 실패: ', error);
