@@ -4,15 +4,17 @@ import Profile from '../../components/User/Profile';
 import UserEditForm from '../../components/User/UserEditForm';
 import useUserData from '../../hooks/useUserData';
 import ROUTES from '../../constants/router';
+import { useAuthStore } from '../../store/authStore';
 
 const User = () => {
   const { userData, loading, error, myTeam } = useUserData();
+  const { isloggedIn } = useAuthStore();
 
   if (loading) {
     return <p>로딩 중</p>;
   }
 
-  if (error || !userData) {
+  if (error || !isloggedIn) {
     return (
       <div className="mx-auto flex h-[calc(100vh-200px)] max-w-md flex-col items-center justify-center">
         <p className="pb-3">유저 정보가 없습니다.</p>
@@ -23,7 +25,7 @@ const User = () => {
     );
   }
 
-  if (userData) {
+  if (isloggedIn && userData) {
     return (
       <div className="mx-auto max-w-md">
         <Profile
@@ -39,6 +41,8 @@ const User = () => {
       </div>
     );
   }
+
+  return null;
 };
 
 export default User;

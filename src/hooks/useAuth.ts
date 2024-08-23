@@ -1,24 +1,17 @@
-import { LoginProps } from '../pages/User/Login';
 import { useAuthStore } from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
-import { login, join, nickname } from '../apis/auth';
+import { join, nickname } from '../apis/auth';
 import ROUTES from '../constants/router';
 import { User } from '../pages/User/Signup';
 
 export const useAuth = () => {
   const navigate = useNavigate();
-  const { storeLogin, storeLogout, isloggedIn } = useAuthStore();
+  const { storeLogin } = useAuthStore();
 
-  const userLogin = (data: LoginProps) => {
-    login(data).then(
-      (res) => {
-        storeLogin(res.token);
-        navigate(ROUTES.HOME);
-      },
-      (error) => {
-        console.error('Login failed:', error);
-      },
-    );
+  const userLogin = (data: string) => {
+    storeLogin(data);
+    alert('로그인이 완료되었습니다.');
+    navigate(ROUTES.HOME);
   };
 
   const userSignup = async (data: User) => {

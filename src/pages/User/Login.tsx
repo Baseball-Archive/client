@@ -15,7 +15,6 @@ export interface LoginProps {
 }
 
 const Login = () => {
-  const navigate = useNavigate();
   const { userLogin } = useAuth();
   const {
     register,
@@ -25,12 +24,17 @@ const Login = () => {
 
   const onSubmit = async (data: LoginProps) => {
     try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
-      navigate(ROUTES.HOME);
-      userLogin({
-        email: data.email,
-        password: data.password,
-      });
+      if (auth) {
+        await signInWithEmailAndPassword(auth, data.email, data.password);
+        const sendToken = await auth.currentUser?.getIdToken();
+
+        if (sendToken) {
+          userLogin(sendToken);
+        } else {
+          console.error('Failed to get Token');
+          alert('로그인에 문제가 발생했습니다');
+        }
+      }
     } catch (err) {
       console.error('Login failed:', err);
       alert('비밀번호 또는 아이디가 틀립니다.');

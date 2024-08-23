@@ -258,35 +258,3 @@ const Signup = () => {
 };
 
 export default Signup;
-
-// if (err instanceof FirebaseError) {
-//   switch (err.code) {
-//     case AuthErrorCodes.INVALID_EMAIL:
-//       toast.error('잘못된 이메일 형식입니다.');
-//       break;
-//     case AuthErrorCodes.EMAIL_EXISTS:
-//       toast.error('이미 사용 중인 이메일입니다.');
-//       break;
-//     case AuthErrorCodes.WEAK_PASSWORD:
-//       toast.error('비밀번호는 6글자 이상이어야 합니다.');
-//       break;
-//     case AuthErrorCodes.NETWORK_REQUEST_FAILED:
-//       toast.error('네트워크 연결에 실패하였습니다.');
-//       break;
-//     case AuthErrorCodes.USER_DISABLED:
-//       toast.error('해당 계정은 비활성화되었습니다.');
-//       break;
-//     default:
-//       toast.error('회원가입에 실패했습니다.');
-//       break;
-//   }
-// } else if(err instanceof join) {
-//     switch (err){
-//       case HttpStatusCode.Conflict:
-//         console.log(err.message);
-
-//     }
-// }else{
-
-//   toast.error('회원가입중 예기치 않은 오류가 발생했습니다.');
-// }

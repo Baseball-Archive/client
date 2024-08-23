@@ -1,56 +1,46 @@
-import { LoginProps } from '../pages/User/Login';
+import ROUTES from '../constants/router';
 import { User } from '../pages/User/Signup';
-
-const JOIN_URL = `http://localhost:5000${ROUTES.JOIN}`;
-const LOGIN_URL = `http://localhost:5000${ROUTES.LOGIN}`;
-const CHECKNCINAME_URL = `http://localhost:5000${ROUTES.CHECK_NICKNAME}`;
+import apiClient from './apiClient';
 
 export const join = async (userData: User) => {
-  const { nickname, profileImageUrl, myTeam } = userData;
-
-  const response = await fetch(JOIN_URL, {
-    method: 'POST',
-    headers: {
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${await auth.currentUser?.getIdToken()}`,
-    },
-    body: JSON.stringify({
-      nickname,
-      profileImageUrl,
-      myTeam,
-    }),
-  });
-
-  return response;
-};
-
-interface LoginResponse {
-  token: string;
-}
-export const login = async (data: LoginProps) => {
-  const response = await fetch(LOGIN_URL, {
-    method: 'POST',
-    headers: {
-      'Content-type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-
-  return response.json();
+  try {
+    const response = await apiClient.post(ROUTES.JOIN, userData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Error status: ${error}`);
+  }
 };
 
 export const nickname = async (data: Pick<User, 'nickname'>) => {
-  const { nickname } = data;
-
-  const response = await fetch(`${CHECKNCINAME_URL}/${nickname}`, {
-    method: 'GET',
-    headers: {
-      'Content-type': 'application/json',
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Error status: ${response.status}`);
+  try {
+    const response = await apiClient.post(ROUTES.CHECK_NICKNAME, data);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Error status: ${error}`);
   }
-  return await response.json();
+};
+
+export const getUser = async () => {
+  try {
+    const response = await apiClient.get('/users');
+    return response.data;
+  } catch (error) {
+    console.error('회원정보가 없습니다: ', error);
+    throw new Error(`회원정보 조회 실패:  ${error}`);
+  }
+};
+
+export interface updateUserProps {
+  nickname?: string;
+  picURL?: string;
+  myTeam?: number;
+}
+export const updateUser = async (data: updateUserProps) => {
+  try {
+    const response = await apiClient.put('/users', data);
+    return response.data;
+  } catch (error) {
+    console.error('회원정보 수정 실패했습니다.: ', error);
+    throw new Error(`회원정보 수정 실패:  ${error}`);
+  }
 };
