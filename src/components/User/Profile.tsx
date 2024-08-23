@@ -8,13 +8,17 @@ import ROUTES from '../../constants/router';
 import Button from '../common/Button';
 import { DEFAULT_IMAGE } from '../../constants/image';
 import { uploadImage } from '../../apis/uploadImage';
+import { updateUser } from '../../apis/auth';
+import { OptionsProps } from '../../constants/baseballTeams';
 
 export interface Props {
   profile: string;
   email: string;
+  nickname: string;
+  myTeam: OptionsProps | undefined;
 }
 
-const Profile = ({ profile, email }: Props) => {
+const Profile = ({ profile, email, nickname, myTeam }: Props) => {
   const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState(profile);
 
@@ -32,9 +36,17 @@ const Profile = ({ profile, email }: Props) => {
       if (auth.currentUser) {
         const formData = new FormData();
         formData.append('profileImage', file[0]);
-
         const result = await uploadImage(formData);
-        setProfileImage(result.fileUrl);
+
+        if (result.fileUrl) {
+          setProfileImage(result.fileUrl);
+          const updateResult = await updateUser({
+            picURL: result.nickname,
+            nickname,
+            myTeam: myTeam?.key,
+          });
+          window.alert(updateResult.message);
+        }
       } else {
         console.error('토큰이 없습니다.');
       }
@@ -49,7 +61,7 @@ const Profile = ({ profile, email }: Props) => {
       removeToken();
       navigate(ROUTES.LOGIN);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   return (

@@ -1,6 +1,4 @@
 import { LoginProps } from '../pages/User/Login';
-import ROUTES from '../constants/router';
-import { auth } from '../service/firebase';
 import { User } from '../pages/User/Signup';
 
 const JOIN_URL = `http://localhost:5000${ROUTES.JOIN}`;
@@ -29,7 +27,6 @@ export const join = async (userData: User) => {
 interface LoginResponse {
   token: string;
 }
-
 export const login = async (data: LoginProps) => {
   const response = await fetch(LOGIN_URL, {
     method: 'POST',
