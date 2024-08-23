@@ -1,15 +1,9 @@
 import axios from 'axios';
-import { auth } from '../service/firebase';
+import { getToken } from '../store/authStore';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const apiClient = (() => {
-  const getAuthToken = async () => {
-    const user = auth.currentUser;
-    const token = await user?.getIdToken();
-    return `Bearer ${token}`;
-  };
-
   const instance = axios.create({
     baseURL: BASE_URL,
     headers: {
@@ -18,8 +12,8 @@ const apiClient = (() => {
   });
 
   instance.interceptors.request.use(async (config) => {
-    const token = await getAuthToken();
-    config.headers.Authorization = token;
+    const token = getToken();
+    config.headers.Authorization = `Bearer ${token}`;
     return config;
   });
 

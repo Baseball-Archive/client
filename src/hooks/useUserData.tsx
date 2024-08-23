@@ -12,17 +12,19 @@ interface IUserData {
 }
 
 const useUserData = () => {
+  const { isloggedIn } = useAuthStore();
+
   const [userData, setUserData] = useState<IUserData | undefined>(undefined);
+  const [myTeam, setMyTeam] = useState<OptionsProps | undefined>(undefined);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [myTeam, setMyTeam] = useState<OptionsProps | undefined>(undefined);
-  const { isloggedIn } = useAuthStore();
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const user = auth.currentUser;
-
-        if (user) {
+        if (isloggedIn) {
+          const user = auth.currentUser;
           const result = await getUser();
           setUserData({ ...user, ...result.data });
           setMyTeam(
@@ -31,8 +33,8 @@ const useUserData = () => {
             ),
           );
         } else {
-          console.error('토큰이 없습니다.');
-          setError('토큰이 없습니다.');
+          console.error('로그인 이력이 없습니다.');
+          setError('로그인 이력이 없습니다.');
         }
       } catch (error) {
         console.error('회원정보 조회 실패:', error);
@@ -43,7 +45,7 @@ const useUserData = () => {
     };
 
     fetchUserData();
-  }, []);
+  }, [isloggedIn]);
 
   return { userData, loading, error, myTeam };
 };
