@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MatchData } from '../../types/MatchData';
-import Badge from '../common/Badge';
-import { getTeamValueByKey } from '../../utils/getTeamValueByKey';
 import { TeamScheme } from '../../types/TeamScheme';
+import { getTeamValueByKey } from '../../utils/getTeamValueByKey';
+import Badge from '../common/Badge';
 
 interface ReviewSectionProps {
   id: number;
@@ -41,7 +41,7 @@ const ReviewSection = ({
       <div className="flex flex-row justify-between">
         <p className="flex items-center text-lg">
           <Badge
-            scheme={(getTeamValueByKey(homeTeamId) as TeamScheme) || 'nc'}
+            scheme={(getTeamValueByKey(homeTeamId) as TeamScheme) || 'lg'}
           />
           <span className="mx-4 font-semibold">
             {homeTeamScore || 1} : {awayTeamScore || 2}

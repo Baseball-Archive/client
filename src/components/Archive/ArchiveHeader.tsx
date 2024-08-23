@@ -87,7 +87,7 @@ const ArchiveHeader = ({
           </div>
         </div>
       </div>
-      {isCommunityArchives && (
+      {isCommunityArchives === false && (
         <ArchiveHandleButton onEdit={handleEdit} onDelete={handleDelete} />
       )}
     </div>

@@ -24,7 +24,7 @@ const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
   } = data;
 
   return (
-    <div className="mb-6 flex justify-center overflow-hidden bg-white">
+    <div className="mb-6 flex flex-col justify-center overflow-hidden bg-white">
       <div className="w-full">
         <ArchiveHeader
           id={id as number}

@@ -8,6 +8,7 @@ interface UploadPhotoButtonProps {
 }
 const UploadPhotoButton = ({ handlePicUrl }: UploadPhotoButtonProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
 
   const handleButtonClick = () => {
     fileInputRef.current?.click();
@@ -28,6 +29,7 @@ const UploadPhotoButton = ({ handlePicUrl }: UploadPhotoButtonProps) => {
         formData.append('profileImage', file[0]);
         const result = await uploadImage(formData);
         handlePicUrl(result.fileUrl);
+        setFileName(file[0].name);
         console.log(result.fileUrl);
       } else {
         console.error('토큰이 없습니다.');
@@ -54,6 +56,7 @@ const UploadPhotoButton = ({ handlePicUrl }: UploadPhotoButtonProps) => {
         onClick={handleButtonClick}
       >
         <PhotoIcon className="size-8" />
+        {fileName && <span className="ml-2">{fileName}</span>}
       </div>
     </>
   );
