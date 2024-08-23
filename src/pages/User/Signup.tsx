@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { LoginProps } from './Login';
-import { AuthErrorCodes, createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../service/firebase';
 import { useAuth } from '../../hooks/useAuth';
 import InputText from '../../components/common/InputText';
@@ -11,8 +11,7 @@ import GoogleButton from '../../components/User/GoogleButton';
 import GithubButton from '../../components/User/GithubButton';
 import ROUTES from '../../constants/router';
 import { DEFAULT_IMAGE } from '../../constants/image';
-import { FirebaseError } from 'firebase/app';
-import { toast } from 'react-toastify';
+
 import { TeamScheme } from '../../types/TeamScheme';
 import { BASEBALL_TEAMS } from '../../constants/baseballTeams';
 
@@ -28,10 +27,10 @@ export interface SignupProps extends LoginProps {
 }
 
 const Signup = () => {
-  const { userSignup } = useAuth();
-  const navigate = useNavigate();
+  const { userSignup, userNickname } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [team, setTeam] = useState<number | null>(null);
+  const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
   const {
     register,
     handleSubmit,
@@ -41,6 +40,10 @@ const Signup = () => {
   } = useForm<SignupProps>();
 
   const onSubmit = async (data: SignupProps) => {
+    if (!isNicknameAvailable) {
+      alert('닉네임 중복을 확인해주세요.');
+      return;
+    }
     try {
       const createdUser = await createUserWithEmailAndPassword(
         auth,
@@ -50,39 +53,44 @@ const Signup = () => {
 
       if (auth.currentUser) {
         const userData: User = {
-          nickname: data.nickname || '',
+          nickname: data.nickname,
           profileImageUrl: DEFAULT_IMAGE,
           myTeam: team || null,
         };
-        userSignup(userData);
-        navigate(ROUTES.LOGIN);
-        return userData;
+
+        await userSignup(userData);
       }
-    } catch (err: unknown) {
-      if (err instanceof FirebaseError) {
-        switch (err.code) {
-          case AuthErrorCodes.INVALID_EMAIL:
-            toast.error('잘못된 이메일 형식입니다.');
-            break;
-          case AuthErrorCodes.EMAIL_EXISTS:
-            toast.error('이미 사용 중인 이메일입니다.');
-            break;
-          case AuthErrorCodes.WEAK_PASSWORD:
-            toast.error('비밀번호는 6글자 이상이어야 합니다.');
-            break;
-          case AuthErrorCodes.NETWORK_REQUEST_FAILED:
-            toast.error('네트워크 연결에 실패하였습니다.');
-            break;
-          case AuthErrorCodes.USER_DISABLED:
-            toast.error('해당 계정은 비활성화되었습니다.');
-            break;
-          default:
-            toast.error('회원가입에 실패했습니다.');
-            break;
-        }
+
+      // Firebase 사용자 계정 생성
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Signup failed:', error.message);
+        alert(`회원 가입 실패: ${error.message}`);
       } else {
-        toast.error('회원가입중 예기치 않은 오류가 발생했습니다.');
+        console.error('Signup failed with unknown error');
+        alert('알 수 없는 오류가 발생했습니다.');
       }
+    }
+  };
+
+  const handleNicknameCheck = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault();
+    const nickname = watch('nickname');
+
+    try {
+      if (nickname) {
+        await userNickname({ nickname });
+        setIsNicknameAvailable(true);
+        alert('사용가능한 닉네임입니다.');
+      } else {
+        alert('닉네임을 입력해주세요.');
+      }
+    } catch (error) {
+      setIsNicknameAvailable(false);
+      alert('이미 사용 중인 닉네임입니다.');
+      console.error('Nickname check failed:', error);
     }
   };
 
@@ -176,15 +184,25 @@ const Signup = () => {
             )}
           </fieldset>
           <fieldset className="flex flex-col items-center p-3">
-            <p className="w-80 text-left">닉네임</p>
+            <p className="w-80 text-left">
+              닉네임<span className="text-blue-600">*</span>
+            </p>
             <InputText
               placeholder="닉네임"
               inputType="nickname"
               inputSize="medium"
-              scheme="primary"
+              scheme={!isNicknameAvailable ? 'danger' : 'primary'}
               {...register('nickname')}
             />
           </fieldset>
+          <button
+            type="button"
+            className="relative bottom-20 left-24 py-1"
+            onClick={handleNicknameCheck}
+          >
+            닉네임 중복 확인
+          </button>
+
           <fieldset className="flex flex-col items-center">
             <div
               onClick={handleValidate}
@@ -240,3 +258,35 @@ const Signup = () => {
 };
 
 export default Signup;
+
+// if (err instanceof FirebaseError) {
+//   switch (err.code) {
+//     case AuthErrorCodes.INVALID_EMAIL:
+//       toast.error('잘못된 이메일 형식입니다.');
+//       break;
+//     case AuthErrorCodes.EMAIL_EXISTS:
+//       toast.error('이미 사용 중인 이메일입니다.');
+//       break;
+//     case AuthErrorCodes.WEAK_PASSWORD:
+//       toast.error('비밀번호는 6글자 이상이어야 합니다.');
+//       break;
+//     case AuthErrorCodes.NETWORK_REQUEST_FAILED:
+//       toast.error('네트워크 연결에 실패하였습니다.');
+//       break;
+//     case AuthErrorCodes.USER_DISABLED:
+//       toast.error('해당 계정은 비활성화되었습니다.');
+//       break;
+//     default:
+//       toast.error('회원가입에 실패했습니다.');
+//       break;
+//   }
+// } else if(err instanceof join) {
+//     switch (err){
+//       case HttpStatusCode.Conflict:
+//         console.log(err.message);
+
+//     }
+// }else{
+
+//   toast.error('회원가입중 예기치 않은 오류가 발생했습니다.');
+// }

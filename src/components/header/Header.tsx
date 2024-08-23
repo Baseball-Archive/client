@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { UserCircleIcon } from '@heroicons/react/20/solid';
 import Logo from '/images/logo.png';
+import ROUTES from '../../constants/router';
 
 const Header = () => {
   return (
@@ -9,7 +10,7 @@ const Header = () => {
         <Link className="w-[120px]" to="/">
           <img src={Logo} alt="야구볼램 로고" />
         </Link>
-        <Link to="/users/user">
+        <Link to={ROUTES.USER}>
           <UserCircleIcon className="size-8" />
         </Link>
       </div>

@@ -1,14 +1,13 @@
 import { LoginProps } from '../pages/User/Login';
-import ROUTES from '../constants/router';
-import { auth } from '../service/firebase';
 import { User } from '../pages/User/Signup';
 
 const JOIN_URL = `http://localhost:5000${ROUTES.JOIN}`;
 const LOGIN_URL = `http://localhost:5000${ROUTES.LOGIN}`;
-
+const CHECKNCINAME_URL = `http://localhost:5000${ROUTES.CHECK_NICKNAME}`;
 
 export const join = async (userData: User) => {
   const { nickname, profileImageUrl, myTeam } = userData;
+
   const response = await fetch(JOIN_URL, {
     method: 'POST',
     headers: {
@@ -21,13 +20,13 @@ export const join = async (userData: User) => {
       myTeam,
     }),
   });
-  return response.json();
+
+  return response;
 };
 
 interface LoginResponse {
   token: string;
 }
-
 export const login = async (data: LoginProps) => {
   const response = await fetch(LOGIN_URL, {
     method: 'POST',
@@ -38,4 +37,20 @@ export const login = async (data: LoginProps) => {
   });
 
   return response.json();
+};
+
+export const nickname = async (data: Pick<User, 'nickname'>) => {
+  const { nickname } = data;
+
+  const response = await fetch(`${CHECKNCINAME_URL}/${nickname}`, {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error status: ${response.status}`);
+  }
+  return await response.json();
 };
