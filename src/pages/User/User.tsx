@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import Button from '../../components/common/Button';
 import Profile from '../../components/User/Profile';
 import UserEditForm from '../../components/User/UserEditForm';
-import { auth } from '../../service/firebase';
 import ROUTES from '../../constants/router';
+import { auth } from '../../service/firebase';
 
 const User = () => {
   try {

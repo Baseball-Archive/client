@@ -1,9 +1,9 @@
-import { LoginProps } from '../pages/User/Login';
-import { useAuthStore } from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
 import { login, join } from '../apis/auth';
 import ROUTES from '../constants/router';
+import { LoginProps } from '../pages/User/Login';
 import { User } from '../pages/User/Signup';
+import { useAuthStore } from '../store/authStore';
 
 export const useAuth = () => {
   const navigate = useNavigate();

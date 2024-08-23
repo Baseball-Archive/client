@@ -1,6 +1,6 @@
-import Badge from "../../components/common/Badge";
-import { TeamScheme } from "../../types/TeamScheme";
-import { calculateWinPercentage } from "../../utils/baseballStats";
+import Badge from '../../components/common/Badge';
+import { TeamScheme } from '../../types/TeamScheme';
+import { calculateWinPercentage } from '../../utils/baseballStats';
 
 interface Standings {
   team_id: number;
@@ -14,7 +14,7 @@ interface Standings {
 const dummyDataList: Standings[] = [
   {
     team_id: 1,
-    team_name: "lg",
+    team_name: 'lg',
     wins: 55,
     losses: 30,
     draws: 8,
@@ -23,7 +23,7 @@ const dummyDataList: Standings[] = [
   },
   {
     team_id: 2,
-    team_name: "doosan",
+    team_name: 'doosan',
     wins: 52,
     losses: 33,
     draws: 8,
@@ -32,7 +32,7 @@ const dummyDataList: Standings[] = [
   },
   {
     team_id: 3,
-    team_name: "nc",
+    team_name: 'nc',
     wins: 50,
     losses: 35,
     draws: 8,
@@ -41,7 +41,7 @@ const dummyDataList: Standings[] = [
   },
   {
     team_id: 4,
-    team_name: "kia",
+    team_name: 'kia',
     wins: 47,
     losses: 38,
     draws: 8,
@@ -50,7 +50,7 @@ const dummyDataList: Standings[] = [
   },
   {
     team_id: 5,
-    team_name: "lotte",
+    team_name: 'lotte',
     wins: 45,
     losses: 40,
     draws: 8,
@@ -59,7 +59,7 @@ const dummyDataList: Standings[] = [
   },
   {
     team_id: 6,
-    team_name: "samsung",
+    team_name: 'samsung',
     wins: 42,
     losses: 43,
     draws: 8,
@@ -68,7 +68,7 @@ const dummyDataList: Standings[] = [
   },
   {
     team_id: 7,
-    team_name: "hanhwa",
+    team_name: 'hanhwa',
     wins: 40,
     losses: 45,
     draws: 8,
@@ -77,7 +77,7 @@ const dummyDataList: Standings[] = [
   },
   {
     team_id: 8,
-    team_name: "kia",
+    team_name: 'kia',
     wins: 38,
     losses: 47,
     draws: 8,
@@ -86,7 +86,7 @@ const dummyDataList: Standings[] = [
   },
   {
     team_id: 9,
-    team_name: "kiwoom",
+    team_name: 'kiwoom',
     wins: 35,
     losses: 50,
     draws: 8,
@@ -95,7 +95,7 @@ const dummyDataList: Standings[] = [
   },
   {
     team_id: 10,
-    team_name: "ssg",
+    team_name: 'ssg',
     wins: 30,
     losses: 55,
     draws: 8,

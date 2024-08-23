@@ -1,12 +1,12 @@
-import { useForm } from 'react-hook-form';
-import InputText from '../../components/common/InputText';
-import Button from '../../components/common/Button';
-import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../service/firebase';
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import Button from '../../components/common/Button';
+import InputText from '../../components/common/InputText';
 import GithubButton from '../../components/User/GithubButton';
 import GoogleButton from '../../components/User/GoogleButton';
 import ROUTES from '../../constants/router';
+import { auth } from '../../service/firebase';
 export interface LoginProps {
   email: string;
   password: string;
