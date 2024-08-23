@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { CameraIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../service/firebase';
-import { removeToken } from '../../store/authStore';
+import { removeToken, useAuthStore } from '../../store/authStore';
 import ROUTES from '../../constants/router';
 import Button from '../common/Button';
 import { DEFAULT_IMAGE } from '../../constants/image';
@@ -19,6 +19,7 @@ export interface Props {
 }
 
 const Profile = ({ profile, email, nickname, myTeam }: Props) => {
+  const { isloggedIn } = useAuthStore();
   const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState(profile);
 
@@ -33,15 +34,16 @@ const Profile = ({ profile, email, nickname, myTeam }: Props) => {
       return;
     }
     try {
-      if (auth.currentUser) {
+      if (isloggedIn) {
         const formData = new FormData();
         formData.append('profileImage', file[0]);
         const result = await uploadImage(formData);
 
         if (result.fileUrl) {
           setProfileImage(result.fileUrl);
+          console.log('result.fileUrl', result.fileUrl);
           const updateResult = await updateUser({
-            picURL: result.nickname,
+            picURL: result.fileUrl,
             nickname,
             myTeam: myTeam?.key,
           });
