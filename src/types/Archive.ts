@@ -3,21 +3,25 @@ import { TeamScheme } from './TeamScheme';
 import { Weather } from './Weather';
 
 export interface Archive {
-  id: number;
-  userId: string;
-  weather: Weather;
-  matchData: MatchData;
-  result: {
-    homeTeam: number;
-    awayTeam: number;
-  };
+  id?: number;
+  nickname?: string;
   title: string;
-  review: string;
-  photo: string;
+  scheduleId: number;
+  weather: Weather | null;
+  homeTeamScore: number;
+  awayTeamScore: number;
+  content: string;
+  picUrl: string;
   isPublic: boolean | null;
-  myTeam?: TeamScheme;
+  created_at?: string;
+  updated_at?: string;
+  homeTeamId?: number;
+  awayTeamId?: number;
+  matchDate?: string;
+  staitium?: string;
 }
-export interface SnakeArchive {
+
+export interface PostArchiveProps {
   schedule_id: number;
   weather: string | null;
   home_team_score: number;
@@ -26,4 +30,5 @@ export interface SnakeArchive {
   content: string;
   pic_url: string;
   is_public: boolean | null;
+  created_at?: string;
 }

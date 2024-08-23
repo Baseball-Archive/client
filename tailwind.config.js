@@ -44,5 +44,5 @@ export default {
       },
     },
   },
-  plugins: [require('tailwind-scrollbar-hide')],
+  plugins: ['tailwind-scrollbar-hide'],
 };
