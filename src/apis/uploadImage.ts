@@ -1,18 +1,15 @@
-import ROUTES from '../constants/router';
-import { auth } from '../service/firebase';
+import apiClient from './apiClient';
 
-const UPLOAD_IMAGE_URL = `http://localhost:5000/ROUTES.`;
-
-export const uploadImage = async (file: File) => {
-  const formData = new FormData();
-  formData.append('profileImage', file);
-
-  const response = await fetch(UPLOAD_IMAGE_URL, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${await auth.currentUser?.getIdToken()}`,
-    },
-    body: formData,
-  });
-  return response.json();
+export const uploadImage = async (data: FormData) => {
+  try {
+    const response = await apiClient.post('/upload', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('이미지 업로드 실패: ', error);
+    throw new Error(`이미지 업로드 실패:  ${error}`);
+  }
 };

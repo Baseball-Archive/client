@@ -26,7 +26,6 @@ const ArchiveInfo = () => {
       picUrl: '',
       content: '',
       isPublic: null,
-      matchData: null,
       matchDate: new Date().toISOString().split('T')[0],
       scheduleId: 0,
     },
@@ -86,7 +85,7 @@ const ArchiveInfo = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="container pt-6 scrollbar-hide"
+      className="scrollbar-hide container pt-6"
     >
       <InfoSection label="제목 ">
         <input
@@ -97,7 +96,10 @@ const ArchiveInfo = () => {
       </InfoSection>
       <div className="flex space-x-2">
         <InfoSection half={true} label="직관한 날짜">
-          <PickDate selectedDate={watch('matchDate')} handleDate={handleDate} />
+          <PickDate
+            selectedDate={watch('matchDate') as string}
+            handleDate={handleDate}
+          />
         </InfoSection>
         <InfoSection half={true} label="날씨">
           <PickWeather
@@ -108,7 +110,7 @@ const ArchiveInfo = () => {
       </div>
       <InfoSection label="경기 선택">
         <PickMatch
-          selectedDate={watch('matchDate')}
+          selectedDate={watch('matchDate') as string}
           selectedMatch={matchData}
           handleMatchData={handleMatchData}
           handleSelectedScheduleId={handleScheduleId}

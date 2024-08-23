@@ -1,6 +1,7 @@
 import { PhotoIcon } from '@heroicons/react/24/outline';
 import { useRef, useState } from 'react';
 import { uploadImage } from '../../../apis/uploadImage';
+import { auth } from '../../../service/firebase';
 
 interface UploadPhotoButtonProps {
   handlePicUrl: (url: string) => void;
@@ -11,20 +12,31 @@ const UploadPhotoButton = ({ handlePicUrl }: UploadPhotoButtonProps) => {
   const handleButtonClick = () => {
     fileInputRef.current?.click();
   };
-
   const uploadImageAndGetUrl = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      try {
-        const response = await uploadImage(file);
-        handlePicUrl(response.fileUrl);
-      } catch (error) {
-        //TODO: 에러 처리
+    const file = event.target.files;
+
+    if (!file) {
+      window.alert('선택된 파일이 없습니다.');
+      console.error('선택된 파일이 없습니다.');
+      return;
+    }
+    try {
+      if (auth.currentUser) {
+        const formData = new FormData();
+        formData.append('profileImage', file[0]);
+        const result = await uploadImage(formData);
+        handlePicUrl(result.fileUrl);
+        console.log(result.fileUrl);
+      } else {
+        console.error('토큰이 없습니다.');
       }
+    } catch (err) {
+      console.error(err);
     }
   };
+
   return (
     <>
       <input

@@ -17,7 +17,7 @@ export interface Archive {
   updated_at?: string;
   homeTeamId?: number;
   awayTeamId?: number;
-  matchDate?: string;
+  matchDate?: string | null;
   staitium?: string;
 }
 

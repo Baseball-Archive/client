@@ -13,7 +13,6 @@ const Archives = () => {
     queryKey: ['Archives'],
     queryFn: getArchives,
   });
-
   if (isLoading) return <Loading />;
   if (error) return <div>error:{error.message}</div>;
 
