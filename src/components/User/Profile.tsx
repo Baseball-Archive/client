@@ -24,13 +24,17 @@ const Profile = ({ profile, email }: Props) => {
     const file = event.target.files;
 
     if (!file) {
+      window.alert('선택된 파일이 없습니다.');
       console.error('선택된 파일이 없습니다.');
       return;
     }
     try {
       if (auth.currentUser) {
-        const response = await uploadImage(file[0]);
-        setProfileImage(response.fileUrl);
+        const formData = new FormData();
+        formData.append('profileImage', file[0]);
+
+        const result = await uploadImage(formData);
+        setProfileImage(result.fileUrl);
       } else {
         console.error('토큰이 없습니다.');
       }
