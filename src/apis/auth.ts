@@ -1,11 +1,10 @@
-import { LoginProps } from '../pages/User/Login';
 import ROUTES from '../constants/router';
-import { auth } from '../service/firebase';
+import { LoginProps } from '../pages/User/Login';
 import { User } from '../pages/User/Signup';
+import { auth } from '../service/firebase';
 
 const JOIN_URL = `http://localhost:5000${ROUTES.JOIN}`;
 const LOGIN_URL = `http://localhost:5000${ROUTES.LOGIN}`;
-
 
 export const join = async (userData: User) => {
   const { nickname, profileImageUrl, myTeam } = userData;
