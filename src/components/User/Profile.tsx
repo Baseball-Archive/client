@@ -1,11 +1,11 @@
 import { CameraIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { signOut } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
+import { DEFAULT_IMAGE } from '../../constants/image';
+import ROUTES from '../../constants/router';
 import { auth } from '../../service/firebase';
 import { removeToken } from '../../store/authStore';
-import ROUTES from '../../constants/router';
 import Button from '../common/Button';
-import { DEFAULT_IMAGE } from '../../constants/image';
 
 export interface Props {
   profile: string;

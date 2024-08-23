@@ -1,3 +1,9 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  addArchiveComment,
+  deleteArchiveComment,
+  editArchiveComment,
+} from '../../../apis/archive';
 import { Comment } from '../../../types/Comment';
 
 interface Props {
@@ -5,7 +11,28 @@ interface Props {
 }
 
 const ArchiveComment = ({ comment }: Props) => {
+  const queryClient = useQueryClient();
   const { userId, commentId, content, updatedAt, nickname, picUrl } = comment;
+
+  const { mutate: editArchiveCommentMutation } = useMutation({
+    mutationFn: editArchiveComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['archiveWithComments'] });
+    },
+    onError: () => {
+      alert('댓글 수정 실패');
+    },
+  });
+
+  const { mutate: deleteArchiveCommentMutation } = useMutation({
+    mutationFn: deleteArchiveComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['archiveWithComments'] });
+    },
+    onError: () => {
+      alert('댓글 삭제 실패');
+    },
+  });
 
   return (
     <div className="flex justify-center overflow-hidden bg-white pt-4">

@@ -1,14 +1,14 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import {
   addArchiveLike,
   getArchiveDetailWithComments,
 } from '../../apis/archive';
+import ArchiveAddComment from '../../components/Archive/ArchiveDetail/ArchiveAddComment';
 import ArchiveComment from '../../components/Archive/ArchiveDetail/ArchiveComment';
 import ArchiveContent from '../../components/Archive/ArchiveDetail/ArchiveContent';
 import LikeButton from '../../components/common/LikeButton';
 import Loading from '../../components/common/Loading';
-import AddComment from '../../components/Community/Comment/AddComment';
 import type { Archive, ArchiveDetail } from '../../types/Archive';
 
 const ArchiveDetail = () => {
@@ -62,7 +62,7 @@ const ArchiveDetail = () => {
         {archiveWithCommentsQuery?.comments.map((comment, index) => (
           <ArchiveComment key={index} comment={comment} />
         ))}
-        <AddComment />
+        <ArchiveAddComment />
       </div>
       <LikeButton onClick={() => handleLike(isLiked)} isLiked={isLiked} />
     </div>
