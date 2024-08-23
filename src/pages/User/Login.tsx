@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import InputText from '../../components/common/InputText';
 import Button from '../../components/common/Button';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../service/firebase';
 import GithubButton from '../../components/User/GithubButton';

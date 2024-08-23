@@ -1,10 +1,16 @@
 import ROUTES from '../constants/router';
 import { User } from '../pages/User/Signup';
-import apiClient from './apiClient';
+import apiClient, { getAuthToken } from './apiClient';
 
 export const join = async (userData: User) => {
   try {
-    const response = await apiClient.post(ROUTES.JOIN, userData);
+    const token = await getAuthToken();
+
+    const response = await apiClient.post(ROUTES.JOIN, userData, {
+      headers: {
+        Authorization: token,
+      },
+    });
     return response.data;
   } catch (error) {
     throw new Error(`Error status: ${error}`);
