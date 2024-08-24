@@ -2,16 +2,31 @@ import { Link } from 'react-router-dom';
 import Button from '../../components/common/Button';
 import Profile from '../../components/User/Profile';
 import UserEditForm from '../../components/User/UserEditForm';
+import Loading from '../../components/common/Loading';
 import useUserData from '../../hooks/useUserData';
+import useUpdateUser from '../../hooks/useUpdateUser';
 import ROUTES from '../../constants/router';
 import { useAuthStore } from '../../store/authStore';
 
 const User = () => {
-  const { userData, loading, error, myTeam } = useUserData();
+  const { userData, isLoading, error, myTeam } = useUserData();
   const { isloggedIn } = useAuthStore();
+  const { mutate: updateUser } = useUpdateUser();
 
-  if (loading) {
-    return <p>로딩 중</p>;
+  const handleUpdateUser = (data: {
+    nickname?: string;
+    myTeam?: number;
+    picURL?: string;
+  }) => {
+    updateUser({
+      nickname: data.nickname || userData?.nickname,
+      myTeam: data.myTeam || userData?.my_team_id,
+      picURL: data.picURL || userData?.pic_url,
+    });
+  };
+
+  if (isLoading) {
+    return <Loading />;
   }
 
   if (error || !isloggedIn) {
@@ -31,12 +46,12 @@ const User = () => {
         <Profile
           profile={userData.pic_url ? userData.pic_url : ''}
           email={userData.email ? userData.email : ''}
-          nickname={userData.nickname ? userData.nickname : ''}
-          myTeam={myTeam}
+          onUpdateUser={handleUpdateUser}
         />
         <UserEditForm
           nickname={userData.nickname ? userData.nickname : ''}
           myTeam={myTeam}
+          onUpdateUser={handleUpdateUser}
         />
       </div>
     );
