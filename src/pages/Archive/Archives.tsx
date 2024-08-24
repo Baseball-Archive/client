@@ -3,7 +3,6 @@ import Archive from '../../components/Archive/Archive';
 import Loading from '../../components/common/Loading';
 import type { Archive as ArchiveType } from '../../types/Archive';
 import { getArchives } from '../../apis/archive';
-import { notify } from '../../components/common/toast';
 
 const Archives = () => {
   const {
