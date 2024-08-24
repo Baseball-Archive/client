@@ -16,3 +16,8 @@ export const getCommunity = async () => {
   const response = await apiClient.get('/board');
   return response.data;
 };
+
+export const getCommunityDetail = async (id: string) => {
+  const response = await apiClient.get(`/board/${id}`);
+  return response.data;
+};

@@ -1,32 +1,45 @@
 import { useParams } from 'react-router-dom';
 import PostDetail from '../../components/Community/PostDetail';
-import { dummyPost } from './dummyPost';
 import Comment from '../../components/Community/Comment/Comment';
 import AddComment from '../../components/Community/Comment/AddComment';
-import { dummyComment } from './dummyComment';
+import { useEffect, useState } from 'react';
+import { getCommunityDetail } from '../../apis/community';
 
 const CommunityDetail = () => {
+  const { id } = useParams<{ id?: string }>();
 
-  const { id } = useParams<{ id: string }>();
-  const postId = parseInt(id || '', 10);
-  const post = dummyPost.find(post => post.id === postId);
+  const [commnunityData, setCommnunityData] = useState();
 
-  const filteredComment = dummyComment.filter(comment => comment.post_id === postId);
+  const fetchData = async () => {
+    if (!id) {
+      return;
+    }
+    try {
+      const result = await getCommunityDetail(id);
+      setCommnunityData(result);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  if (!post) {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  if (!commnunityData) {
     return <div>Post not found</div>;
   }
 
   return (
     <div className="mb-32">
-      <PostDetail postDetail={post} />
-      {filteredComment.slice().map((comment) => (
+      <PostDetail postDetail={commnunityData} />
+      {/* {filteredComment.slice().map((comment) => (
         <Comment 
           key={comment.id}
           comment={comment}
         />
-      ))}
-      
+      ))} */}
+
       <AddComment />
     </div>
   );
