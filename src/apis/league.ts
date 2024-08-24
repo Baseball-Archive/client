@@ -12,7 +12,7 @@ export const getSchedule = async (date: string) => {
 
 export const getStandings = async () => {
   try {
-    const response = await apiClient.get('/standings');
+    const response = await apiClient.get('/ranking');
     return response.data;
   } catch (error) {
     console.error('리그 순위 조회 실패: ', error);
