@@ -4,6 +4,7 @@ import { AddComment, Comment } from '../types/Comment';
 import { snakeToCamel } from '../utils/snakeToCamel';
 import apiClient from './apiClient';
 import { showToast } from '../components/common/Toast';
+
 export const getArchives = async () => {
   try {
     const response = await apiClient.get('/archive');

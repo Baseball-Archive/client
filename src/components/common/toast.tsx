@@ -1,25 +1,55 @@
-import { Slide, ToastContainer, toast } from 'react-toastify';
+import React from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const notify = (text: string) => {
-  toast.info(text);
-};
+interface ToastProps {
+  position?:
+    | 'top-right'
+    | 'top-left'
+    | 'top-center'
+    | 'bottom-right'
+    | 'bottom-left'
+    | 'bottom-center';
+  autoClose?: number;
+  hideProgressBar?: boolean;
+  rtl?: boolean;
+  pauseOnFocusLoss?: boolean;
+  draggable?: boolean;
+  pauseOnHover?: boolean;
+  theme?: 'light' | 'dark' | 'colored';
+}
 
-function Toast() {
+const Toast: React.FC<ToastProps> = ({
+  position = 'top-right',
+  autoClose = 3000,
+  hideProgressBar = false,
+  rtl = false,
+  pauseOnFocusLoss = true,
+  draggable = true,
+  pauseOnHover = true,
+  theme = 'light',
+}) => {
   return (
     <ToastContainer
-      position="top-right"
-      autoClose={1000}
-      hideProgressBar
-      newestOnTop
-      closeOnClick={false}
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      //theme="colored"
-      transition={Slide}
+      position={position}
+      autoClose={autoClose}
+      hideProgressBar={hideProgressBar}
+      closeOnClick
+      rtl={rtl}
+      pauseOnFocusLoss={pauseOnFocusLoss}
+      draggable={draggable}
+      pauseOnHover={pauseOnHover}
+      theme={theme}
     />
   );
-}
+};
+
+// 알림을 트리거하는 함수
+export const showToast = (
+  message: string,
+  type: 'info' | 'success' | 'warning' | 'error' = 'info',
+) => {
+  toast[type](message);
+};
+
 export default Toast;
