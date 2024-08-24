@@ -1,14 +1,18 @@
-// install event
+
+// Install event
+
 self.addEventListener('install', (e) => {
   console.log('[Service Worker] installed');
 });
 
-// activate event
+
+// Activate event
 self.addEventListener('activate', (e) => {
-  console.log('[Service Worker] actived', e);
+  console.log('[Service Worker] activated', e);
 });
 
-// fetch event
+// Fetch event
+
 self.addEventListener('fetch', (e) => {
   console.log('[Service Worker] fetched resource ' + e.request.url);
 });
