@@ -5,12 +5,12 @@ import {
   ChatBubbleOvalLeftEllipsisIcon,
   UserCircleIcon,
 } from '@heroicons/react/20/solid';
+import Icon from '/images/icon.png';
+import Logo from '/images/logo.png';
 import { useState } from 'react';
 import ROUTES from '../../constants/router';
 import NavigationItem from './NavigationItem';
 import PostsMenu from './PostsMenu';
-import Logo from '/images/logo.png';
-import Icon from '/images/icon.png';
 
 const ICON_SIZE = 'size-8';
 const LIST_STYLE = 'py-4';

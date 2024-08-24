@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { postArchive } from '../../../apis/archive';
+import { useNavigate, useParams } from 'react-router-dom';
+import { editArchive, postArchive } from '../../../apis/archive';
 import { MatchData } from '../../../types/MatchData';
 import { Weather } from '../../../types/Weather';
 import { showToast } from '../../common/Toast';
@@ -16,6 +17,8 @@ import UploadPhotoButton from './UploadPhotoButton';
 import type { Archive } from '../../../types/Archive';
 
 const ArchiveInfo = () => {
+  const { id: archiveId } = useParams();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [matchData, setMatchData] = useState<MatchData | null>(null);
   const { register, handleSubmit, setValue, watch } = useForm<Archive>({
@@ -31,6 +34,30 @@ const ArchiveInfo = () => {
       scheduleId: 0,
     },
   });
+
+  const cachedArchive = queryClient.getQueryData<Archive[]>(['Archives']);
+
+  useEffect(() => {
+    if (cachedArchive) {
+      const archive = cachedArchive.find(
+        (item: Archive) => item.id === Number(archiveId),
+      );
+      console.log(archive);
+
+      if (archive) {
+        setValue('title', archive.title);
+        setValue('weather', archive.weather);
+        setValue('homeTeamScore', archive.homeTeamScore);
+        setValue('awayTeamScore', archive.awayTeamScore);
+        setValue('picUrl', archive.picUrl);
+        setValue('content', archive.content);
+        setValue('isPublic', archive.isPublic);
+        setValue('matchDate', archive.matchDate);
+        setValue('scheduleId', archive.scheduleId);
+      }
+    }
+  }, [cachedArchive]);
+
   const handleMatchData = (match: MatchData | null) => {
     setMatchData(match);
   };
@@ -62,17 +89,20 @@ const ArchiveInfo = () => {
   const onSubmit: SubmitHandler<Archive> = async (archiveData) => {
     try {
       console.log(archiveData);
-      await postArchive({
-        schedule_id: archiveData.scheduleId,
-        weather: archiveData.weather,
-        home_team_score: archiveData.homeTeamScore,
-        away_team_score: archiveData.awayTeamScore,
-        title: archiveData.title,
-        content: archiveData.content,
-        pic_url: archiveData.picUrl,
-        is_public: archiveData.isPublic,
+      await editArchive({
+        id: Number(archiveId),
+        archiveData: {
+          schedule_id: archiveData.scheduleId,
+          weather: archiveData.weather,
+          home_team_score: archiveData.homeTeamScore,
+          away_team_score: archiveData.awayTeamScore,
+          title: archiveData.title,
+          content: archiveData.content,
+          pic_url: archiveData.picUrl,
+          is_public: archiveData.isPublic,
+        },
       });
-      showToast('기록이 성공적으로 등록되었습니다.', 'success');
+      showToast('기록이 성공적으로 수정되었습니다.', 'success');
       navigate('/');
     } catch (error) {
       if (error instanceof Error) {
@@ -131,7 +161,7 @@ const ArchiveInfo = () => {
         content={watch('content')}
         onChangeReview={onChangeContent}
       />
-      <UploadPhotoButton handlePicUrl={handlePicUrl} />
+      <UploadPhotoButton picUrl={watch('picUrl')} handlePicUrl={handlePicUrl} />
       <div className="mt-4 flex flex-col">
         <label className="mb-2 text-base">공개 설정</label>
         <PublicPrivateToggle

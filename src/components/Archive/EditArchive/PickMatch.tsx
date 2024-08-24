@@ -115,7 +115,7 @@ const PickMatch = ({
   return (
     <div className="w-full">
       <Select
-        placeholder="경기를 선택하세요."
+        placeholder="경기를 다시 선택하세요."
         isSearchable={false}
         value={selectedMatch}
         onChange={handleMatchSelect}

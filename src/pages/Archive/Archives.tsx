@@ -1,8 +1,8 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { getArchives } from '../../apis/archive';
 import Archive from '../../components/Archive/Archive';
 import Loading from '../../components/common/Loading';
 import type { Archive as ArchiveType } from '../../types/Archive';
-import { getArchives } from '../../apis/archive';
 
 const Archives = () => {
   const {
@@ -14,8 +14,7 @@ const Archives = () => {
     queryFn: getArchives,
   });
   if (isLoading) return <Loading />;
-  console.log(error);
-  console.log(archivesQuery);
+
   return (
     <div className="container mb-32 flex flex-col pt-7">
       {archivesQuery?.length ? (

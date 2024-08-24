@@ -17,6 +17,7 @@ const Login = lazy(() => import('./pages/User/Login'));
 const Signup = lazy(() => import('./pages/User/Signup'));
 const ResetPW = lazy(() => import('./components/common/ResetPW'));
 const ArchiveDetail = lazy(() => import('./pages/Archive/ArchiveDetail'));
+const EditArchive = lazy(() => import('./pages/Archive/EditArchive'));
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <AddArchive />
+          </Suspense>
+        ),
+      },
+      {
+        path: ROUTES.EDIT_ARCHIVE,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <EditArchive />
           </Suspense>
         ),
       },

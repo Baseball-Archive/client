@@ -1,4 +1,5 @@
 import { Weather } from '../../types/Weather';
+import { convertStadiumName } from '../../utils/convertStadiumName';
 import ArchiveHeader from './ArchiveHeader';
 import ReviewSection from './ReviewSection';
 import type { Archive } from '../../types/Archive';
@@ -16,6 +17,7 @@ const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
   const {
     nickname,
     id,
+    stadium,
     weather,
     title,
     content,
@@ -35,8 +37,8 @@ const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
           nickname={(nickname as string) || 'test'}
           weather={weather as Weather}
           profileImage={picUrl}
-          matchDate={matchDate || '2024-01-01'}
-          stadium={'포항야구장'}
+          matchDate={matchDate as string}
+          stadium={convertStadiumName(stadium as string) || (stadium as string)}
           isCommunityArchives={isCommunityArchives}
         />
         <div className="w-full flex-col items-center">

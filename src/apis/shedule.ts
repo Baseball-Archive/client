@@ -1,7 +1,7 @@
 import axios from 'axios';
+import { showToast } from '../components/common/Toast';
 import { snakeToCamel } from '../utils/snakeToCamel';
 import apiClient from './apiClient';
-import { showToast } from '../components/common/Toast';
 
 export const getSchedule = async (date: string) => {
   try {
@@ -15,5 +15,6 @@ export const getSchedule = async (date: string) => {
         showToast('서버와의 연결이 원활하지 않습니다.', 'error');
       }
     }
+    return [];
   }
 };

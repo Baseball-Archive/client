@@ -31,6 +31,10 @@ export interface PostArchiveProps {
   is_public: boolean | null;
   created_at?: string;
 }
+export interface EditArchiveProps {
+  id: number;
+  archiveData: PostArchiveProps;
+}
 
 export interface ArchiveDetail {
   post: Archive;

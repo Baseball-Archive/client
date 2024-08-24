@@ -1,16 +1,23 @@
-import axios, { AxiosError } from 'axios';
-import { PostArchiveProps } from '../types/Archive';
+import axios from 'axios';
+import { showToast } from '../components/common/Toast';
+import { EditArchiveProps, PostArchiveProps } from '../types/Archive';
 import { AddComment, Comment } from '../types/Comment';
 import { snakeToCamel } from '../utils/snakeToCamel';
 import apiClient from './apiClient';
-import { showToast } from '../components/common/Toast';
 
 export const getArchives = async () => {
   try {
     const response = await apiClient.get('/archive');
     return snakeToCamel(response.data);
   } catch (error) {
-    throw error;
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        showToast(error.response.data.error, 'error');
+      } else {
+        showToast(error.message, 'error');
+      }
+    }
+    return []; // 에러 발생 시 빈 배열 반환
   }
 };
 export const getArchiveDetailWithComments = async () => {
@@ -43,8 +50,8 @@ export const addArchiveComment = async ({
   //TODO: 서버 API 확정되면 엔드포인트 수정
 };
 
-export const editArchive = async (id: number) => {
-  const response = await apiClient.put(`/archive/${id}`);
+export const editArchive = async (data: EditArchiveProps) => {
+  const response = await apiClient.put(`/archive/${data.id}`, data.archiveData);
   return response.data;
 };
 export const editArchiveComment = async (comment: Comment) => {

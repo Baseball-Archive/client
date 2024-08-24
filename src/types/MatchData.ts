@@ -1,6 +1,6 @@
 export interface MatchData {
   matchDate: string;
-  scheduleId?: number;
+  id?: number;
   homeTeamId: number;
   awayTeamId: number;
   stadium: string;

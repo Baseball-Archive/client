@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-
+import { useNavigate } from 'react-router-dom';
+import { deleteArchive, editArchive } from '../../apis/archive';
 import { Weather } from '../../types/Weather';
 import ArchiveHandleButton from '../common/PostHandleButton';
-import { deleteArchive, editArchive } from '../../apis/archive';
 
 interface ArchiveHeaderProps {
   id: number;
@@ -30,7 +30,7 @@ const ArchiveHeader = ({
   isCommunityArchives,
 }: ArchiveHeaderProps) => {
   const queryClient = useQueryClient();
-
+  const navigate = useNavigate();
   const { mutate: deleteArchiveMutate } = useMutation({
     mutationFn: deleteArchive,
     onSuccess: () => {
@@ -59,7 +59,7 @@ const ArchiveHeader = ({
   };
   const handleEdit = () => {
     if (confirm('수정 하시겠습니까?')) {
-      editArchiveMutate(id);
+      navigate(`/editarchive/${id}`);
     }
   };
 

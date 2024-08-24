@@ -1,6 +1,7 @@
 const ROUTES = {
   HOME: '/',
   ADD_ARCHIVE: '/addarchive',
+  EDIT_ARCHIVE: '/editarchive/:id',
   POSTS: '/posts',
   POST_DETAIL: '/posts/:id',
   ADD_POST: '/post',
