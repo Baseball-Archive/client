@@ -10,13 +10,13 @@ import InputText from '../../components/common/InputText';
 import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
 
-import { updateUser } from '../../apis/auth';
 import { TeamScheme } from '../Community/Post';
 import { BASEBALL_TEAMS, OptionsProps } from '../../constants/baseballTeams';
 
 interface Props {
   nickname: string;
   myTeam: OptionsProps | undefined;
+  onUpdateUser: (data: { nickname?: string; myTeam?: number }) => void;
 }
 
 const Option = (props: OptionProps<OptionsProps>) => {
@@ -46,7 +46,7 @@ const selectStyle: StylesConfig<OptionsProps> = {
   }),
 };
 
-const UserEditForm = ({ nickname, myTeam }: Props) => {
+const UserEditForm = ({ nickname, myTeam, onUpdateUser }: Props) => {
   const { control, handleSubmit } = useForm({
     defaultValues: {
       nickname,
@@ -54,17 +54,11 @@ const UserEditForm = ({ nickname, myTeam }: Props) => {
     },
   });
 
-  const onSubmit: SubmitHandler<Props> = async (data) => {
-    try {
-      const result = await updateUser({
-        nickname: data.nickname,
-        myTeam: data.myTeam?.key,
-      });
-      window.alert(result.message);
-    } catch (err) {
-      console.error(err);
-      throw err;
-    }
+  const onSubmit: SubmitHandler<Omit<Props, 'onUpdateUser'>> = async (data) => {
+    onUpdateUser({
+      nickname: data.nickname,
+      myTeam: data.myTeam?.key,
+    });
   };
 
   return (
