@@ -18,6 +18,7 @@ export interface Archive {
   awayTeamId?: number;
   matchDate?: string | null;
   stadium?: string;
+  userPicUrl?: string;
 }
 
 export interface PostArchiveProps {

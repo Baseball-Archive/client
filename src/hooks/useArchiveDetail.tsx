@@ -13,7 +13,7 @@ const useArchiveDetail = (id: string) => {
     Archive,
     Error
   >({
-    queryKey: ['ArchiveDetail', id],
+    queryKey: ['publicArchive', id],
     queryFn: () => getArchiveDetailWithComments(id),
   });
   return { getArchiveWithComments, getArchiveError };

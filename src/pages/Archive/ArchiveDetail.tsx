@@ -1,39 +1,21 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  addArchiveLike,
-  getArchiveDetailWithComments,
-} from '../../apis/archive';
 import ArchiveAddComment from '../../components/Archive/ArchiveDetail/ArchiveAddComment';
 import ArchiveComment from '../../components/Archive/ArchiveDetail/ArchiveComment';
 import ArchiveContent from '../../components/Archive/ArchiveDetail/ArchiveContent';
 import LikeButton from '../../components/common/LikeButton';
-import Loading from '../../components/common/Loading';
 import useArchiveDetail from '../../hooks/useArchiveDetail';
+import { useLike } from '../../hooks/useLike';
 import type { Archive, ArchiveDetail } from '../../types/Archive';
 
 const ArchiveDetail = () => {
   const { id: archiveId } = useParams();
   const [isLiked, setIsLiked] = useState(false);
-  const { getArchiveWithComments, getArchiveError } = useArchiveDetail(
-    archiveId as string,
-  );
+  const { getArchiveWithComments } = useArchiveDetail(archiveId as string);
+  const { addLike, subLike } = useLike(Number(archiveId));
 
   const DUMMY_DATA = {
-    post: getArchiveWithComments || {
-      matchDate: '2024-08-05T15:00:00.000Z',
-      homeTeamId: 2,
-      awayTeamId: 9,
-      title: 'edittest!!!',
-      content: 'asd@@@@@@@@@!!!!!',
-      picUrl:
-        'https://baseball-archive-team.s3.ap-northeast-2.amazonaws.com/profile-images/517fe222-c1cb-407a-bf10-86369bfc5443-hongje.PNG',
-      createdAt: '2024-08-24T08:25:15.292Z',
-      userUid: 'Nd0BhLPx3ded9xt8XgMwNV1UQ1E3',
-      likes: '0',
-      comments: '0',
-    },
+    post: getArchiveWithComments as Archive,
     comments: [
       {
         userId: 1,
@@ -54,37 +36,14 @@ const ArchiveDetail = () => {
     ],
   };
 
-  // const { mutate: addArchiveLikeMutate } = useMutation({
-  //   mutationFn: addArchiveLike,
-  //   onSuccess: () => {
-  //     setIsLiked((prev) => !prev);
-  //   },
-  //   onError: () => {
-  //     alert('좋아요 실패');
-  //   },
-  // });
-  // const { mutate: subArchiveLikeMutate } = useMutation({
-  //   mutationFn: addArchiveLike,
-  //   onSuccess: () => {
-  //     setIsLiked((prev) => !prev);
-  //   },
-  //   onError: () => {
-  //     alert('좋아요 취소 실패');
-  //   },
-  // });
-
-  // const handleLike = (isLiked: boolean) => {
-  //   if (isLiked === true) {
-  //     addArchiveLikeMutate(archiveWithCommentsQuery?.post.id as number);
-  //   } else if (isLiked === false) {
-  //     subArchiveLikeMutate(archiveWithCommentsQuery?.post.id as number);
-  //   }
-  // };
-
-  // if (isLoading) return <Loading />;
-  // if (archiveWithCommentError)
-  //   return <div>error:{archiveWithCommentError.message}</div>;
-  // console.log(getArchiveDetailWithComments(id));
+  const handleLike = (isLiked: boolean) => {
+    if (isLiked === true) {
+      subLike();
+    } else if (isLiked === false) {
+      addLike();
+    }
+  };
+  console.log(DUMMY_DATA.post);
   return (
     <div className="relative mb-32 h-full w-full pt-7">
       <ArchiveContent ArchiveContent={DUMMY_DATA.post} />
@@ -94,7 +53,7 @@ const ArchiveDetail = () => {
         ))}
         <ArchiveAddComment />
       </div>
-      {/* <LikeButton onClick={() => handleLike(isLiked)} isLiked={isLiked} /> */}
+      <LikeButton onClick={() => handleLike(isLiked)} isLiked={isLiked} />
     </div>
   );
 };

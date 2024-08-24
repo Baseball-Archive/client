@@ -1,3 +1,4 @@
+import { DEFAULT_IMAGE } from '../../constants/image';
 import { Weather } from '../../types/Weather';
 import { convertStadiumName } from '../../utils/convertStadiumName';
 import ArchiveHeader from './ArchiveHeader';
@@ -27,6 +28,7 @@ const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
     homeTeamId,
     awayTeamId,
     matchDate,
+    userPicUrl,
   } = data;
 
   return (
@@ -36,7 +38,7 @@ const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
           id={id as number}
           nickname={(nickname as string) || 'test'}
           weather={weather as Weather}
-          profileImage={picUrl}
+          profileImage={(userPicUrl as string) || DEFAULT_IMAGE}
           matchDate={matchDate as string}
           stadium={convertStadiumName(stadium as string) || (stadium as string)}
           isCommunityArchives={isCommunityArchives}
