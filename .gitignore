@@ -12,6 +12,7 @@ dev-dist
 dist
 dist-ssr
 *.local
+.env
 
 # Editor directories and files
 .vscode/*
@@ -24,7 +25,4 @@ dist-ssr
 *.sln
 *.sw?
 
-*.png
 
-/public/mockServiceWorker.js
-/src/mocks/

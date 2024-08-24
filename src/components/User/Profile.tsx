@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { CameraIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../service/firebase';
-import { removeToken, useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '../../store/authStore';
 import ROUTES from '../../constants/router';
 import Button from '../common/Button';
 import { DEFAULT_IMAGE } from '../../constants/image';
@@ -20,6 +20,7 @@ export interface Props {
 
 const Profile = ({ profile, email, nickname, myTeam }: Props) => {
   const { isloggedIn } = useAuthStore();
+  const { storeLogout } = useAuthStore();
   const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState(profile);
 
@@ -59,7 +60,7 @@ const Profile = ({ profile, email, nickname, myTeam }: Props) => {
   const onSignOut = async () => {
     try {
       await signOut(auth);
-      removeToken();
+      storeLogout();
       navigate(ROUTES.LOGIN);
     } catch (error) {
       console.error(error);

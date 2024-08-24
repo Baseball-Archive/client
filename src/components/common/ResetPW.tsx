@@ -1,18 +1,30 @@
 import { sendPasswordResetEmail } from 'firebase/auth';
 import InputText from './InputText';
 import { auth } from '../../service/firebase';
+import { useForm } from 'react-hook-form';
+
+interface Props {
+  email: string;
+}
 
 const ResetPW = () => {
-  const handlePasswordReset = () => {
-    const user = auth.currentUser;
-    try {
-      if (user && user.email) {
-        sendPasswordResetEmail(auth, user.email);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Props>();
 
-        alert('해당 메일로 메시지를 보냈습니다!');
+  const handlePasswordReset = async (data: Props) => {
+    try {
+      if (data.email) {
+        await sendPasswordResetEmail(auth, data.email);
+        alert('해당 메일로 비밀번호 재설정 링크를 보냈습니다!');
+      } else {
+        alert('이메일을 입력해주세요.');
       }
     } catch (err) {
       console.error(err);
+      alert('비밀번호 재설정 이메일 발송 실패.');
     }
   };
 
@@ -22,18 +34,26 @@ const ResetPW = () => {
         <div className="py-16 font-title text-3xl font-bold">
           비밀번호 재설정
         </div>
-        <form className="flex flex-col">
+        <form
+          className="flex flex-col"
+          onSubmit={handleSubmit(handlePasswordReset)}
+        >
           <fieldset>
             <p>이메일</p>
             <InputText
-              scheme="primary"
+              scheme={errors.email ? 'danger' : 'primary'}
               inputSize="large"
               inputType="email"
-            ></InputText>
+              {...register('email', {
+                required: true,
+              })}
+            />
+            {errors.email && (
+              <p className="error-text">이메일을 입력해주세요.</p>
+            )}
           </fieldset>
           <fieldset className="py-10">
             <button
-              onClick={handlePasswordReset}
               type="submit"
               className="h-16 w-[359px] shrink-0 rounded-lg bg-black text-2xl not-italic text-white"
             >
