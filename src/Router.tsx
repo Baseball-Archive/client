@@ -4,6 +4,7 @@ import Layout from './components/layout/Layout';
 import Loading from './components/common/Loading';
 import AddPost from './pages/Community/AddPost';
 import ROUTES from './constants/router';
+import ErrorPage from './components/common/ErrorPage';
 
 const Archives = lazy(() => import('./pages/Archive/Archives'));
 const AddArchive = lazy(() => import('./pages/Archive/AddArchive'));
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
   {
     path: ROUTES.HOME,
     element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,

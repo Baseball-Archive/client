@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { auth } from '../service/firebase';
 import { getToken, setToken } from '../store/authStore';
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../constants/router';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -34,6 +36,18 @@ const apiClient = (() => {
       return config;
     },
     (error) => {
+      return Promise.reject(error);
+    },
+  );
+
+  // 응답 인터셉터
+  instance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response?.status === 401) {
+        const navigate = useNavigate();
+        navigate(ROUTES.LOGIN);
+      }
       return Promise.reject(error);
     },
   );
