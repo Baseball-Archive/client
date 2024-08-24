@@ -1,6 +1,6 @@
+import { CalendarDaysIcon } from '@heroicons/react/20/solid';
 import { forwardRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
-import { CalendarDaysIcon } from '@heroicons/react/20/solid';
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface PickDateProps {
@@ -11,8 +11,9 @@ interface ShowInputDateProps {
   value?: string;
   onClick?: () => void;
 }
+
 const ShowInputDate = forwardRef<HTMLDivElement, ShowInputDateProps>(
-  ({ value, onClick }, ref) => (
+  ({ value, onClick }: ShowInputDateProps, ref) => (
     <div className="px-4" ref={ref} onClick={onClick}>
       <input value={value} readOnly className="w-11/12 outline-none" />
       <span className="absolute right-4 top-1/2 -translate-y-1/2 transform cursor-pointer">
@@ -21,6 +22,7 @@ const ShowInputDate = forwardRef<HTMLDivElement, ShowInputDateProps>(
     </div>
   ),
 );
+ShowInputDate.displayName = 'ShowInputDate';
 
 const PickDate = ({ selectedDate, handleDate }: PickDateProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

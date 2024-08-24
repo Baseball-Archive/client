@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { auth } from '../service/firebase';
 import { getToken, setToken } from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +11,7 @@ export const getAuthToken = async (): Promise<string | null> => {
   const user = auth.currentUser;
   if (user) {
     const token = await user.getIdToken();
+
     setToken(token); // 토큰을 전역 상태나 스토어에 저장합니다.
     return `Bearer ${token}`;
   }
@@ -30,6 +31,7 @@ const apiClient = (() => {
   instance.interceptors.request.use(
     async (config) => {
       const token = getToken(); // 저장된 토큰 가져오기
+
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }

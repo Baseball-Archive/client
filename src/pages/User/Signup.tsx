@@ -1,21 +1,20 @@
+import { FirebaseError } from 'firebase/app';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { LoginProps } from './Login';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../service/firebase';
-import { useAuth } from '../../hooks/useAuth';
-import InputText from '../../components/common/InputText';
 import Badge from '../../components/common/Badge';
-import GoogleButton from '../../components/User/GoogleButton';
-import GithubButton from '../../components/User/GithubButton';
-import ROUTES from '../../constants/router';
-import { DEFAULT_IMAGE } from '../../constants/image';
-
-import { TeamScheme } from '../../types/TeamScheme';
-import { BASEBALL_TEAMS } from '../../constants/baseballTeams';
+import InputText from '../../components/common/InputText';
 import { showToast } from '../../components/common/Toast';
-import { FirebaseError } from 'firebase/app';
+import GithubButton from '../../components/User/GithubButton';
+import GoogleButton from '../../components/User/GoogleButton';
+import { BASEBALL_TEAMS } from '../../constants/baseballTeams';
+import { DEFAULT_IMAGE } from '../../constants/image';
+import ROUTES from '../../constants/router';
+import { useAuth } from '../../hooks/useAuth';
+import { auth } from '../../service/firebase';
+import { TeamScheme } from '../../types/TeamScheme';
+import { LoginProps } from './Login';
 
 export interface User {
   nickname: string;

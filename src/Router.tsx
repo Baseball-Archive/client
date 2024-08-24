@@ -1,10 +1,10 @@
-import React, { Suspense, lazy } from 'react';
+import { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import Layout from './components/layout/Layout';
 import Loading from './components/common/Loading';
-import AddPost from './pages/Community/AddPost';
+import Layout from './components/layout/Layout';
 import ROUTES from './constants/router';
 import ErrorPage from './components/common/ErrorPage';
+
 
 const Archives = lazy(() => import('./pages/Archive/Archives'));
 const AddArchive = lazy(() => import('./pages/Archive/AddArchive'));
@@ -18,6 +18,7 @@ const Login = lazy(() => import('./pages/User/Login'));
 const Signup = lazy(() => import('./pages/User/Signup'));
 const ResetPW = lazy(() => import('./components/common/ResetPW'));
 const ArchiveDetail = lazy(() => import('./pages/Archive/ArchiveDetail'));
+const EditArchive = lazy(() => import('./pages/Archive/EditArchive'));
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <AddArchive />
+          </Suspense>
+        ),
+      },
+      {
+        path: ROUTES.EDIT_ARCHIVE,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <EditArchive />
           </Suspense>
         ),
       },

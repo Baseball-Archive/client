@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
-import ReviewSection from './ReviewSection';
+import { DEFAULT_IMAGE } from '../../constants/image';
+import { Weather } from '../../types/Weather';
+import { convertStadiumName } from '../../utils/convertStadiumName';
 import ArchiveHeader from './ArchiveHeader';
+import ReviewSection from './ReviewSection';
 import type { Archive } from '../../types/Archive';
-import { getArchives } from '../../apis/archive';
 
 interface ArchiveProps {
   data: Archive;
@@ -10,35 +11,51 @@ interface ArchiveProps {
 }
 
 const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
+  if (!data) {
+    return <div>데이터가 없습니다.</div>;
+  }
+
   const {
+    nickname,
     id,
-    userId,
+    stadium,
     weather,
-    photo,
-    matchData,
-    review,
-    isPublic,
     title,
-    result,
+    content,
+    homeTeamScore,
+    awayTeamScore,
+    picUrl,
+    homeTeamId,
+    awayTeamId,
+    matchDate,
+    userPicUrl,
   } = data;
 
   return (
-    <div className="mb-6 flex justify-center overflow-hidden bg-white">
+    <div className="mb-6 flex flex-col justify-center overflow-hidden bg-white">
       <div className="w-full">
         <ArchiveHeader
-          userId={userId}
-          weather={weather}
-          profileImage={photo}
-          matchData={matchData}
+          id={id as number}
+          nickname={(nickname as string) || 'test'}
+          weather={weather as Weather}
+          profileImage={(userPicUrl as string) || DEFAULT_IMAGE}
+          matchDate={matchDate as string}
+          stadium={convertStadiumName(stadium as string) || (stadium as string)}
+          isCommunityArchives={isCommunityArchives}
         />
         <div className="w-full flex-col items-center">
-          <img src={photo} className="mb-4 aspect-square w-full object-cover" />
+          <img
+            src={picUrl}
+            className="mb-4 aspect-square w-full object-cover"
+          />
           <ReviewSection
-            matchData={matchData}
-            id={id}
+            id={id as number}
             title={title}
-            review={review}
-            result={result}
+            content={content}
+            homeTeamId={homeTeamId as number}
+            awayTeamId={awayTeamId as number}
+            homeTeamScore={homeTeamScore}
+            awayTeamScore={awayTeamScore}
             isCommunityArchives={isCommunityArchives}
           />
         </div>

@@ -1,3 +1,4 @@
+
 import { auth } from '../service/firebase';
 import { getUser } from '../apis/auth';
 import { BASEBALL_TEAMS } from '../constants/baseballTeams';
