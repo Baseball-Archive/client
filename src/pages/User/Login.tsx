@@ -8,6 +8,8 @@ import GithubButton from '../../components/User/GithubButton';
 import GoogleButton from '../../components/User/GoogleButton';
 import ROUTES from '../../constants/router';
 import { useAuth } from '../../hooks/useAuth';
+import { showToast } from '../../components/common/Toast';
+import { FirebaseError } from 'firebase/app';
 
 export interface LoginProps {
   email: string;
@@ -31,13 +33,19 @@ const Login = () => {
         if (sendToken) {
           userLogin(sendToken);
         } else {
-          console.error('Failed to get Token');
-          alert('로그인에 문제가 발생했습니다');
+          showToast('로그인에 문제가 발생했습니다', 'error');
         }
       }
-    } catch (err) {
-      console.error('Login failed:', err);
-      alert('비밀번호 또는 아이디가 틀립니다.');
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case 'auth/user-not-found':
+          case 'auth/wrong-password':
+            return showToast('비밀번호 또는 아이디가 틀립니다.', 'error');
+        }
+      } else {
+        showToast('알 수 없는 오류가 발생했습니다.', 'error');
+      }
     }
   };
 

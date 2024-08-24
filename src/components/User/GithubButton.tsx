@@ -1,7 +1,6 @@
 import { GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../service/firebase';
 import { useNavigate } from 'react-router-dom';
-import Button from '../common/Button';
 import { User } from '../../pages/User/Signup';
 import { useAuth } from '../../hooks/useAuth';
 import ROUTES from '../../constants/router';

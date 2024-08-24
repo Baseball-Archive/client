@@ -50,5 +50,3 @@ export const updateUser = async (data: updateUserProps) => {
     throw new Error(`회원정보 수정 실패:  ${error}`);
   }
 };
-
-export const socialLoginEmail = async (data: string) => {};

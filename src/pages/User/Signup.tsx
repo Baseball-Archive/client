@@ -14,6 +14,8 @@ import { DEFAULT_IMAGE } from '../../constants/image';
 
 import { TeamScheme } from '../../types/TeamScheme';
 import { BASEBALL_TEAMS } from '../../constants/baseballTeams';
+import { showToast } from '../../components/common/Toast';
+import { FirebaseError } from 'firebase/app';
 
 export interface User {
   nickname: string;
@@ -41,15 +43,11 @@ const Signup = () => {
 
   const onSubmit = async (data: SignupProps) => {
     if (!isNicknameAvailable) {
-      alert('닉네임 중복을 확인해주세요.');
+      showToast('닉네임 중복을 확인해주세요.', 'warning');
       return;
     }
     try {
-      const createdUser = await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password,
-      );
+      await createUserWithEmailAndPassword(auth, data.email, data.password);
 
       if (auth.currentUser) {
         const userData: User = {
@@ -63,12 +61,23 @@ const Signup = () => {
 
       // Firebase 사용자 계정 생성
     } catch (error) {
-      if (error instanceof Error) {
-        console.error('Signup failed:', error.message);
-        alert(`회원 가입 실패: ${error.message}`);
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            return showToast('이미 사용 중인 이메일입니다.', 'warning');
+          case 'auth/weak-password':
+            return showToast('비밀번호는 6글자 이상이어야 합니다.', 'warning');
+          case 'auth/network-request-failed':
+            return showToast('네트워크 연결에 실패 하였습니다.', 'error');
+          case 'auth/invalid-email':
+            return showToast('잘못된 이메일 형식입니다.', 'warning');
+          case 'auth/internal-error':
+            return showToast('잘못된 요청입니다.', 'error');
+          default:
+            return showToast('회원 가입에 실패했습니다.', 'error');
+        }
       } else {
-        console.error('Signup failed with unknown error');
-        alert('알 수 없는 오류가 발생했습니다.');
+        showToast('알 수 없는 오류가 발생했습니다.', 'error');
       }
     }
   };
@@ -83,14 +92,13 @@ const Signup = () => {
       if (nickname) {
         await userNickname({ nickname });
         setIsNicknameAvailable(true);
-        alert('사용가능한 닉네임입니다.');
+        showToast('사용가능한 닉네임입니다.', 'info');
       } else {
-        alert('닉네임을 입력해주세요.');
+        showToast('닉네임을 입력해주세요.', 'warning');
       }
     } catch (error) {
       setIsNicknameAvailable(false);
-      alert('이미 사용 중인 닉네임입니다.');
-      console.error('Nickname check failed:', error);
+      showToast('이미 사용 중인 닉네임입니다.', 'warning');
     }
   };
 
@@ -104,7 +112,7 @@ const Signup = () => {
     if (isValid) {
       setIsOpen(true);
     } else {
-      alert('정보를 입력하세요');
+      showToast('정보를 입력하세요', 'warning');
     }
   };
 
