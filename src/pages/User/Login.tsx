@@ -1,13 +1,15 @@
 import { useForm } from 'react-hook-form';
 import InputText from '../../components/common/InputText';
 import Button from '../../components/common/Button';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../service/firebase';
 import GithubButton from '../../components/User/GithubButton';
 import GoogleButton from '../../components/User/GoogleButton';
 import ROUTES from '../../constants/router';
 import { useAuth } from '../../hooks/useAuth';
+import { showToast } from '../../components/common/Toast';
+import { FirebaseError } from 'firebase/app';
 
 export interface LoginProps {
   email: string;
@@ -31,13 +33,19 @@ const Login = () => {
         if (sendToken) {
           userLogin(sendToken);
         } else {
-          console.error('Failed to get Token');
-          alert('로그인에 문제가 발생했습니다');
+          showToast('로그인에 문제가 발생했습니다', 'error');
         }
       }
-    } catch (err) {
-      console.error('Login failed:', err);
-      alert('비밀번호 또는 아이디가 틀립니다.');
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case 'auth/user-not-found':
+          case 'auth/wrong-password':
+            return showToast('비밀번호 또는 아이디가 틀립니다.', 'error');
+        }
+      } else {
+        showToast('알 수 없는 오류가 발생했습니다.', 'error');
+      }
     }
   };
 
@@ -88,15 +96,17 @@ const Login = () => {
               <Link to={ROUTES.RESET}>비밀번호 찾기 </Link>
               <Link to={ROUTES.JOIN}>회원가입</Link>
             </div>
-            <div className="pt-20 text-center font-title font-light">
-              SNS 계정으로 간편하게 로그인
-            </div>
-            <div className="flex justify-between pb-5 text-center">
-              <div className="px-5">
-                <GoogleButton />
+            <div className="flex flex-col">
+              <div className="pt-20 text-center font-title font-normal">
+                SNS 계정으로 간편하게 로그인
               </div>
-              <div className="px-5">
-                <GithubButton />
+              <div className="flex justify-between pb-5 text-center">
+                <div className="px-3">
+                  <GoogleButton />
+                </div>
+                <div className="px-3">
+                  <GithubButton />
+                </div>
               </div>
             </div>
           </div>

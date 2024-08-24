@@ -14,6 +14,8 @@ import { DEFAULT_IMAGE } from '../../constants/image';
 
 import { TeamScheme } from '../../types/TeamScheme';
 import { BASEBALL_TEAMS } from '../../constants/baseballTeams';
+import { showToast } from '../../components/common/Toast';
+import { FirebaseError } from 'firebase/app';
 
 export interface User {
   nickname: string;
@@ -41,15 +43,11 @@ const Signup = () => {
 
   const onSubmit = async (data: SignupProps) => {
     if (!isNicknameAvailable) {
-      alert('닉네임 중복을 확인해주세요.');
+      showToast('닉네임 중복을 확인해주세요.', 'warning');
       return;
     }
     try {
-      const createdUser = await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password,
-      );
+      await createUserWithEmailAndPassword(auth, data.email, data.password);
 
       if (auth.currentUser) {
         const userData: User = {
@@ -63,12 +61,23 @@ const Signup = () => {
 
       // Firebase 사용자 계정 생성
     } catch (error) {
-      if (error instanceof Error) {
-        console.error('Signup failed:', error.message);
-        alert(`회원 가입 실패: ${error.message}`);
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            return showToast('이미 사용 중인 이메일입니다.', 'warning');
+          case 'auth/weak-password':
+            return showToast('비밀번호는 6글자 이상이어야 합니다.', 'warning');
+          case 'auth/network-request-failed':
+            return showToast('네트워크 연결에 실패 하였습니다.', 'error');
+          case 'auth/invalid-email':
+            return showToast('잘못된 이메일 형식입니다.', 'warning');
+          case 'auth/internal-error':
+            return showToast('잘못된 요청입니다.', 'error');
+          default:
+            return showToast('회원 가입에 실패했습니다.', 'error');
+        }
       } else {
-        console.error('Signup failed with unknown error');
-        alert('알 수 없는 오류가 발생했습니다.');
+        showToast('알 수 없는 오류가 발생했습니다.', 'error');
       }
     }
   };
@@ -83,14 +92,13 @@ const Signup = () => {
       if (nickname) {
         await userNickname({ nickname });
         setIsNicknameAvailable(true);
-        alert('사용가능한 닉네임입니다.');
+        showToast('사용가능한 닉네임입니다.', 'info');
       } else {
-        alert('닉네임을 입력해주세요.');
+        showToast('닉네임을 입력해주세요.', 'warning');
       }
     } catch (error) {
       setIsNicknameAvailable(false);
-      alert('이미 사용 중인 닉네임입니다.');
-      console.error('Nickname check failed:', error);
+      showToast('이미 사용 중인 닉네임입니다.', 'warning');
     }
   };
 
@@ -104,7 +112,7 @@ const Signup = () => {
     if (isValid) {
       setIsOpen(true);
     } else {
-      alert('정보를 입력하세요');
+      showToast('정보를 입력하세요', 'warning');
     }
   };
 
@@ -114,14 +122,16 @@ const Signup = () => {
         <div className="m:text-center font-title text-3xl font-bold md:block">
           회원가입
         </div>
-        <div className="pt-6 text-center font-title font-light">
-          SNS 계정으로 간편하게 로그인
-          <div className="flex pb-3 text-center">
-            <div className="px-5">
-              <GoogleButton />
-            </div>
-            <div className="px-5">
-              <GithubButton />
+        <div className="flex flex-col">
+          <div className="pt-6 text-center font-title font-normal">
+            SNS 계정으로 간편하게 로그인
+            <div className="flex justify-between pb-5 text-center">
+              <div className="px-3">
+                <GoogleButton />
+              </div>
+              <div className="px-3">
+                <GithubButton />
+              </div>
             </div>
           </div>
         </div>
@@ -211,10 +221,12 @@ const Signup = () => {
               회원가입
             </div>
             <span className="flex place-content-center py-5">
-              <p className="px-4 font-title font-light">
+              <p className="px-4 font-title font-normal">
                 이미 아이디가 있으신가요?
               </p>
-              <Link to={ROUTES.LOGIN}>로그인</Link>
+              <Link className="font-bold" to={ROUTES.LOGIN}>
+                로그인
+              </Link>
             </span>
           </fieldset>
           {isOpen && (
