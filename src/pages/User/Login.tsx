@@ -88,15 +88,17 @@ const Login = () => {
               <Link to={ROUTES.RESET}>비밀번호 찾기 </Link>
               <Link to={ROUTES.JOIN}>회원가입</Link>
             </div>
-            <div className="pt-20 text-center font-title font-light">
-              SNS 계정으로 간편하게 로그인
-            </div>
-            <div className="flex justify-between pb-5 text-center">
-              <div className="px-5">
-                <GoogleButton />
+            <div className="flex flex-col">
+              <div className="pt-20 text-center font-title font-normal">
+                SNS 계정으로 간편하게 로그인
               </div>
-              <div className="px-5">
-                <GithubButton />
+              <div className="flex justify-between pb-5 text-center">
+                <div className="px-3">
+                  <GoogleButton />
+                </div>
+                <div className="px-3">
+                  <GithubButton />
+                </div>
               </div>
             </div>
           </div>

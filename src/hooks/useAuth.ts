@@ -1,6 +1,6 @@
 import { useAuthStore } from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
-import { join, nickname } from '../apis/auth';
+import { getUser, join, nickname } from '../apis/auth';
 import ROUTES from '../constants/router';
 import { User } from '../pages/User/Signup';
 
@@ -26,7 +26,13 @@ export const useAuth = () => {
     return response;
   };
 
+  const checkUserExists = async (data: string) => {
+    const response = await getUser();
+
+    return response;
+  };
   return {
+    checkUserExists,
     userLogin,
     userSignup,
     userNickname,

@@ -114,14 +114,16 @@ const Signup = () => {
         <div className="m:text-center font-title text-3xl font-bold md:block">
           회원가입
         </div>
-        <div className="pt-6 text-center font-title font-light">
-          SNS 계정으로 간편하게 로그인
-          <div className="flex pb-3 text-center">
-            <div className="px-5">
-              <GoogleButton />
-            </div>
-            <div className="px-5">
-              <GithubButton />
+        <div className="flex flex-col">
+          <div className="pt-6 text-center font-title font-normal">
+            SNS 계정으로 간편하게 로그인
+            <div className="flex justify-between pb-5 text-center">
+              <div className="px-3">
+                <GoogleButton />
+              </div>
+              <div className="px-3">
+                <GithubButton />
+              </div>
             </div>
           </div>
         </div>
@@ -211,10 +213,12 @@ const Signup = () => {
               회원가입
             </div>
             <span className="flex place-content-center py-5">
-              <p className="px-4 font-title font-light">
+              <p className="px-4 font-title font-normal">
                 이미 아이디가 있으신가요?
               </p>
-              <Link to={ROUTES.LOGIN}>로그인</Link>
+              <Link className="font-bold" to={ROUTES.LOGIN}>
+                로그인
+              </Link>
             </span>
           </fieldset>
           {isOpen && (
