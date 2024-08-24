@@ -11,7 +11,9 @@ const ROUTES = {
   LOGIN: '/users/login',
   JOIN: '/users/join',
   RESET: '/users/reset',
+  CHECK_NICKNAME: '/users/checkNickname',
   USER: '/users',
+  UPLOAD_IMAGE_URL: '/upload',
 };
 
 export default ROUTES;

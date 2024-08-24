@@ -5,24 +5,18 @@ import Select, {
   SingleValueProps,
   StylesConfig,
 } from 'react-select';
-import Badge from '../../components/common/Badge';
-import Button from '../../components/common/Button';
+
 import InputText from '../../components/common/InputText';
-import { BASEBALL_TEAMS } from '../../constants/baseballTeams';
+import Button from '../../components/common/Button';
+import Badge from '../../components/common/Badge';
+
+import { updateUser } from '../../apis/auth';
 import { TeamScheme } from '../Community/Post';
+import { BASEBALL_TEAMS, OptionsProps } from '../../constants/baseballTeams';
 
 interface Props {
   nickname: string;
-  team: string;
-}
-export interface OptionsProps {
-  key: number;
-  value: string;
-  label: string;
-}
-interface Form {
-  nickname: string | null;
-  team: OptionsProps | null;
+  myTeam: OptionsProps | undefined;
 }
 
 const Option = (props: OptionProps<OptionsProps>) => {
@@ -52,15 +46,25 @@ const selectStyle: StylesConfig<OptionsProps> = {
   }),
 };
 
-const UserEditForm = ({ nickname, team }: Props) => {
+const UserEditForm = ({ nickname, myTeam }: Props) => {
   const { control, handleSubmit } = useForm({
     defaultValues: {
       nickname,
-      team: BASEBALL_TEAMS.find((option) => option.value === team) || null,
+      myTeam,
     },
   });
-  const onSubmit: SubmitHandler<Form> = (data) => {
-    console.log(data);
+
+  const onSubmit: SubmitHandler<Props> = async (data) => {
+    try {
+      const result = await updateUser({
+        nickname: data.nickname,
+        myTeam: data.myTeam?.key,
+      });
+      window.alert(result.message);
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
   };
 
   return (
@@ -87,13 +91,13 @@ const UserEditForm = ({ nickname, team }: Props) => {
         <fieldset className="pb-6">
           <label htmlFor="team">응원팀</label>
           <Controller
-            name="team"
+            name="myTeam"
             control={control}
             rules={{ required: true }}
             render={({ field }) => (
               <Select
                 {...field}
-                id="team"
+                id="myTeam"
                 options={BASEBALL_TEAMS}
                 components={{ Option, SingleValue }}
                 styles={selectStyle}

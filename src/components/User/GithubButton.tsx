@@ -1,29 +1,38 @@
 import { GithubAuthProvider, signInWithPopup } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
-import ROUTES from '../../constants/router';
 import { auth } from '../../service/firebase';
-import Button from '../common/Button';
+import { useNavigate } from 'react-router-dom';
+import { User } from '../../pages/User/Signup';
+import { useAuth } from '../../hooks/useAuth';
+import ROUTES from '../../constants/router';
 
 const GithubButton = () => {
   const navigate = useNavigate();
   const provider = new GithubAuthProvider();
+  const { userLogin, userSignup } = useAuth();
 
   const onClick = async () => {
     try {
-      await signInWithPopup(auth, provider);
-      console.log(auth.currentUser?.getIdToken());
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const userData: User = {
+        nickname: user.email || '',
+        profileImageUrl: auth.currentUser?.photoURL || '',
+        myTeam: null,
+      };
 
+      const token = await user.getIdToken();
+      userLogin(token);
+      await userSignup(userData);
       navigate(ROUTES.HOME);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     }
   };
 
   return (
-    <Button size="small" scheme="primary" onClick={onClick}>
-      <img className="h-10" src="/public/icons/github/github-mark-white.svg" />
-      Continue with Github
-    </Button>
+    <button className="rounded-full bg-white" onClick={onClick}>
+      <img className="h-16 w-16" src="/public/icons/github/github-mark.svg" />
+    </button>
   );
 };
 export default GithubButton;
