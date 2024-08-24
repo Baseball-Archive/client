@@ -48,7 +48,7 @@ const Navigation = () => {
           <li className={LIST_STYLE}>
             <NavigationItem
               title="오늘의 야구"
-              link="/league/schedule"
+              link={`${ROUTES.LEAGUE}/${ROUTES.SCHEDULE}`}
               icon={<CalendarDaysIcon className={ICON_SIZE} />}
             />
           </li>
