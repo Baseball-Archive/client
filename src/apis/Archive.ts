@@ -20,8 +20,8 @@ export const getArchives = async () => {
     return []; // 에러 발생 시 빈 배열 반환
   }
 };
-export const getArchiveDetailWithComments = async () => {
-  const response = await apiClient.get('/archive/detail');
+export const getArchiveDetailWithComments = async (id: string) => {
+  const response = await apiClient.get(`/archive/public/${id}`);
   return snakeToCamel(response.data);
   //TODO: 서버 API 확정되면 엔드포인트 수정
 };

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { auth } from '../service/firebase';
 import { getUser } from '../apis/auth';
 import { BASEBALL_TEAMS, OptionsProps } from '../constants/baseballTeams';
+import { auth } from '../service/firebase';
 import { useAuthStore } from '../store/authStore';
 
 interface IUserData {

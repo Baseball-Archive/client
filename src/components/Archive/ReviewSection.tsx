@@ -52,7 +52,7 @@ const ReviewSection = ({
         </p>
       </div>
       <div className="my-4 flex flex-col">
-        <p className="font-medium">{title}</p>
+        <p className="font-semibold">{title}</p>
       </div>
       {isExpanded ? (
         <pre className="whitespace-pre-wrap font-title text-sm">{content}</pre>

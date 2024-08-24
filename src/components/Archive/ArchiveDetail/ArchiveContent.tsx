@@ -7,8 +7,8 @@ import type { Archive } from '../../../types/Archive';
 interface ArchiveContentProps {
   ArchiveContent: Archive;
 }
-
-const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
+//TOFIX : api확정되면 타입수정
+const ArchiveContent = ({ ArchiveContent }: any) => {
   const {
     nickname,
     id,
@@ -93,7 +93,7 @@ const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
               {content}
             </pre>
             <div className="pb-4">
-              <img src={picUrl} alt="Post Photo" />
+              <img className="w-full" src={picUrl} alt="Post Photo" />
             </div>
           </div>
         </div>

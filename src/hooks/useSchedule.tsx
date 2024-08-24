@@ -1,5 +1,5 @@
-import { getSchedule } from '../apis/league';
 import { useQuery } from '@tanstack/react-query';
+import { getSchedule } from '../apis/league';
 
 interface ScheduleItem {
   away_team_id: number;

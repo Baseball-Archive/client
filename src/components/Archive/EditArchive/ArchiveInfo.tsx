@@ -2,18 +2,18 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import { editArchive, postArchive } from '../../../apis/archive';
+import { editArchive } from '../../../apis/archive';
 import { MatchData } from '../../../types/MatchData';
 import { Weather } from '../../../types/Weather';
 import { showToast } from '../../common/Toast';
-import InfoSection from './InfoSection';
-import MatchReview from './MatchReview';
-import PickDate from './PickDate';
-import PickMatch from './PickMatch';
-import PickScore from './PickScore';
-import PickWeather from './PickWeather';
-import PublicPrivateToggle from './PublicPrivateToggle';
-import UploadPhotoButton from './UploadPhotoButton';
+import InfoSection from '../AddArchive/InfoSection';
+import MatchReview from '../AddArchive/MatchReview';
+import PickDate from '../AddArchive/PickDate';
+import PickMatch from '../AddArchive/PickMatch';
+import PickScore from '../AddArchive/PickScore';
+import PickWeather from '../AddArchive/PickWeather';
+import PublicPrivateToggle from '../AddArchive/PublicPrivateToggle';
+import EditPhotoButton from './EditPhotoButton';
 import type { Archive } from '../../../types/Archive';
 
 const ArchiveInfo = () => {
@@ -21,6 +21,7 @@ const ArchiveInfo = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [matchData, setMatchData] = useState<MatchData | null>(null);
+  const cachedArchive = queryClient.getQueryData<Archive[]>(['Archives']);
   const { register, handleSubmit, setValue, watch } = useForm<Archive>({
     defaultValues: {
       title: '',
@@ -34,8 +35,6 @@ const ArchiveInfo = () => {
       scheduleId: 0,
     },
   });
-
-  const cachedArchive = queryClient.getQueryData<Archive[]>(['Archives']);
 
   useEffect(() => {
     if (cachedArchive) {
@@ -88,7 +87,7 @@ const ArchiveInfo = () => {
 
   const onSubmit: SubmitHandler<Archive> = async (archiveData) => {
     try {
-      console.log(archiveData);
+      console.log(archiveData.scheduleId);
       await editArchive({
         id: Number(archiveId),
         archiveData: {
@@ -161,7 +160,7 @@ const ArchiveInfo = () => {
         content={watch('content')}
         onChangeReview={onChangeContent}
       />
-      <UploadPhotoButton picUrl={watch('picUrl')} handlePicUrl={handlePicUrl} />
+      <EditPhotoButton picUrl={watch('picUrl')} handlePicUrl={handlePicUrl} />
       <div className="mt-4 flex flex-col">
         <label className="mb-2 text-base">공개 설정</label>
         <PublicPrivateToggle

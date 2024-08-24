@@ -76,7 +76,7 @@ const ArchiveHeader = ({
               {nickname || 'test'} ·
             </div>
             <div className="flex items-center text-xs text-gray-400">
-              {matchDate || '2021-01-01'}
+              {matchDate.slice(0, 10) || '2021-01-01'}
             </div>
           </div>
           <div className="flex-row">

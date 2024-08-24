@@ -15,12 +15,20 @@ const Archives = () => {
   });
   if (isLoading) return <Loading />;
 
+  const sortedArchives = archivesQuery
+    ?.slice()
+    .sort(
+      (a, b) =>
+        new Date(b.matchDate as string).getTime() -
+        new Date(a.matchDate as string).getTime(),
+    );
+
   return (
     <div className="container mb-32 flex flex-col pt-7">
       {archivesQuery?.length ? (
-        archivesQuery.map((archive) => (
+        sortedArchives?.map((archive) => (
           <Archive
-            key={archive.id}
+            key={archive.matchDate}
             isCommunityArchives={false}
             data={archive}
           />

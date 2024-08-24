@@ -3,14 +3,11 @@ import { useRef, useState } from 'react';
 import { uploadImage } from '../../../apis/uploadImage';
 import { auth } from '../../../service/firebase';
 
-interface UploadPhotoButtonProps {
+interface EditPhotoButtonProps {
   picUrl: string;
   handlePicUrl: (url: string) => void;
 }
-const UploadPhotoButton = ({
-  picUrl,
-  handlePicUrl,
-}: UploadPhotoButtonProps) => {
+const EditPhotoButton = ({ picUrl, handlePicUrl }: EditPhotoButtonProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string | null>(null);
 
@@ -66,4 +63,4 @@ const UploadPhotoButton = ({
   );
 };
 
-export default UploadPhotoButton;
+export default EditPhotoButton;
