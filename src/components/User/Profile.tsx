@@ -41,7 +41,6 @@ const Profile = ({ profile, email, nickname, myTeam }: Props) => {
 
         if (result.fileUrl) {
           setProfileImage(result.fileUrl);
-          console.log('result.fileUrl', result.fileUrl);
           const updateResult = await updateUser({
             picURL: result.fileUrl,
             nickname,

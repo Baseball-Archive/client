@@ -1,18 +1,17 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 interface PostInfoSectionProps {
   label: string;
+  name: string;
   children: ReactNode;
 }
 
-const PostInfoSection = ({ label, children }: PostInfoSectionProps) => {
+const PostInfoSection = ({ label, children, name }: PostInfoSectionProps) => {
   return (
-    <div className="mt-2 flex flex-col">
-      <label className="text-base">{label}</label>
-      <div className="mb-4 flex h-12 items-center justify-center rounded-[4px] border text-lg">
-        {children}
-      </div>
-    </div>
+    <fieldset className="flex flex-col pb-6">
+      <label htmlFor={name}>{label}</label>
+      {children}
+    </fieldset>
   );
 };
 

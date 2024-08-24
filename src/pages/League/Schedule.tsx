@@ -8,14 +8,6 @@ import useSchedule from '../../hooks/useSchedule';
 import useDateNavigation from '../../hooks/useDateNavigation';
 import Loading from '../../components/common/Loading';
 
-interface ScheduleItem {
-  away_team_id: number;
-  home_team_id: number;
-  match_date: string;
-  stadium: string;
-  time: string;
-}
-
 const Schedule = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryDate = searchParams.get('date') || dayjs().format('YYYYMMDD');

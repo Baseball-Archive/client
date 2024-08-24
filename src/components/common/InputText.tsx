@@ -23,10 +23,6 @@ const SCHEME_MAP: Record<InputScheme, string> = {
   danger: 'border-2 rounded border-rose-600 bg-white',
 };
 
-// border-radius: 4px;
-// border: 0.5px solid #A9A9A9;
-// background: #FFF;
-
 const InputText = React.forwardRef(
   (
     { placeholder, inputType, inputSize, scheme, onChange, ...props }: Props,
