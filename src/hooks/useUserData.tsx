@@ -13,7 +13,6 @@ interface IUserData {
 
 const useUserData = () => {
   const { isloggedIn } = useAuthStore();
-
   const [userData, setUserData] = useState<IUserData | undefined>(undefined);
   const [myTeam, setMyTeam] = useState<OptionsProps | undefined>(undefined);
 
