@@ -6,6 +6,7 @@ import ScheduleItem from '../../components/League/Schedule/ScheduleItem';
 
 import useSchedule from '../../hooks/useSchedule';
 import useDateNavigation from '../../hooks/useDateNavigation';
+import Loading from '../../components/common/Loading';
 
 interface ScheduleItem {
   away_team_id: number;
@@ -24,7 +25,10 @@ const Schedule = () => {
     setSearchParams,
     searchParams,
   );
-  const { scheduleData } = useSchedule(date);
+  const { data: scheduleData, isLoading, error } = useSchedule(date);
+
+  if (isLoading) return <Loading />;
+  if (error) return <div>데이터를 가져오는 데 실패했습니다.</div>;
 
   return (
     <>
@@ -33,7 +37,7 @@ const Schedule = () => {
         onPreviousDate={handlePreviousDate}
         onNextDate={handleNextDate}
       />
-      {scheduleData.length ? (
+      {scheduleData && scheduleData.length > 0 ? (
         scheduleData.map((item, index) => (
           <ScheduleItem
             key={index}

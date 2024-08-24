@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import { getSchedule } from '../apis/league';
+import { useQuery } from '@tanstack/react-query';
 
 interface ScheduleItem {
   away_team_id: number;
@@ -10,23 +10,10 @@ interface ScheduleItem {
 }
 
 const useSchedule = (date: string) => {
-  const [scheduleData, setScheduleData] = useState<ScheduleItem[]>([]);
-
-  useEffect(() => {
-    const fetchSchedule = async () => {
-      try {
-        const result = await getSchedule(date);
-        setScheduleData(result);
-      } catch (err) {
-        setScheduleData([]);
-        console.error(err);
-      }
-    };
-
-    fetchSchedule();
-  }, [date]);
-
-  return { scheduleData };
+  return useQuery<ScheduleItem[], Error>({
+    queryKey: ['schedule', date],
+    queryFn: () => getSchedule(date),
+  });
 };
 
 export default useSchedule;
