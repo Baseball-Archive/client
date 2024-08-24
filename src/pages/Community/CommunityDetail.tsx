@@ -40,7 +40,7 @@ const CommunityDetail = () => {
         />
       ))} */}
 
-      <AddComment />
+      <AddComment boardId={id} />
     </div>
   );
 };
