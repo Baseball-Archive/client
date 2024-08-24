@@ -13,7 +13,7 @@ const Layout = () => {
 
   useEffect(() => {
     if (!isloggedIn) {
-      navigate(ROUTES.LOGIN, { replace: true });
+      // navigate(ROUTES.LOGIN, { replace: true });
     }
   }, [navigate, isloggedIn]);
 
@@ -24,6 +24,7 @@ const Layout = () => {
       <>
         <Header />
         <Navigation />
+
         <Content />
       </>
     );

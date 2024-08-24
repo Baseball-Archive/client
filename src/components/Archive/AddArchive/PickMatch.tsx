@@ -96,20 +96,23 @@ const PickMatch = ({
   const handleMatchSelect = (seletedOption: MatchData | null) => {
     handleMatchData(seletedOption);
     handleSelectedScheduleId(seletedOption?.scheduleId || 3901);
-  }; //TODO : schedule API 현재 schedulId 안줌 -> 받을 때 수정 필요
+  };
 
   const getschedules = async () => {
     return await getSchedule(selectedDate);
   };
-  const { data: getScheduleQuery, error: getScheduleError } = useQuery<
-    MatchData[]
-  >({
+  const {
+    data: getScheduleQuery,
+    error: getScheduleError,
+    isLoading,
+  } = useQuery<MatchData[]>({
     queryKey: ['scheule', selectedDate],
     queryFn: getschedules,
   });
-  if (getScheduleError) {
-    alert(getScheduleError);
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
+
   return (
     <div className="w-full">
       <Select

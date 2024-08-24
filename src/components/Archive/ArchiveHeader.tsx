@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteArchive, editArchive } from '../../apis/archive';
-import { MatchData } from '../../types/MatchData';
+
 import { Weather } from '../../types/Weather';
 import ArchiveHandleButton from '../common/PostHandleButton';
+import { deleteArchive, editArchive } from '../../apis/archive';
 
 interface ArchiveHeaderProps {
   id: number;
@@ -87,7 +87,9 @@ const ArchiveHeader = ({
           </div>
         </div>
       </div>
-      {isCommunityArchives === false && (
+      {isCommunityArchives ? (
+        <></>
+      ) : (
         <ArchiveHandleButton onEdit={handleEdit} onDelete={handleDelete} />
       )}
     </div>

@@ -9,6 +9,10 @@ interface ArchiveProps {
 }
 
 const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
+  if (!data) {
+    return <div>데이터가 없습니다.</div>;
+  }
+
   const {
     nickname,
     id,
@@ -28,7 +32,7 @@ const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
       <div className="w-full">
         <ArchiveHeader
           id={id as number}
-          nickname={nickname as string}
+          nickname={(nickname as string) || 'test'}
           weather={weather as Weather}
           profileImage={picUrl}
           matchDate={matchDate || '2024-01-01'}

@@ -1,25 +1,16 @@
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { PostArchiveProps } from '../types/Archive';
 import { AddComment, Comment } from '../types/Comment';
 import { snakeToCamel } from '../utils/snakeToCamel';
 import apiClient from './apiClient';
+import { notify } from '../components/common/toast';
 
 export const getArchives = async () => {
   try {
     const response = await apiClient.get('/archive');
     return snakeToCamel(response.data);
   } catch (error) {
-    if (error instanceof AxiosError) {
-      if (error.response && error.response.status === 404) {
-        return null;
-      } else {
-        console.error('에러:', error);
-        throw error;
-      }
-    } else {
-      console.error('에러:', error);
-      throw error;
-    }
+    throw error;
   }
 };
 export const getArchiveDetailWithComments = async () => {
