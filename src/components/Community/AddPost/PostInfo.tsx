@@ -9,6 +9,7 @@ import InputText from '../../common/InputText';
 import Button from '../../common/Button';
 import dayjs from 'dayjs';
 import useSchedule from '../../../hooks/useSchedule';
+import { useMutation } from '@tanstack/react-query';
 
 const PostInfo = () => {
   const { handleSubmit, register } = useForm<CommunityData>();
@@ -20,19 +21,27 @@ const PostInfo = () => {
     setMatch(null);
   }, [date, scheduleData]);
 
-  const onSubmit: SubmitHandler<CommunityData> = async (data) => {
-    if (!match) {
-      return;
-    }
-    try {
-      const result = await postCommunity({
+  const mutation = useMutation({
+    mutationFn: async (data: CommunityData) => {
+      if (match === null) {
+        throw new Error('Match ID is required');
+      }
+      return await postCommunity({
         scheduleId: match,
         title: data.title,
         content: data.content,
       });
-    } catch (error) {
-      console.error('Error adding document: ', error);
-    }
+    },
+    onSuccess: (data) => {
+      console.log('Success:', data);
+    },
+    onError: (error) => {
+      console.error('Error:', error);
+    },
+  });
+
+  const onSubmit: SubmitHandler<CommunityData> = async (data) => {
+    mutation.mutate(data);
   };
 
   return (
