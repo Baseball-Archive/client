@@ -1,38 +1,61 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { CommunityData, postCommunity } from '../../../apis/community';
+import { SubmitHandler, useForm, Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import {
+  CommunityData,
+  postCommunity,
+  updateCommunity,
+} from '../../../apis/community';
 import useSchedule from '../../../hooks/useSchedule';
+import { getTeamLabelByKey } from '../../../utils/getTeamValueByKey';
 import Button from '../../common/Button';
 import InputText from '../../common/InputText';
+import { Post } from '../PostDetail';
 import PostInfoSection from './PostInfoSection';
 import PostPickDate from './PostPickDate';
-// import PostPickMatch from './PostPickMatch';
 
-const PostInfo = () => {
-  const { handleSubmit, register } = useForm<CommunityData>();
-  const [date, setDate] = useState<string>(dayjs().format('YYYYMMDD'));
-  const [match, setMatch] = useState<number | null>(null);
-  const { data: scheduleData } = useSchedule(date);
+interface Props {
+  communityDetail?: Post;
+}
 
-  useEffect(() => {
-    setMatch(null);
-  }, [date, scheduleData]);
+const PostInfo = ({ communityDetail }: Props) => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const { handleSubmit, register, control, setValue, watch } =
+    useForm<CommunityData>({
+      defaultValues: {
+        title: communityDetail?.title || '',
+        content: communityDetail?.content || '',
+        date: communityDetail?.match_date || dayjs().format('YYYY-MM-DD'),
+        // scheduleId: communityDetail?.scheduleId || '',
+      },
+    });
+
+  const date = watch('date');
+
+  const { data: scheduleData } = useSchedule(dayjs(date).format('YYYYMMDD'));
 
   const mutation = useMutation({
     mutationFn: async (data: CommunityData) => {
-      if (match === null) {
-        throw new Error('Match ID is required');
+      if (communityDetail) {
+        return await updateCommunity(communityDetail.id, {
+          scheduleId: data.scheduleId,
+          title: data.title,
+          content: data.content,
+        });
+      } else {
+        return await postCommunity({
+          scheduleId: data.scheduleId,
+          title: data.title,
+          content: data.content,
+        });
       }
-      return await postCommunity({
-        scheduleId: match,
-        title: data.title,
-        content: data.content,
-      });
     },
-    onSuccess: (data) => {
-      console.log('Success:', data);
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['community'] });
+      navigate('/posts');
     },
     onError: (error) => {
       console.error('Error:', error);
@@ -40,7 +63,10 @@ const PostInfo = () => {
   });
 
   const onSubmit: SubmitHandler<CommunityData> = async (data) => {
-    mutation.mutate(data);
+    const action = communityDetail ? '수정' : '등록';
+    if (window.confirm(`게시글을 ${action} 하시겠습니까?`)) {
+      mutation.mutate(data);
+    }
   };
 
   return (
@@ -57,16 +83,36 @@ const PostInfo = () => {
       </PostInfoSection>
 
       <PostInfoSection label="경기 날짜" name="date">
-        <PostPickDate onSelectDate={setDate} />
+        <Controller
+          name="date"
+          control={control}
+          render={({ field }) => (
+            <PostPickDate
+              {...field}
+              onSelectDate={(date) => setValue('date', date)}
+            />
+          )}
+        />
       </PostInfoSection>
 
-      {/* <PostInfoSection label="홈 vs 원정" name="match">
-        <PostPickMatch
-          onSelectMatch={setMatch}
-          {...register('scheduleId')}
-          scheduleData={scheduleData || []}
-        />
-      </PostInfoSection> */}
+      <PostInfoSection label="경기 선택" name="scheduleId">
+        <select
+          id="scheduleId"
+          className="h-[40px] rounded border border-[#A9A9A9] p-2"
+          {...register('scheduleId', { required: true })}
+        >
+          <option value="">
+            {scheduleData?.length
+              ? '경기를 선택하세요'
+              : '해당일에 경기가 없습니다.'}
+          </option>
+          {scheduleData?.map((game) => (
+            <option key={game.id} value={game.id}>
+              {`[${game.stadium}] ${getTeamLabelByKey(game.home_team_id)} vs ${getTeamLabelByKey(game.away_team_id)}`}
+            </option>
+          ))}
+        </select>
+      </PostInfoSection>
 
       <PostInfoSection label="내용" name="content">
         <textarea
@@ -79,7 +125,7 @@ const PostInfo = () => {
 
       <fieldset className="py-10 text-center">
         <Button type="submit" size="medium" scheme="primary">
-          게시글 등록
+          {`게시글 ${communityDetail ? '수정' : '등록'}`}
         </Button>
       </fieldset>
     </form>

@@ -1,46 +1,73 @@
+import {
+  HeartIcon as OutlineHeartIcon,
+  ChatBubbleOvalLeftIcon,
+} from '@heroicons/react/24/outline';
 import dayjs from 'dayjs';
-import { Link } from 'react-router-dom';
-import { BASEBALL_TEAMS } from '../../constants/baseballTeams';
+import { useNavigate } from 'react-router-dom';
+import { ICommnunityData } from '../../pages/Community/Community';
 import { TeamScheme } from '../../types/TeamScheme';
+import { convertTeamNameToEnglish } from '../../utils/convertTeamNameToEnglish';
 import Badge from '../common/Badge';
 
 interface Props {
-  away: number;
-  createdAt: string;
-  home: number;
-  title: string;
+  post: ICommnunityData;
 }
 
-export interface PostType {
-  id: number;
-  match_date: string;
-  home_team_name: string;
-  away_team_name: string;
-  review_short: string;
-  review_long: string;
-  user_id: number;
-  likes: number;
-  comments: number;
-  result: string;
-  stadium: string;
-  weather: string;
-  photo: number;
-}
-
-const Post = ({ away, createdAt, home, title }: Props) => {
+const Post = ({ post }: Props) => {
+  const navigate = useNavigate();
+  const {
+    id,
+    home_team_name,
+    away_team_name,
+    title,
+    created_at,
+    nickname,
+    my_team_name,
+    likes,
+    comments,
+  } = post;
   return (
-    <tr className="border-b">
-      <Link to={`/posts/40`} className="flex w-full items-center">
-        <td className="w-[30%] py-4 text-center">
-          <Badge scheme={BASEBALL_TEAMS[home - 1].value as TeamScheme} />
-          <span className="px-2">vs</span>
-          <Badge scheme={BASEBALL_TEAMS[away - 1].value as TeamScheme} />
-        </td>
-        <td className="w-[50%] font-bold">{title}</td>
-        <td className="w-[20%] font-light">
-          {dayjs(createdAt).format('YYYY.MM.DD')}
-        </td>
-      </Link>
+    <tr
+      onClick={() => {
+        navigate(`/posts/${id}`);
+      }}
+      className="cursor-pointer border-b"
+    >
+      <td className="w-[30%] py-4 pl-4">
+        <p className="flex gap-1">
+          <Badge
+            scheme={convertTeamNameToEnglish(home_team_name) as TeamScheme}
+          />
+          <Badge
+            scheme={convertTeamNameToEnglish(away_team_name) as TeamScheme}
+          />
+        </p>
+        <p className="pt-2 text-sm text-slate-400">
+          {dayjs(created_at).format('YYYY.MM.DD')}
+        </p>
+      </td>
+      <td className="flex w-[50%] py-4 text-xl font-bold">{title}</td>
+      <td className="w-[20%] py-4 pr-4 font-light">
+        <p className="flex justify-end gap-2">
+          {my_team_name && (
+            <Badge
+              small={true}
+              scheme={convertTeamNameToEnglish(my_team_name) as TeamScheme}
+            />
+          )}
+          <span className="text-gray text-sm">{nickname}</span>
+        </p>
+        <div className="flex items-center justify-end gap-2 pt-2 text-slate-400">
+          <p className="flex items-center justify-end">
+            <OutlineHeartIcon className="size-4" />
+            {likes}
+          </p>
+          <p className="flex items-center justify-end">
+            <ChatBubbleOvalLeftIcon className="size-4" />
+            {comments}
+          </p>
+        </div>
+      </td>
     </tr>
   );
 };

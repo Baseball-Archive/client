@@ -5,6 +5,7 @@ export interface CommunityData {
   title: string;
   content: string;
   picUrl?: string;
+  date?: string;
 }
 
 export const postCommunity = async (data: CommunityData) => {
@@ -13,11 +14,21 @@ export const postCommunity = async (data: CommunityData) => {
 };
 
 export const getCommunity = async () => {
-  const response = await apiClient.get('/board');
+  const response = await apiClient.get('/board?limit=10&currentPage=1');
   return response.data;
 };
 
 export const getCommunityDetail = async (id: string) => {
   const response = await apiClient.get(`/board/${id}`);
+  return response.data;
+};
+
+export const deleteCommunity = async (id: string) => {
+  const response = await apiClient.delete(`/board/${id}`);
+  return response.data;
+};
+
+export const updateCommunity = async (id: number, data: CommunityData) => {
+  const response = await apiClient.put(`/board/${id}`, data);
   return response.data;
 };

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-// import { PostComment } from '../../../types/Comment';
+import { addArchiveComment } from '../../../apis/comment';
 
-//{ boardId }: { boardId: string }
-const AddComment = () => {
+const AddComment = ({ boardId }: { boardId: string }) => {
   const [comment, setComment] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,8 +12,8 @@ const AddComment = () => {
     e.preventDefault();
     if (comment.trim()) {
       try {
-        // const result = await PostComment(comment, boardId);
-        // console.log('Comment submitted:', result);
+        const result = await addArchiveComment(comment, boardId);
+        console.log('Comment submitted:', result);
         setComment('');
       } catch (error) {
         console.error('Error adding comment: ', error);
