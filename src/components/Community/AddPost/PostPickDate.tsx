@@ -1,7 +1,6 @@
 import { CalendarDaysIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
-
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface PostPickDateProps {
@@ -15,7 +14,13 @@ const PostPickDate: React.FC<PostPickDateProps> = ({ onSelectDate }) => {
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
     if (date) {
-      onSelectDate(date.toISOString().split('T')[0]);
+      const localDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+      );
+      const formattedDate = localDate.toISOString().split('T')[0];
+      onSelectDate(formattedDate);
     }
   };
 

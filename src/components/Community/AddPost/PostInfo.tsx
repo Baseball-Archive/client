@@ -8,13 +8,16 @@ import Button from '../../common/Button';
 import InputText from '../../common/InputText';
 import PostInfoSection from './PostInfoSection';
 import PostPickDate from './PostPickDate';
-import PostPickMatch from './PostPickMatch';
+import { getTeamLabelByKey } from '../../../utils/getTeamValueByKey';
+import { useNavigate } from 'react-router-dom';
 
 const PostInfo = () => {
+  const navigate = useNavigate();
+
   const { handleSubmit, register } = useForm<CommunityData>();
   const [date, setDate] = useState<string>(dayjs().format('YYYYMMDD'));
   const [match, setMatch] = useState<number | null>(null);
-  const { data: scheduleData } = useSchedule(date);
+  const { data: scheduleData } = useSchedule(dayjs(date).format('YYYYMMDD'));
 
   useEffect(() => {
     setMatch(null);
@@ -32,6 +35,7 @@ const PostInfo = () => {
       });
     },
     onSuccess: (data) => {
+      navigate('/posts');
       console.log('Success:', data);
     },
     onError: (error) => {
@@ -40,7 +44,9 @@ const PostInfo = () => {
   });
 
   const onSubmit: SubmitHandler<CommunityData> = async (data) => {
-    mutation.mutate(data);
+    if (window.confirm('게시글을 등록 하시겠습니까?')) {
+      mutation.mutate(data);
+    }
   };
 
   return (
@@ -60,12 +66,24 @@ const PostInfo = () => {
         <PostPickDate onSelectDate={setDate} />
       </PostInfoSection>
 
-      <PostInfoSection label="홈 vs 원정" name="match">
-        <PostPickMatch
-          onSelectMatch={setMatch}
-          {...register('scheduleId')}
-          scheduleData={scheduleData || []}
-        />
+      <PostInfoSection label="경기 선택" name="match">
+        <select
+          id="match"
+          className="h-[40px] rounded border border-[#A9A9A9] p-2"
+          value={match ?? ''}
+          onChange={(e) => setMatch(Number(e.target.value))}
+        >
+          <option value="">
+            {scheduleData.length
+              ? '경기를 선택하세요'
+              : '해당일에 경기가 없습니다.'}
+          </option>
+          {scheduleData?.map((game) => (
+            <option key={game.id} value={game.id}>
+              {`[${game.stadium}] ${getTeamLabelByKey(game.home_team_id)} vs ${getTeamLabelByKey(game.away_team_id)}`}
+            </option>
+          ))}
+        </select>
       </PostInfoSection>
 
       <PostInfoSection label="내용" name="content">
