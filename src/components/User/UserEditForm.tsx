@@ -10,8 +10,8 @@ import InputText from '../../components/common/InputText';
 import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
 
-import { TeamScheme } from '../Community/Post';
 import { BASEBALL_TEAMS, OptionsProps } from '../../constants/baseballTeams';
+import { TeamScheme } from '../../types/TeamScheme';
 
 interface Props {
   nickname: string;

@@ -19,6 +19,7 @@ const ResetPW = lazy(() => import('./components/common/ResetPW'));
 const ArchiveDetail = lazy(() => import('./pages/Archive/ArchiveDetail'));
 const EditArchive = lazy(() => import('./pages/Archive/EditArchive'));
 const AddPost = lazy(() => import('./pages/Community/AddPost'));
+const EditPost = lazy(() => import('./pages/Community/EditPost'));
 const PublicArchives = lazy(() => import('./pages/Archive/PublicArchives'));
 const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.ADD_POST,
         element: <AddPost />,
+      },
+      {
+        path: ROUTES.EDIT_POST,
+        element: <EditPost />,
       },
       {
         path: ROUTES.LEAGUE,
