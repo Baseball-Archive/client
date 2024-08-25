@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { join, nickname } from '../apis/auth';
-import { showToast } from '../components/common/toast';
+import { showToast } from '../components/common/Toast';
 import ROUTES from '../constants/router';
 import { User } from '../pages/User/Signup';
 import { useAuthStore } from '../store/authStore';

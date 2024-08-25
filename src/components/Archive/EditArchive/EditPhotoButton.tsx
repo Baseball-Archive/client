@@ -2,6 +2,7 @@ import { PhotoIcon } from '@heroicons/react/24/outline';
 import { useRef, useState } from 'react';
 import { uploadImage } from '../../../apis/uploadImage';
 import { auth } from '../../../service/firebase';
+import { showToast } from '../../common/Toast';
 
 interface EditPhotoButtonProps {
   picUrl: string;
@@ -9,6 +10,7 @@ interface EditPhotoButtonProps {
 }
 const EditPhotoButton = ({ picUrl, handlePicUrl }: EditPhotoButtonProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+
   const [fileName, setFileName] = useState<string | null>(null);
 
   const handleButtonClick = () => {
@@ -20,7 +22,7 @@ const EditPhotoButton = ({ picUrl, handlePicUrl }: EditPhotoButtonProps) => {
     const file = event.target.files;
 
     if (!file) {
-      window.alert('선택된 파일이 없습니다.');
+      showToast('선택된 파일이 없습니다.', 'error');
       console.error('선택된 파일이 없습니다.');
       return;
     }
@@ -31,7 +33,6 @@ const EditPhotoButton = ({ picUrl, handlePicUrl }: EditPhotoButtonProps) => {
         const result = await uploadImage(formData);
         handlePicUrl(result.fileUrl);
         setFileName(file[0].name);
-        console.log(result.fileUrl);
       } else {
         console.error('토큰이 없습니다.');
       }
@@ -57,8 +58,17 @@ const EditPhotoButton = ({ picUrl, handlePicUrl }: EditPhotoButtonProps) => {
         onClick={handleButtonClick}
       >
         <PhotoIcon className="size-8" />
-        {picUrl && <span className="ml-2">사진 수정</span>}
+        {picUrl ? (
+          <span className="ml-2">사진 수정</span>
+        ) : (
+          <span className="ml-2">사진 업로드</span>
+        )}
       </div>
+      {fileName && (
+        <div className="mt-2 text-sm text-gray-600">
+          업로드된 파일: {fileName}
+        </div>
+      )}
     </>
   );
 };

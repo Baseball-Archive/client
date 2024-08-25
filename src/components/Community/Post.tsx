@@ -11,6 +11,22 @@ interface Props {
   title: string;
 }
 
+export interface PostType {
+  id: number;
+  match_date: string;
+  home_team_name: string;
+  away_team_name: string;
+  review_short: string;
+  review_long: string;
+  user_id: number;
+  likes: number;
+  comments: number;
+  result: string;
+  stadium: string;
+  weather: string;
+  photo: number;
+}
+
 const Post = ({ away, createdAt, home, title }: Props) => {
   return (
     <tr className="border-b">

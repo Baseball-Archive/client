@@ -1,10 +1,7 @@
-import { DEFAULT_IMAGE } from '../../../constants/image';
 import { TeamScheme } from '../../../types/TeamScheme';
 import { convertTeamNameToEnglish } from '../../../utils/convertTeamNameToEnglish';
 import formatTimeDifference from '../../../utils/formatTimeDifference';
-import { getTeamLabelByKey } from '../../../utils/getTeamValueByKey';
 import Badge from '../../common/Badge';
-import PostHandleButton from '../../common/PostHandleButton';
 import type { ArchiveContent } from '../../../types/Archive';
 
 interface ArchiveContentProps {
@@ -14,7 +11,6 @@ interface ArchiveContentProps {
 const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
   if (!ArchiveContent) return <div>로딩</div>;
   const {
-    id,
     matchDate,
     homeTeamName,
     awayTeamName,
@@ -28,21 +24,19 @@ const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
     createdAt,
     nickname,
     myTeamName,
-    likes,
-    comments,
   } = ArchiveContent;
 
-  const handleDelete = () => {
-    if (window.confirm('삭제 하시겠습니까?')) {
-      alert('삭제 되었습니다.');
-    }
-  };
-  const handleEdit = () => {
-    if (window.confirm('수정 하시겠습니까?')) {
-      alert('수정 되었습니다.');
-    }
-  };
-  console.log(ArchiveContent);
+  // const handleDelete = () => {
+  //   if (window.confirm('삭제 하시겠습니까?')) {
+  //     alert('삭제 되었습니다.');
+  //   }
+  // };
+  // const handleEdit = () => {
+  //   if (window.confirm('수정 하시겠습니까?')) {
+  //     alert('수정 되었습니다.');
+  //   }
+  // };
+  // console.log(ArchiveContent);
   return (
     <div className="flex justify-center overflow-hidden bg-white">
       <div className="w-full">

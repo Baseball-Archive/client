@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
 import { getArchiveComments } from '../apis/comment';
 import { Comment } from '../types/Comment';
 

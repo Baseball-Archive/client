@@ -11,7 +11,7 @@ import type { ArchiveContent as ArchiveContentType } from '../../types/Archive';
 
 const ArchiveDetail = () => {
   const { id: archiveId } = useParams();
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked] = useState(false);
   const { archiveContent } = useArchiveDetail(archiveId as string);
   const { archiveComment } = useArchiveComment(archiveId as string);
   const { addLike, subLike } = useLike(Number(archiveId));

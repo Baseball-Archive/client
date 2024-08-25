@@ -2,9 +2,7 @@ import { CameraIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { signOut } from 'firebase/auth';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { updateUser } from '../../apis/auth';
 import { uploadImage } from '../../apis/uploadImage';
-import { OptionsProps } from '../../constants/baseballTeams';
 import { DEFAULT_IMAGE } from '../../constants/image';
 import ROUTES from '../../constants/router';
 import { auth } from '../../service/firebase';
@@ -43,7 +41,6 @@ const Profile = ({ profile, email, onUpdateUser }: Props) => {
           setProfileImage(result.fileUrl);
 
           onUpdateUser({ picURL: result.fileUrl });
-
         }
       } else {
         console.error('토큰이 없습니다.');

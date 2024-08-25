@@ -1,10 +1,9 @@
-import { useParams } from 'react-router-dom';
-import PostDetail from '../../components/Community/PostDetail';
-import Comment from '../../components/Community/Comment/Comment';
-import AddComment from '../../components/Community/Comment/AddComment';
-import { getCommunityDetail } from '../../apis/community';
 import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
+import { getCommunityDetail } from '../../apis/community';
 import Loading from '../../components/common/Loading';
+import AddComment from '../../components/Community/Comment/AddComment';
+import PostDetail from '../../components/Community/PostDetail';
 
 const CommunityDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,7 +26,6 @@ const CommunityDetail = () => {
     },
     enabled: !!id,
   });
-
 
   if (isLoading) {
     return <Loading />;

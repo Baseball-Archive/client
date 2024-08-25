@@ -1,11 +1,11 @@
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/20/solid';
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline';
-import dayjs from 'dayjs';
 import { useState } from 'react';
 import { formatDate } from '../../utils/format';
 import { getTeamLabelByKey } from '../../utils/getTeamValueByKey';
 import Badge from '../common/Badge';
 import PostHandleButton from '../common/PostHandleButton';
+import { showToast } from '../common/Toast';
 
 interface Post {
   away_team_id: number;
@@ -24,17 +24,8 @@ interface Props {
 }
 
 const PostDetail = ({ postDetail }: Props) => {
-  const {
-    away_team_id,
-    comments,
-    content,
-    created_at,
-    home_team_id,
-    likes,
-    match_date,
-    pic_url,
-    title,
-  } = postDetail;
+  const { away_team_id, content, home_team_id, match_date, pic_url } =
+    postDetail;
 
   const [isLikesClicked, setIsLikesClicked] = useState(() => {
     const savedState = localStorage.getItem(`isLikesClicked-${postDetail.id}`);
@@ -52,12 +43,12 @@ const PostDetail = ({ postDetail }: Props) => {
 
   const handleDelete = () => {
     if (window.confirm('삭제 하시겠습니까?')) {
-      alert('삭제 되었습니다.');
+      showToast('삭제 되었습니다.', 'success');
     }
   };
   const handleEdit = () => {
     if (window.confirm('수정 하시겠습니까?')) {
-      alert('수정 되었습니다.');
+      showToast('수정 되었습니다.', 'success');
     }
   };
 

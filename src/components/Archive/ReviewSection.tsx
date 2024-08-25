@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { MatchData } from '../../types/MatchData';
+import { useNavigate } from 'react-router-dom';
 import { TeamScheme } from '../../types/TeamScheme';
 import { getTeamValueByKey } from '../../utils/getTeamValueByKey';
 import Badge from '../common/Badge';

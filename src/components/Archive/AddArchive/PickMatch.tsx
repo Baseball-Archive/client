@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React from 'react';
 import Select, { StylesConfig } from 'react-select';
 import { getSchedule } from '../../../apis/shedule';
 import { MatchData } from '../../../types/MatchData';

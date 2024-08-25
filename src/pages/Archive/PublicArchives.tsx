@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PublicPost from '../../components/common/PublicPost';
 import usePublicArchive from '../../hooks/usePublicArchive';

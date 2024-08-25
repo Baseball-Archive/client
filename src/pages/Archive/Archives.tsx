@@ -1,15 +1,11 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getArchives } from '../../apis/archive';
 import Archive from '../../components/Archive/Archive';
 import Loading from '../../components/common/Loading';
 import type { Archive as ArchiveType } from '../../types/Archive';
 
 const Archives = () => {
-  const {
-    data: archivesQuery,
-    error,
-    isLoading,
-  } = useQuery<ArchiveType[]>({
+  const { data: archivesQuery, isLoading } = useQuery<ArchiveType[]>({
     queryKey: ['Archives'],
     queryFn: getArchives,
   });

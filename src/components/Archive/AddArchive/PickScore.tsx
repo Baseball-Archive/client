@@ -1,5 +1,4 @@
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
-import React, { useState } from 'react';
 import { MatchData } from '../../../types/MatchData';
 import { TeamScheme } from '../../../types/TeamScheme';
 import { getTeamValueByKey } from '../../../utils/getTeamValueByKey';

@@ -1,4 +1,3 @@
-import { Comment } from './Comment';
 import { Weather } from './Weather';
 
 export interface Archive {
@@ -36,6 +35,8 @@ export interface PostArchiveProps {
 export interface EditArchiveProps {
   id: number;
   archiveData: PostArchiveProps;
+  stadium?: string;
+  weather?: string;
 }
 
 export interface ArchiveContent {

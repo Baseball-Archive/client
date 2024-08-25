@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { deleteArchive, editArchive } from '../../apis/archive';
 import { Weather } from '../../types/Weather';
 import ArchiveHandleButton from '../common/PostHandleButton';
+import { showToast } from '../common/Toast';
 
 interface ArchiveHeaderProps {
   id: number;
@@ -35,20 +36,10 @@ const ArchiveHeader = ({
     mutationFn: deleteArchive,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['Archives'] });
-      alert('삭제 되었습니다.');
+      showToast('삭제 되었습니다.', 'error');
     },
     onError: () => {
-      alert('삭제에 실패했습니다.');
-    },
-  });
-  const { mutate: editArchiveMutate } = useMutation({
-    mutationFn: editArchive,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['Archives'] });
-      alert('수정되었습니다.');
-    },
-    onError: () => {
-      alert('수정에 실패했습니다.');
+      showToast('삭제에 실패했습니다.', 'error');
     },
   });
 

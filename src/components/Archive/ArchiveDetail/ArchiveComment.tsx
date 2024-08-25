@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   deleteArchiveComment,
@@ -7,6 +8,7 @@ import {
 import { DEFAULT_IMAGE } from '../../../constants/image';
 import { Comment as CommentType } from '../../../types/Comment';
 import formatTimeDifference from '../../../utils/formatTimeDifference';
+import { showToast } from '../../common/Toast';
 interface Props {
   comment: CommentType;
 }
@@ -15,16 +17,27 @@ const ArchiveComment = ({ comment }: Props) => {
   const { id: archiveId } = useParams();
   const { id, userNickname, userPicUrl, createdAt, content } = comment;
   const queryClient = useQueryClient();
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState(content);
 
   const { mutate: editCommentMutation } = useMutation({
     mutationFn: editArchiveComment,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['ArchiveCommnet'] });
+      setIsEditing(false);
     },
     onError: () => {
-      alert('댓글 수정 실패');
+      showToast('댓글 수정 실패', 'error');
     },
   });
+
+  const handleEdit = () => {
+    if (isEditing) {
+      editCommentMutation({ archiveId, commentId: id, content: editedContent });
+    } else {
+      setIsEditing(true); // 수정 모드로 전환
+    }
+  };
 
   const { mutate: deleteCommentMutation } = useMutation({
     mutationFn: deleteArchiveComment,
@@ -32,7 +45,7 @@ const ArchiveComment = ({ comment }: Props) => {
       queryClient.invalidateQueries({ queryKey: ['ArchiveCommnet'] });
     },
     onError: () => {
-      alert('댓글 삭제 실패');
+      showToast('댓글 삭제 실패', 'error');
     },
   });
 
@@ -49,12 +62,21 @@ const ArchiveComment = ({ comment }: Props) => {
         </div>
         <div>
           <div className="text-sm font-bold">{userNickname}</div>
-
-          <div className="pb-1 pt-1 text-sm leading-none">{content}</div>
+          {isEditing ? (
+            <textarea
+              className="w-full rounded border p-1 text-sm"
+              value={editedContent}
+              onChange={(e) => setEditedContent(e.target.value)}
+            />
+          ) : (
+            <div className="pb-1 pt-1 text-sm leading-none">{content}</div>
+          )}
           <div className="flex flex-row items-center space-x-[4px] text-[12px] text-gray-400">
             <div className="">{formatTimeDifference(createdAt)}</div>
-            {/* <div className="relative top-[-1px] text-[0.5rem]">•</div>
-            <button type="button">수정</button>
+            <div className="relative top-[-1px] text-[0.5rem]">•</div>
+            <button type="button" onClick={handleEdit}>
+              {isEditing ? '저장' : '수정'}
+            </button>
             <div className="relative top-[-1px] text-[0.5rem]">•</div>
             <button
               type="button"
@@ -63,7 +85,7 @@ const ArchiveComment = ({ comment }: Props) => {
               }
             >
               삭제
-            </button> */}
+            </button>
           </div>
         </div>
       </div>

@@ -1,4 +1,3 @@
-
 import { isAxiosError } from 'axios';
 import { showToast } from '../components/common/Toast';
 import { PostComment } from '../types/Comment';
@@ -86,5 +85,4 @@ export const deleteArchiveComment = async ({
       }
     }
   }
-
 };

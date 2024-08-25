@@ -1,5 +1,4 @@
 import { HeartIcon, ChatBubbleOvalLeftIcon } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
 import { Post } from '../../types/Post';
 import { TeamScheme } from '../../types/TeamScheme';
 import { convertTeamNameToEnglish } from '../../utils/convertTeamNameToEnglish';
@@ -12,7 +11,6 @@ interface Props {
 
 const PublicPost = ({ post }: Props) => {
   const {
-    id,
     myTeamName,
     homeTeamName,
     awayTeamName,

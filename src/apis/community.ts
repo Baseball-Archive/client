@@ -1,4 +1,4 @@
-import apiClient, { getAuthToken } from './apiClient';
+import apiClient from './apiClient';
 
 export interface CommunityData {
   scheduleId: number;
