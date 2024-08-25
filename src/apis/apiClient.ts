@@ -11,8 +11,8 @@ export const getAuthToken = async (): Promise<string | null> => {
   const user = auth.currentUser;
   if (user) {
     const token = await user.getIdToken();
-    const uid = user.uid;
 
+    const uid = user.uid;
     setToken(uid); // 토큰을 전역 상태나 스토어에 저장합니다.
     return `Bearer ${token}`;
   }

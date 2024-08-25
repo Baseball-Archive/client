@@ -1,2 +1,2 @@
 export const DEFAULT_IMAGE =
-  'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png';
+  'https://baseball-archive-team.s3.ap-northeast-2.amazonaws.com/profile-images/2517a049-08ae-48be-b972-ee92dd682459-13.png';

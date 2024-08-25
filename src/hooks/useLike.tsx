@@ -9,6 +9,7 @@ export const useLike = (archiveId: number) => {
     mutationFn: () => addArchiveLike(archiveId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['publicArchive'] });
+      console.log('좋아요 추가 성공');
     },
     onError: () => {
       showToast('좋아요 추가에 실패했습니다.', 'error');
@@ -19,6 +20,7 @@ export const useLike = (archiveId: number) => {
     mutationFn: () => subArchiveLike(archiveId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['publicArchive'] });
+      console.log('좋아요 삭제 성공');
     },
     onError: () => {
       showToast('좋아요 취소에 실패했습니다.', 'error');

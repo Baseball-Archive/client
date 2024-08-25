@@ -12,9 +12,15 @@ import type { ArchiveContent as ArchiveContentType } from '../../types/Archive';
 const ArchiveDetail = () => {
   const { id: archiveId } = useParams();
   const [isLiked, setIsLiked] = useState(false);
-  const { archiveContent } = useArchiveDetail(archiveId as string);
+  const { archiveContent, isError, isLoading, refetch } = useArchiveDetail(
+    archiveId as string,
+  );
   const { archiveComment } = useArchiveComment(archiveId as string);
   const { addLike, subLike } = useLike(Number(archiveId));
+
+  const handleRefetch = () => {
+    refetch();
+  };
 
   const handleLike = (isLiked: boolean) => {
     if (isLiked === true) {
@@ -22,20 +28,25 @@ const ArchiveDetail = () => {
     } else if (isLiked === false) {
       addLike();
     }
+    setIsLiked((prev) => !prev);
   };
+  if (isLoading) return <div>로딩 중...</div>;
+  if (isError) return <div>오류가 발생했습니다.</div>;
   return (
     <div className="relative mb-32 h-full w-full pt-7">
-      <ArchiveContent ArchiveContent={archiveContent as ArchiveContentType} />
+      <ArchiveContent
+        onError={handleRefetch}
+        ArchiveContent={archiveContent as ArchiveContentType}
+      />
       <div className="mt-8 border-t-2">
         {archiveComment && archiveComment.length > 0 ? (
           archiveComment
-            .slice()
-            .reverse()
+            .sort((a, b) => parseInt(a.id) - parseInt(b.id))
             .map((comment) => (
               <ArchiveComment key={comment.id} comment={comment} />
             ))
         ) : (
-          <div className="flex justify-center">댓글을 작성해주세요.</div>
+          <></>
         )}
         <ArchiveAddComment />
       </div>

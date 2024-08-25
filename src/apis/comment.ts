@@ -1,4 +1,3 @@
-
 import { isAxiosError } from 'axios';
 import { showToast } from '../components/common/Toast';
 import { PostComment } from '../types/Comment';
@@ -8,6 +7,7 @@ import apiClient from './apiClient';
 export const getArchiveComments = async (archiveId: string) => {
   try {
     const response = await apiClient.get(`/comments/archive/${archiveId}`);
+    console.log(response.data);
     return snakeToCamel(response.data);
   } catch (error) {
     if (isAxiosError(error)) {
@@ -18,20 +18,19 @@ export const getArchiveComments = async (archiveId: string) => {
       }
     }
   }
+  return [];
 };
 
 export const editArchiveComment = async ({
   archiveId,
   commentId,
   content,
-  createdAt,
-  userId,
 }: PostComment) => {
   try {
-    const response = await apiClient.put(
-      `/comments/archive/${archiveId}/${commentId}`,
-      { content: content, created_at: createdAt, user_id: userId },
-    );
+    const response = await apiClient.put(`/comments/archive/${archiveId}`, {
+      commentId: commentId,
+      content: content,
+    });
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
@@ -73,9 +72,9 @@ export const deleteArchiveComment = async ({
   commentId,
 }: PostComment) => {
   try {
-    const response = await apiClient.delete(
-      `/comments/archive/${archiveId}/${commentId}`,
-    );
+    const response = await apiClient.delete(`/comments/archive/${archiveId}`, {
+      data: { commentId: commentId },
+    });
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
@@ -86,5 +85,4 @@ export const deleteArchiveComment = async ({
       }
     }
   }
-
 };

@@ -13,11 +13,15 @@ export const usePublicArchive = () => {
     isFetching,
     isFetchingNextPage,
     status,
+    refetch,
   } = useInfiniteQuery({
     queryKey: ['PublicArchives'],
     queryFn: fetchPublicArchives,
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
+      if (!lastPage) {
+        return undefined;
+      }
       const lastPageLength = lastPage.length;
       return lastPageLength === LIMIT_POST ? pages.length + 1 : undefined;
     },
@@ -31,6 +35,7 @@ export const usePublicArchive = () => {
     isFetching,
     isFetchingNextPage,
     status,
+    refetch,
   };
 };
 

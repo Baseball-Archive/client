@@ -30,7 +30,6 @@ const UploadPhotoButton = ({ handlePicUrl }: UploadPhotoButtonProps) => {
         const result = await uploadImage(formData);
         handlePicUrl(result.fileUrl);
         setFileName(file[0].name);
-        console.log(result.fileUrl);
       } else {
         console.error('토큰이 없습니다.');
       }

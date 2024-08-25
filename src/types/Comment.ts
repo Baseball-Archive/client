@@ -1,7 +1,7 @@
 export interface Comment {
   id: string;
-  userNickname: string;
-  userPicUrl: string;
+  nickname: string;
+  picUrl: string;
   content: string;
   createdAt: string;
 }

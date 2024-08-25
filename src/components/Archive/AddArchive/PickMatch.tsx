@@ -1,6 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import Select, { StylesConfig } from 'react-select';
+import Select, {
+  SingleValue as SingleValueType,
+  StylesConfig,
+} from 'react-select';
 import { getSchedule } from '../../../apis/shedule';
 import { MatchData } from '../../../types/MatchData';
 import { TeamScheme } from '../../../types/TeamScheme';
@@ -99,8 +102,6 @@ const PickMatch = ({
   };
 
   const getschedules = async () => {
-    console.log(selectedDate);
-
     return await getSchedule(selectedDate);
   };
 
@@ -111,14 +112,16 @@ const PickMatch = ({
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
+  const handleSelectChange = (newValue: SingleValueType<MatchData>) => {
+    handleMatchSelect(newValue ? { ...newValue } : null);
+  };
   return (
     <div className="w-full">
       <Select
         placeholder="경기를 선택하세요."
         isSearchable={false}
         value={selectedMatch}
-        onChange={handleMatchSelect}
+        onChange={handleSelectChange}
         options={getScheduleQuery || []}
         components={{ Option, SingleValue }}
         styles={customStyles}
@@ -128,4 +131,3 @@ const PickMatch = ({
 };
 
 export default PickMatch;
-//@TODO: 스케쥴 API 구현 안된 상태라 더미데이터로 대체함. 추후 받은 matchdate로 스케쥴 API 호출
