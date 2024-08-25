@@ -42,7 +42,6 @@ const PostDetail = ({ postDetail }: Props) => {
     nickname,
     my_team_name,
     likes,
-    comments,
   } = postDetail;
 
   const queryClient = useQueryClient();

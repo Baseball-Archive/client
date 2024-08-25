@@ -1,10 +1,7 @@
-
 // Install event
-
 self.addEventListener('install', (e) => {
   console.log('[Service Worker] installed');
 });
-
 
 // Activate event
 self.addEventListener('activate', (e) => {
