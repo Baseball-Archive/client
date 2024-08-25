@@ -1,15 +1,17 @@
 import { TeamScheme } from '../../../types/TeamScheme';
+import { Weather } from '../../../types/Weather';
 import { convertTeamNameToEnglish } from '../../../utils/convertTeamNameToEnglish';
 import formatTimeDifference from '../../../utils/formatTimeDifference';
+import { useRenderEmoji } from '../../../utils/renderWeatherEmoji';
 import Badge from '../../common/Badge';
 import type { ArchiveContent } from '../../../types/Archive';
 
 interface ArchiveContentProps {
   ArchiveContent: ArchiveContent;
+  onError: () => void;
 }
 //TOFIX : api확정되면 타입수정
-const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
-  if (!ArchiveContent) return <div>로딩</div>;
+const ArchiveContent = ({ ArchiveContent, onError }: ArchiveContentProps) => {
   const {
     matchDate,
     homeTeamName,
@@ -26,17 +28,17 @@ const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
     myTeamName,
   } = ArchiveContent;
 
-  // const handleDelete = () => {
-  //   if (window.confirm('삭제 하시겠습니까?')) {
-  //     alert('삭제 되었습니다.');
-  //   }
-  // };
-  // const handleEdit = () => {
-  //   if (window.confirm('수정 하시겠습니까?')) {
-  //     alert('수정 되었습니다.');
-  //   }
-  // };
-  // console.log(ArchiveContent);
+  const handleDelete = () => {
+    if (window.confirm('삭제 하시겠습니까?')) {
+      alert('삭제 되었습니다.');
+    }
+  };
+  const handleEdit = () => {
+    if (window.confirm('수정 하시겠습니까?')) {
+      alert('수정 되었습니다.');
+    }
+  };
+  console.log(ArchiveContent);
   return (
     <div className="flex justify-center overflow-hidden bg-white">
       <div className="w-full">
@@ -62,7 +64,7 @@ const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
           <div className="flex items-start">
             <p className="text-s min-w-[4rem] font-light">경기 날짜</p>
             <p className="text-s min-w-[4rem] font-medium">
-              {matchDate.slice(0, 10)}
+              {matchDate ? matchDate.slice(0, 10) : '날짜 없음'}
             </p>
           </div>
           <div className="flex items-center">
@@ -79,7 +81,9 @@ const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
           </div>
           <div className="flex items-center">
             <p className="text-s min-w-[4rem] font-light text-black">날씨</p>
-            <p className="text-s min-w-[4rem] font-medium">{weather}</p>
+            <p className="text-s min-w-[4rem] font-medium">
+              {useRenderEmoji(weather as Weather)}
+            </p>
           </div>
           <div className="flex items-center">
             <p className="text-s min-w-[4rem] font-light text-black">홈</p>

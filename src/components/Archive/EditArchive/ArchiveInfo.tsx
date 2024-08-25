@@ -87,7 +87,6 @@ const ArchiveInfo = () => {
 
   const onSubmit: SubmitHandler<Archive> = async (archiveData) => {
     try {
-      console.log(archiveData.scheduleId);
       await editArchive({
         id: Number(archiveId),
         archiveData: {

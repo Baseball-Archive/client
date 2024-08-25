@@ -7,7 +7,7 @@ import router from './Router';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 3,
+      retry: 4,
       throwOnError: true,
     },
     mutations: {

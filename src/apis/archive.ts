@@ -32,6 +32,7 @@ export const getArchiveContent = async (id: string) => {
       }
     }
   }
+  return { archive: {} };
 };
 export const fetchPublicArchives = async ({ pageParam = 1 }) => {
   const limit = 10;
@@ -60,10 +61,19 @@ export const postArchive = async (data: PostArchiveProps) => {
   return response.data;
 };
 export const addArchiveLike = async (id: number) => {
-  const response = await apiClient.post(`/likse/archive/${id}`);
-  return response.data;
+  try {
+    const response = await apiClient.post(`/likes/archive/${id}`);
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      if (error.response) {
+        showToast(error.response.data.error, 'error');
+      } else {
+        showToast(error.message, 'error');
+      }
+    }
+  }
 };
-
 export const editArchive = async (data: EditArchiveProps) => {
   const response = await apiClient.put(`/archive/${data.id}`, data.archiveData);
   return response.data;

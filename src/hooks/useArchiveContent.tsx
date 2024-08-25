@@ -3,12 +3,16 @@ import { getArchiveContent } from '../apis/archive';
 import { ArchiveContent } from '../types/Archive';
 
 const useArchiveContent = (id: string) => {
-  const { data: archiveContent, error: archiveError } =
-    useQuery<ArchiveContent>({
-      queryKey: ['ArchiveContent', id],
-      queryFn: () => getArchiveContent(id),
-    });
-  return { archiveContent, archiveError };
+  const {
+    data: archiveContent,
+    isError,
+    isLoading,
+    refetch,
+  } = useQuery<ArchiveContent>({
+    queryKey: ['ArchiveContent', id],
+    queryFn: () => getArchiveContent(id),
+  });
+  return { archiveContent, isError, isLoading, refetch };
 };
 
 export default useArchiveContent;

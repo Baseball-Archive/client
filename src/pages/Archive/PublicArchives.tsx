@@ -25,6 +25,7 @@ const PublicArchives = () => {
     isFetching,
     isFetchingNextPage,
     status,
+    refetch,
   } = usePublicArchive();
 
   useEffect(() => {
@@ -38,10 +39,13 @@ const PublicArchives = () => {
         fetchNextPage();
       }
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   if (status === 'pending') {
     return <div>Loading...</div>;
