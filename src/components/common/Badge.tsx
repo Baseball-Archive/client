@@ -26,7 +26,7 @@ const Badge = ({ scheme, small }: Props) => {
   if (small) {
     return (
       <span
-        className={`inline-flex items-center rounded-lg px-[6px] py-[2px] text-[10px] font-bold text-white ${style}`}
+        className={`inline-flex items-center rounded-lg px-[6px] py-[2px] text-[10px] font-normal text-white ${style}`}
       >
         {name}
       </span>

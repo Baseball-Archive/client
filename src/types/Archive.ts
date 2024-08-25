@@ -38,7 +38,21 @@ export interface EditArchiveProps {
   archiveData: PostArchiveProps;
 }
 
-export interface ArchiveDetail {
-  post: Archive;
-  comments: Comment[];
+export interface ArchiveContent {
+  id?: number;
+  matchDate: string;
+  homeTeamName: string;
+  awayTeamName: string;
+  stadium: string;
+  weather: string;
+  homeTeamScore: number;
+  awayTeamScore: number;
+  content: string;
+  title: string;
+  picUrl: string;
+  createdAt: string;
+  nickname: string;
+  likes: string;
+  comments: string;
+  myTeamName: string;
 }

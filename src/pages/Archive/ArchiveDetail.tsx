@@ -4,37 +4,17 @@ import ArchiveAddComment from '../../components/Archive/ArchiveDetail/ArchiveAdd
 import ArchiveComment from '../../components/Archive/ArchiveDetail/ArchiveComment';
 import ArchiveContent from '../../components/Archive/ArchiveDetail/ArchiveContent';
 import LikeButton from '../../components/common/LikeButton';
-import useArchiveDetail from '../../hooks/useArchiveDetail';
+import useArchiveComment from '../../hooks/useArchiveComments';
+import useArchiveDetail from '../../hooks/useArchiveContent';
 import { useLike } from '../../hooks/useLike';
-import type { Archive, ArchiveDetail } from '../../types/Archive';
+import type { ArchiveContent as ArchiveContentType } from '../../types/Archive';
 
 const ArchiveDetail = () => {
   const { id: archiveId } = useParams();
   const [isLiked, setIsLiked] = useState(false);
-  const { getArchiveWithComments } = useArchiveDetail(archiveId as string);
+  const { archiveContent } = useArchiveDetail(archiveId as string);
+  const { archiveComment } = useArchiveComment(archiveId as string);
   const { addLike, subLike } = useLike(Number(archiveId));
-
-  const DUMMY_DATA = {
-    post: getArchiveWithComments as Archive,
-    comments: [
-      {
-        userId: 1,
-        commentId: 2,
-        content: '123213',
-        updatedAt: '2023-01-01T00:00:00Z', // 올바른 날짜 형식으로 수정
-        picUrl: 'asd',
-        nickname: '123',
-      },
-      {
-        userId: 1,
-        commentId: 2,
-        content: '213213',
-        updatedAt: '2023-01-01T00:00:00Z', // 올바른 날짜 형식으로 수정
-        picUrl: 'asd',
-        nickname: '123',
-      },
-    ],
-  };
 
   const handleLike = (isLiked: boolean) => {
     if (isLiked === true) {
@@ -43,14 +23,20 @@ const ArchiveDetail = () => {
       addLike();
     }
   };
-  console.log(DUMMY_DATA.post);
   return (
     <div className="relative mb-32 h-full w-full pt-7">
-      <ArchiveContent ArchiveContent={DUMMY_DATA.post} />
+      <ArchiveContent ArchiveContent={archiveContent as ArchiveContentType} />
       <div className="mt-8 border-t-2">
-        {DUMMY_DATA.comments.map((comment, index) => (
-          <ArchiveComment key={index} comment={comment} />
-        ))}
+        {archiveComment && archiveComment.length > 0 ? (
+          archiveComment
+            .slice()
+            .reverse()
+            .map((comment) => (
+              <ArchiveComment key={comment.id} comment={comment} />
+            ))
+        ) : (
+          <div className="flex justify-center">댓글을 작성해주세요.</div>
+        )}
         <ArchiveAddComment />
       </div>
       <LikeButton onClick={() => handleLike(isLiked)} isLiked={isLiked} />

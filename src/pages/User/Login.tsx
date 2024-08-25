@@ -1,15 +1,15 @@
-import { useForm } from 'react-hook-form';
-import InputText from '../../components/common/InputText';
-import Button from '../../components/common/Button';
-import { Link } from 'react-router-dom';
+import { FirebaseError } from 'firebase/app';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../service/firebase';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import Button from '../../components/common/Button';
+import InputText from '../../components/common/InputText';
+import { showToast } from '../../components/common/Toast';
 import GithubButton from '../../components/User/GithubButton';
 import GoogleButton from '../../components/User/GoogleButton';
 import ROUTES from '../../constants/router';
 import { useAuth } from '../../hooks/useAuth';
-import { showToast } from '../../components/common/Toast';
-import { FirebaseError } from 'firebase/app';
+import { auth } from '../../service/firebase';
 
 export interface LoginProps {
   email: string;
@@ -29,9 +29,12 @@ const Login = () => {
       if (auth) {
         await signInWithEmailAndPassword(auth, data.email, data.password);
         const sendToken = await auth.currentUser?.getIdToken();
-
+        const userId = auth.currentUser?.uid;
         if (sendToken) {
           userLogin(sendToken);
+          if (userId) {
+            localStorage.setItem('userId', userId);
+          }
         } else {
           showToast('로그인에 문제가 발생했습니다', 'error');
         }

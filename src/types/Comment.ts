@@ -1,14 +1,14 @@
 export interface Comment {
-  userId?: number;
-  commentId?: number;
+  id: string;
+  userNickname: string;
+  userPicUrl: string;
   content: string;
-  updatedAt?: string;
-  picUrl?: string;
-  nickname?: string;
+  createdAt: string;
 }
-export interface AddComment {
-  archive_id: number;
-  user_id: number;
-  content: string;
-  created_at: string;
+export interface PostComment {
+  userId?: string;
+  archiveId?: string;
+  createdAt?: string;
+  content?: string;
+  commentId?: string;
 }

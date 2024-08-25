@@ -1,7 +1,7 @@
 import { sendPasswordResetEmail } from 'firebase/auth';
-import InputText from './InputText';
-import { auth } from '../../service/firebase';
 import { useForm } from 'react-hook-form';
+import { auth } from '../../service/firebase';
+import InputText from './InputText';
 
 interface Props {
   email: string;
