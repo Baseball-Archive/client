@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import PublicPost from '../../components/common/PublicPost';
 import usePublicArchive from '../../hooks/usePublicArchive';
+import Community from '../Community/Community';
 
 interface PublicArchive {
   id: number;
@@ -13,7 +16,7 @@ interface PublicArchive {
   comments: string;
 }
 
-const PublicArchive = () => {
+const PublicArchives = () => {
   const {
     data,
     error,
@@ -23,16 +26,15 @@ const PublicArchive = () => {
     isFetchingNextPage,
     status,
   } = usePublicArchive();
+
   useEffect(() => {
     const handleScroll = () => {
       if (
-        window.innerHeight + document.documentElement.scrollTop !==
-          document.documentElement.offsetHeight ||
-        isFetchingNextPage
+        window.innerHeight + document.documentElement.scrollTop >=
+          document.documentElement.offsetHeight - 2 &&
+        !isFetchingNextPage &&
+        hasNextPage
       ) {
-        return;
-      }
-      if (hasNextPage) {
         fetchNextPage();
       }
     };
@@ -40,6 +42,7 @@ const PublicArchive = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
   if (status === 'pending') {
     return <div>Loading...</div>;
   }
@@ -50,13 +53,13 @@ const PublicArchive = () => {
 
   return (
     <div>
+      <Community />
       {data?.pages.map((page, index) => (
         <div key={index}>
-          {page.map((archive: PublicArchive) => (
-            <div key={archive.id}>
-              <div>{archive.title}</div>
-              <div></div>
-            </div>
+          {page?.map((archive: PublicArchive) => (
+            <Link to={`/archive/${archive.id}`}>
+              <PublicPost key={archive.id} post={archive} />
+            </Link>
           ))}
         </div>
       ))}
@@ -65,4 +68,4 @@ const PublicArchive = () => {
   );
 };
 
-export default PublicArchive;
+export default PublicArchives;

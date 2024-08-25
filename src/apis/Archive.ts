@@ -35,7 +35,7 @@ export const getArchiveDetailWithComments = async (id: string) => {
   }
 };
 export const fetchPublicArchives = async ({ pageParam = 1 }) => {
-  const limit = 6;
+  const limit = 10;
   try {
     const response = await apiClient.get('/archive/public', {
       params: {
@@ -43,7 +43,8 @@ export const fetchPublicArchives = async ({ pageParam = 1 }) => {
         currentPage: pageParam,
       },
     });
-    return response.data;
+
+    return snakeToCamel(response.data);
   } catch (error) {
     if (isAxiosError(error)) {
       if (error.response) {

@@ -1,9 +1,8 @@
-
-import { auth } from '../service/firebase';
+import { useQuery } from '@tanstack/react-query';
 import { getUser } from '../apis/auth';
 import { BASEBALL_TEAMS } from '../constants/baseballTeams';
+import { auth } from '../service/firebase';
 import { useAuthStore } from '../store/authStore';
-import { useQuery } from '@tanstack/react-query';
 
 interface IUserData {
   pic_url: string;

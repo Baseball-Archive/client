@@ -4,7 +4,6 @@ import ErrorPage from './components/common/ErrorPage';
 import Loading from './components/common/Loading';
 import Layout from './components/layout/Layout';
 import ROUTES from './constants/router';
-import PublicArchive from './pages/Archive/PublicArchive';
 
 const Archives = lazy(() => import('./pages/Archive/Archives'));
 const AddArchive = lazy(() => import('./pages/Archive/AddArchive'));
@@ -20,6 +19,7 @@ const ResetPW = lazy(() => import('./components/common/ResetPW'));
 const ArchiveDetail = lazy(() => import('./pages/Archive/ArchiveDetail'));
 const EditArchive = lazy(() => import('./pages/Archive/EditArchive'));
 const AddPost = lazy(() => import('./pages/Community/AddPost'));
+const PublicArchives = lazy(() => import('./pages/Archive/PublicArchives'));
 const router = createBrowserRouter([
   {
     path: ROUTES.HOME,
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
         path: ROUTES.PUBLIC_ARCHIVES,
         element: (
           <Suspense fallback={<Loading />}>
-            <PublicArchive />
+            <PublicArchives />
           </Suspense>
         ),
       },

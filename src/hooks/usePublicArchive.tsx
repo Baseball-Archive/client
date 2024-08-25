@@ -2,6 +2,8 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
 import { fetchPublicArchives } from '../apis/archive';
 
+const LIMIT_POST = 10;
+
 export const usePublicArchive = () => {
   const {
     data,
@@ -17,7 +19,7 @@ export const usePublicArchive = () => {
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       const lastPageLength = lastPage.length;
-      return lastPageLength === 6 ? pages.length + 1 : undefined;
+      return lastPageLength === LIMIT_POST ? pages.length + 1 : undefined;
     },
   });
 
