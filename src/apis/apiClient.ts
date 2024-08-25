@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
-import { auth } from '../service/firebase';
-import { getToken, setToken } from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../constants/router';
+import { auth } from '../service/firebase';
+import { getToken, setToken } from '../store/authStore';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -31,7 +31,6 @@ const apiClient = (() => {
   instance.interceptors.request.use(
     async (config) => {
       const token = getToken(); // 저장된 토큰 가져오기
-
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }

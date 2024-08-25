@@ -1,10 +1,9 @@
 import { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+import ErrorPage from './components/common/ErrorPage';
 import Loading from './components/common/Loading';
 import Layout from './components/layout/Layout';
 import ROUTES from './constants/router';
-import ErrorPage from './components/common/ErrorPage';
-
 
 const Archives = lazy(() => import('./pages/Archive/Archives'));
 const AddArchive = lazy(() => import('./pages/Archive/AddArchive'));
@@ -19,7 +18,7 @@ const Signup = lazy(() => import('./pages/User/Signup'));
 const ResetPW = lazy(() => import('./components/common/ResetPW'));
 const ArchiveDetail = lazy(() => import('./pages/Archive/ArchiveDetail'));
 const EditArchive = lazy(() => import('./pages/Archive/EditArchive'));
-
+const AddPost = lazy(() => import('./pages/Community/AddPost'));
 const router = createBrowserRouter([
   {
     path: ROUTES.HOME,
