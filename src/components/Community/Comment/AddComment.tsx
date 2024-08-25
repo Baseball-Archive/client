@@ -1,36 +1,45 @@
-import React, { useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addCommunityComment } from '../../../apis/comment';
+import { showToast } from '../../common/toast';
+
+type FormValues = {
+  comment: string;
+};
 
 const AddComment = ({ boardId }: { boardId: string }) => {
-  const [comment, setComment] = useState('');
+  const { register, handleSubmit, reset } = useForm<FormValues>();
+  const queryClient = useQueryClient();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setComment(e.target.value);
-  };
+  const mutation = useMutation({
+    mutationFn: async (newComment: string) => {
+      return await addCommunityComment({ boardId, content: newComment });
+    },
+    onSuccess: (data) => {
+      showToast(data.message, 'success');
+      queryClient.invalidateQueries({ queryKey: ['communityComment'] });
+      reset();
+    },
+    onError: (error) => {
+      showToast(error.message, 'error');
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (comment.trim()) {
-      try {
-        const result = await addCommunityComment(comment, boardId);
-        console.log('Comment submitted:', result);
-        setComment('');
-      } catch (error) {
-        console.error('Error adding comment: ', error);
-      }
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    if (data.comment.trim()) {
+      mutation.mutate(data.comment);
     }
   };
 
   return (
     <div className="flex justify-center bg-white pt-4">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="flex w-full overflow-hidden rounded-md border"
       >
         <input
           type="text"
-          value={comment}
-          onChange={handleInputChange}
+          {...register('comment', { required: 'Comment is required' })}
           placeholder="댓글을 입력하세요"
           className="flex-grow border-none pl-4 focus:outline-none"
         />

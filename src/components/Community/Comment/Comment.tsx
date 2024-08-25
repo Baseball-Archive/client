@@ -1,11 +1,11 @@
+import dayjs from 'dayjs';
+
 export interface CommentType {
   id: number;
-  post_id: number;
-  user_id: number;
-  profile: number;
   nickname: string;
+  picUrl: string;
   content: string;
-  comment_date: string;
+  createdAt: string;
 }
 
 interface Props {
@@ -13,11 +13,7 @@ interface Props {
 }
 
 const Comment = ({ comment }: Props) => {
-  const { profile, nickname, content, comment_date } = comment;
-
-  const getPhotoSrc = (id: number) => {
-    return `https://picsum.photos/id/${id}/40/40`;
-  };
+  const { id, nickname, picUrl, content, createdAt } = comment;
 
   return (
     <div className="flex justify-center overflow-hidden bg-white pt-4">
@@ -27,7 +23,7 @@ const Comment = ({ comment }: Props) => {
             className="overflow-hidden rounded-full"
             style={{ minWidth: '32px', maxWidth: '32px' }}
           >
-            <img src={getPhotoSrc(profile)} alt="Post Photo" />
+            {picUrl && <img src={picUrl} alt="Post Photo" />}
           </div>
         </div>
         <div>
@@ -35,7 +31,7 @@ const Comment = ({ comment }: Props) => {
 
           <div className="pb-1 pt-1 text-sm leading-none">{content}</div>
           <div className="flex flex-row items-center space-x-[4px] text-[12px] text-gray-400">
-            <div className="">{comment_date}</div>
+            <div className="">{dayjs(createdAt).format('YYYY-MM-DD')}</div>
             <div className="relative top-[-1px] text-[0.5rem]">•</div>
             <button>수정</button>
             <div className="relative top-[-1px] text-[0.5rem]">•</div>
