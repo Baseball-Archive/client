@@ -21,3 +21,8 @@ export const getCommunityDetail = async (id: string) => {
   const response = await apiClient.get(`/board/${id}`);
   return response.data;
 };
+
+export const deleteCommunity = async (id: string) => {
+  const response = await apiClient.delete(`/board/${id}`);
+  return response.data;
+};

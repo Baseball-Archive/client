@@ -7,6 +7,9 @@ import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline';
 import Badge from '../common/Badge';
 import { convertTeamNameToEnglish } from '../../utils/convertTeamNameToEnglish';
 import { TeamScheme } from '../../types/TeamScheme';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { deleteCommunity } from '../../apis/community';
+import { useNavigate } from 'react-router-dom';
 
 interface Post {
   id: number;
@@ -43,11 +46,27 @@ const PostDetail = ({ postDetail }: Props) => {
     comments,
   } = postDetail;
 
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const [isLikesClicked, setIsLikesClicked] = useState(() => {
     const savedState = localStorage.getItem(`isLikesClicked-${id}`);
     return savedState ? JSON.parse(savedState) : false;
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: async () => {
+      return await deleteCommunity(String(id));
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['community'] });
+      navigate('/posts');
+      console.log('Success:', data);
+    },
+    onError: (error) => {
+      console.error('Error:', error);
+    },
+  });
   const toggleLikes = () => {
     const newState = !isLikesClicked;
     setIsLikesClicked(newState);
@@ -56,6 +75,7 @@ const PostDetail = ({ postDetail }: Props) => {
 
   const handleDelete = () => {
     if (window.confirm('삭제 하시겠습니까?')) {
+      deleteMutation.mutate();
       alert('삭제 되었습니다.');
     }
   };
