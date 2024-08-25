@@ -1,8 +1,12 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { CommunityData, postCommunity } from '../../../apis/community';
+import { SubmitHandler, useForm, Controller } from 'react-hook-form';
+import {
+  CommunityData,
+  postCommunity,
+  updateCommunity,
+} from '../../../apis/community';
 import useSchedule from '../../../hooks/useSchedule';
 import Button from '../../common/Button';
 import InputText from '../../common/InputText';
@@ -10,32 +14,62 @@ import PostInfoSection from './PostInfoSection';
 import PostPickDate from './PostPickDate';
 import { getTeamLabelByKey } from '../../../utils/getTeamValueByKey';
 import { useNavigate } from 'react-router-dom';
+import { Post } from '../PostDetail';
 
-const PostInfo = () => {
+interface Props {
+  communityDetail?: Post;
+}
+
+const PostInfo = ({ communityDetail }: Props) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const { handleSubmit, register } = useForm<CommunityData>();
-  const [date, setDate] = useState<string>(dayjs().format('YYYYMMDD'));
-  const [match, setMatch] = useState<number | null>(null);
-  const { data: scheduleData } = useSchedule(dayjs(date).format('YYYYMMDD'));
+  const [currentDate, setCurrentDate] = useState<string>(
+    dayjs().format('YYYY-MM-DD'),
+  );
+
+  const { data: scheduleData } = useSchedule(
+    dayjs(currentDate).format('YYYYMMDD'),
+  );
+
+  const defaultValues = {
+    title: communityDetail?.title || '',
+    content: communityDetail?.content || '',
+    date: communityDetail?.match_date || currentDate,
+    // scheduleId: communityDetail?.scheduleId || '',
+  };
+
+  const { handleSubmit, register, control, setValue, watch } =
+    useForm<CommunityData>({
+      defaultValues,
+    });
+
+  const date = watch('date');
+  const scheduleId = watch('scheduleId');
 
   useEffect(() => {
-    setMatch(null);
-  }, [date, scheduleData]);
+    setCurrentDate(dayjs(date).format('YYYY-MM-DD'));
+  }, [date]);
 
   const mutation = useMutation({
     mutationFn: async (data: CommunityData) => {
-      if (match === null) {
-        throw new Error('Match ID is required');
+      if (communityDetail) {
+        return await updateCommunity(communityDetail.id, {
+          scheduleId: data.scheduleId,
+          title: data.title,
+          content: data.content,
+        });
+      } else {
+        return await postCommunity({
+          scheduleId: data.scheduleId,
+          title: data.title,
+          content: data.content,
+        });
       }
-      return await postCommunity({
-        scheduleId: match,
-        title: data.title,
-        content: data.content,
-      });
     },
     onSuccess: (data) => {
       navigate('/posts');
+      queryClient.invalidateQueries({ queryKey: ['community'] });
       console.log('Success:', data);
     },
     onError: (error) => {
@@ -44,7 +78,11 @@ const PostInfo = () => {
   });
 
   const onSubmit: SubmitHandler<CommunityData> = async (data) => {
-    if (window.confirm('게시글을 등록 하시겠습니까?')) {
+    if (
+      window.confirm(
+        `게시글을 ${communityDetail ? '수정' : '등록'} 하시겠습니까?`,
+      )
+    ) {
       mutation.mutate(data);
     }
   };
@@ -63,18 +101,29 @@ const PostInfo = () => {
       </PostInfoSection>
 
       <PostInfoSection label="경기 날짜" name="date">
-        <PostPickDate onSelectDate={setDate} />
+        <Controller
+          name="date"
+          control={control}
+          render={({ field }) => (
+            <PostPickDate
+              {...field}
+              onSelectDate={(date) => {
+                setValue('date', date);
+                setCurrentDate(dayjs(date).format('YYYY-MM-DD'));
+              }}
+            />
+          )}
+        />
       </PostInfoSection>
 
-      <PostInfoSection label="경기 선택" name="match">
+      <PostInfoSection label="경기 선택" name="scheduleId">
         <select
-          id="match"
+          id="scheduleId"
           className="h-[40px] rounded border border-[#A9A9A9] p-2"
-          value={match ?? ''}
-          onChange={(e) => setMatch(Number(e.target.value))}
+          {...register('scheduleId', { required: true })}
         >
           <option value="">
-            {scheduleData.length
+            {scheduleData?.length
               ? '경기를 선택하세요'
               : '해당일에 경기가 없습니다.'}
           </option>
@@ -97,7 +146,7 @@ const PostInfo = () => {
 
       <fieldset className="py-10 text-center">
         <Button type="submit" size="medium" scheme="primary">
-          게시글 등록
+          {`게시글 ${communityDetail ? '수정' : '등록'}`}
         </Button>
       </fieldset>
     </form>

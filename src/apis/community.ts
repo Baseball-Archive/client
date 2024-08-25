@@ -5,6 +5,7 @@ export interface CommunityData {
   title: string;
   content: string;
   picUrl?: string;
+  date?: string;
 }
 
 export const postCommunity = async (data: CommunityData) => {
@@ -24,5 +25,10 @@ export const getCommunityDetail = async (id: string) => {
 
 export const deleteCommunity = async (id: string) => {
   const response = await apiClient.delete(`/board/${id}`);
+  return response.data;
+};
+
+export const updateCommunity = async (id: number, data: CommunityData) => {
+  const response = await apiClient.put(`/board/${id}`, data);
   return response.data;
 };

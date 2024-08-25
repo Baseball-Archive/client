@@ -1,6 +1,5 @@
 import PostHandleButton from '../common/PostHandleButton';
 import { useState } from 'react';
-import dayjs from 'dayjs';
 import { formatDate } from '../../utils/format';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/20/solid';
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline';
@@ -11,7 +10,7 @@ import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { deleteCommunity } from '../../apis/community';
 import { useNavigate } from 'react-router-dom';
 
-interface Post {
+export interface Post {
   id: number;
   match_date: string;
   home_team_name: string;
@@ -76,12 +75,11 @@ const PostDetail = ({ postDetail }: Props) => {
   const handleDelete = () => {
     if (window.confirm('삭제 하시겠습니까?')) {
       deleteMutation.mutate();
-      alert('삭제 되었습니다.');
     }
   };
   const handleEdit = () => {
     if (window.confirm('수정 하시겠습니까?')) {
-      alert('수정 되었습니다.');
+      navigate(`/post/${id}`);
     }
   };
 
