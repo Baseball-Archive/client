@@ -1,6 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import {
   CommunityData,
@@ -24,32 +23,19 @@ const PostInfo = ({ communityDetail }: Props) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const [currentDate, setCurrentDate] = useState<string>(
-    dayjs().format('YYYY-MM-DD'),
-  );
-
-  const { data: scheduleData } = useSchedule(
-    dayjs(currentDate).format('YYYYMMDD'),
-  );
-
-  const defaultValues = {
-    title: communityDetail?.title || '',
-    content: communityDetail?.content || '',
-    date: communityDetail?.match_date || currentDate,
-    // scheduleId: communityDetail?.scheduleId || '',
-  };
-
   const { handleSubmit, register, control, setValue, watch } =
     useForm<CommunityData>({
-      defaultValues,
+      defaultValues: {
+        title: communityDetail?.title || '',
+        content: communityDetail?.content || '',
+        date: communityDetail?.match_date || dayjs().format('YYYY-MM-DD'),
+        // scheduleId: communityDetail?.scheduleId || '',
+      },
     });
 
   const date = watch('date');
-  const scheduleId = watch('scheduleId');
 
-  useEffect(() => {
-    setCurrentDate(dayjs(date).format('YYYY-MM-DD'));
-  }, [date]);
+  const { data: scheduleData } = useSchedule(dayjs(date).format('YYYYMMDD'));
 
   const mutation = useMutation({
     mutationFn: async (data: CommunityData) => {
@@ -67,10 +53,9 @@ const PostInfo = ({ communityDetail }: Props) => {
         });
       }
     },
-    onSuccess: (data) => {
-      navigate('/posts');
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['community'] });
-      console.log('Success:', data);
+      navigate('/posts');
     },
     onError: (error) => {
       console.error('Error:', error);
@@ -78,11 +63,8 @@ const PostInfo = ({ communityDetail }: Props) => {
   });
 
   const onSubmit: SubmitHandler<CommunityData> = async (data) => {
-    if (
-      window.confirm(
-        `게시글을 ${communityDetail ? '수정' : '등록'} 하시겠습니까?`,
-      )
-    ) {
+    const action = communityDetail ? '수정' : '등록';
+    if (window.confirm(`게시글을 ${action} 하시겠습니까?`)) {
       mutation.mutate(data);
     }
   };
@@ -107,10 +89,7 @@ const PostInfo = ({ communityDetail }: Props) => {
           render={({ field }) => (
             <PostPickDate
               {...field}
-              onSelectDate={(date) => {
-                setValue('date', date);
-                setCurrentDate(dayjs(date).format('YYYY-MM-DD'));
-              }}
+              onSelectDate={(date) => setValue('date', date)}
             />
           )}
         />
