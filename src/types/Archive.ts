@@ -22,7 +22,7 @@ export interface Archive {
 }
 
 export interface PostArchiveProps {
-  schedule_id: number;
+  schedule_id?: number;
   weather: string | null;
   home_team_score: number;
   away_team_score: number;
@@ -31,13 +31,28 @@ export interface PostArchiveProps {
   pic_url: string;
   is_public: boolean | null;
   created_at?: string;
+  updated_at?: string;
 }
 export interface EditArchiveProps {
   id: number;
   archiveData: PostArchiveProps;
 }
 
-export interface ArchiveDetail {
-  post: Archive;
-  comments: Comment[];
+export interface ArchiveContent {
+  id?: number;
+  matchDate: string;
+  homeTeamName: string;
+  awayTeamName: string;
+  stadium: string;
+  weather: string;
+  homeTeamScore: number;
+  awayTeamScore: number;
+  content: string;
+  title: string;
+  picUrl: string;
+  createdAt: string;
+  nickname: string;
+  likes: string;
+  comments: string;
+  myTeamName: string;
 }

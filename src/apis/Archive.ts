@@ -1,7 +1,6 @@
 import axios, { isAxiosError } from 'axios';
 import { showToast } from '../components/common/toast';
 import { EditArchiveProps, PostArchiveProps } from '../types/Archive';
-import { AddComment, Comment } from '../types/Comment';
 import { snakeToCamel } from '../utils/snakeToCamel';
 import apiClient from './apiClient';
 
@@ -20,10 +19,10 @@ export const getArchives = async () => {
   }
   return [];
 };
-export const getArchiveDetailWithComments = async (id: string) => {
+export const getArchiveContent = async (id: string) => {
   try {
     const response = await apiClient.get(`/archive/public/${id}`);
-    return response.data;
+    return snakeToCamel(response.data);
   } catch (error) {
     if (isAxiosError(error)) {
       if (error.response) {
@@ -35,7 +34,7 @@ export const getArchiveDetailWithComments = async (id: string) => {
   }
 };
 export const fetchPublicArchives = async ({ pageParam = 1 }) => {
-  const limit = 6;
+  const limit = 10;
   try {
     const response = await apiClient.get('/archive/public', {
       params: {
@@ -43,7 +42,8 @@ export const fetchPublicArchives = async ({ pageParam = 1 }) => {
         currentPage: pageParam,
       },
     });
-    return response.data;
+
+    return snakeToCamel(response.data);
   } catch (error) {
     if (isAxiosError(error)) {
       if (error.response) {
@@ -63,32 +63,10 @@ export const addArchiveLike = async (id: number) => {
   const response = await apiClient.post(`/likse/archive/${id}`);
   return response.data;
 };
-export const addArchiveComment = async ({
-  archive_id,
-  content,
-  created_at,
-  user_id,
-}: AddComment) => {
-  const response = await apiClient.post(`/archive/comment/${archive_id}`, {
-    content,
-    created_at,
-    user_id,
-  });
-  return response.data;
-  //TODO: 서버 API 확정되면 엔드포인트 수정
-};
 
 export const editArchive = async (data: EditArchiveProps) => {
   const response = await apiClient.put(`/archive/${data.id}`, data.archiveData);
   return response.data;
-};
-export const editArchiveComment = async (comment: Comment) => {
-  const response = await apiClient.put(
-    `/archive/comment/${comment.commentId}`,
-    comment,
-  );
-  return response.data;
-  //TODO: 서버 API 확정되면 엔드포인트 수정
 };
 
 export const deleteArchive = async (id: number) => {
@@ -108,10 +86,4 @@ export const subArchiveLike = async (id: number) => {
       }
     }
   }
-};
-
-export const deleteArchiveComment = async (id: number) => {
-  const response = await apiClient.delete(`/archive/comment/${id}`);
-  return response.data;
-  //TODO: 서버 API 확정되면 엔드포인트 수정
 };

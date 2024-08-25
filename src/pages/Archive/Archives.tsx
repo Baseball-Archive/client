@@ -38,11 +38,6 @@ const Archives = () => {
           아카이브를 작성해주세요
         </div>
       )}
-      {archivesQuery?.length ? (
-        <Archive isCommunityArchives={true} data={archivesQuery[0]} />
-      ) : (
-        <></>
-      )}
     </div>
   );
 };

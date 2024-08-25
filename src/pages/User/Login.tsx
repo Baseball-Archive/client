@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import Button from '../../components/common/Button';
 import InputText from '../../components/common/InputText';
-import { showToast } from '../../components/common/toast';
+import { showToast } from '../../components/common/Toast';
 import GithubButton from '../../components/User/GithubButton';
 import GoogleButton from '../../components/User/GoogleButton';
 import ROUTES from '../../constants/router';
@@ -28,10 +28,15 @@ const Login = () => {
     try {
       if (auth) {
         await signInWithEmailAndPassword(auth, data.email, data.password);
-        const sendToken = auth.currentUser?.uid;
+
+        const sendToken = await auth.currentUser?.getIdToken();
+        const userId = auth.currentUser?.uid;
 
         if (sendToken) {
           userLogin(sendToken);
+          if (userId) {
+            localStorage.setItem('userId', userId);
+          }
         } else {
           showToast('로그인에 문제가 발생했습니다', 'error');
         }

@@ -1,29 +1,36 @@
+import { DEFAULT_IMAGE } from '../../../constants/image';
 import { TeamScheme } from '../../../types/TeamScheme';
+import { convertTeamNameToEnglish } from '../../../utils/convertTeamNameToEnglish';
+import formatTimeDifference from '../../../utils/formatTimeDifference';
 import { getTeamLabelByKey } from '../../../utils/getTeamValueByKey';
 import Badge from '../../common/Badge';
 import PostHandleButton from '../../common/PostHandleButton';
-import type { Archive } from '../../../types/Archive';
+import type { ArchiveContent } from '../../../types/Archive';
 
 interface ArchiveContentProps {
-  ArchiveContent: Archive;
+  ArchiveContent: ArchiveContent;
 }
 //TOFIX : api확정되면 타입수정
 const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
-  // const {
-  //   nickname,
-  //   id,
-  //   weather,
-  //   title,
-  //   content,
-  //   homeTeamScore,
-  //   awayTeamScore,
-  //   picUrl,
-  //   homeTeamId,
-  //   awayTeamId,
-  //   matchDate,
-  //   updatedAt,
-  //   stadium,
-  // } = ArchiveContent;
+  if (!ArchiveContent) return <div>로딩</div>;
+  const {
+    id,
+    matchDate,
+    homeTeamName,
+    awayTeamName,
+    stadium,
+    weather,
+    homeTeamScore,
+    awayTeamScore,
+    content,
+    title,
+    picUrl,
+    createdAt,
+    nickname,
+    myTeamName,
+    likes,
+    comments,
+  } = ArchiveContent;
 
   const handleDelete = () => {
     if (window.confirm('삭제 하시겠습니까?')) {
@@ -35,77 +42,71 @@ const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
       alert('수정 되었습니다.');
     }
   };
-
+  console.log(ArchiveContent);
   return (
     <div className="flex justify-center overflow-hidden bg-white">
       <div className="w-full">
         <div className="border-b-[1px] border-black">
           <div className="flex items-center justify-between">
-            <div className="pl-2 text-lg font-semibold">
-              {ArchiveContent.title}
+            <div className="pl-2 text-2xl font-semibold">{title}</div>
+            <div className="flex items-center text-sm text-gray-400">
+              {formatTimeDifference(createdAt)}
             </div>
-            <PostHandleButton onEdit={handleEdit} onDelete={handleDelete} />
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center font-normal">
               <div className="relative flex h-12 w-12 items-center justify-center overflow-hidden">
-                <Badge scheme={'hanhwa'} />
+                <Badge
+                  scheme={convertTeamNameToEnglish(myTeamName) as TeamScheme}
+                />
               </div>
-              <div className="ml-1 text-sm">{'TEST'}</div>
+              <div className="ml-1 text-sm">{nickname}</div>
             </div>
           </div>
         </div>
         <div className="mt-2 grid grid-cols-2 gap-1 border-b border-gray-300 pb-3 text-sm">
           <div className="flex items-start">
-            <p className="min-w-[4rem] text-xs font-light">경기 날짜</p>
-            <p className="min-w-[4rem] text-xs font-medium">
-              {ArchiveContent.matchDate}
+            <p className="text-s min-w-[4rem] font-light">경기 날짜</p>
+            <p className="text-s min-w-[4rem] font-medium">
+              {matchDate.slice(0, 10)}
             </p>
           </div>
           <div className="flex items-center">
-            <p className="min-w-[4rem] text-xs font-light text-black">
+            <p className="text-s min-w-[4rem] font-light text-black">
               경기 결과
             </p>
-            <p className="min-w-[4rem] text-xs font-medium">
-              {ArchiveContent.homeTeamScore}:{ArchiveContent.awayTeamScore}
+            <p className="text-s min-w-[4rem] font-medium">
+              {homeTeamScore} : {awayTeamScore}
             </p>
           </div>
           <div className="flex items-center">
-            <p className="min-w-[4rem] text-xs font-light text-black">경기장</p>
-            <p className="min-w-[4rem] text-xs font-medium">
-              {ArchiveContent.stadium}
-            </p>
+            <p className="text-s min-w-[4rem] font-light text-black">경기장</p>
+            <p className="text-s min-w-[4rem] font-medium">{stadium}</p>
           </div>
           <div className="flex items-center">
-            <p className="min-w-[4rem] text-xs font-light text-black">날씨</p>
-            <p className="min-w-[4rem] text-xs font-medium">
-              {ArchiveContent.weather}
-            </p>
+            <p className="text-s min-w-[4rem] font-light text-black">날씨</p>
+            <p className="text-s min-w-[4rem] font-medium">{weather}</p>
           </div>
           <div className="flex items-center">
-            <p className="min-w-[4rem] text-xs font-light text-black">홈</p>
-            <p className="min-w-[4rem] text-xs font-medium">
-              {getTeamLabelByKey(ArchiveContent.homeTeamId as number)}
-            </p>
+            <p className="text-s min-w-[4rem] font-light text-black">홈</p>
+            <p className="text-s min-w-[4rem] font-medium">{homeTeamName}</p>
           </div>
           <div className="flex items-center">
-            <p className="min-w-[4rem] text-xs font-light text-black">어웨이</p>
-            <p className="min-w-[4rem] text-xs font-medium text-black">
-              {getTeamLabelByKey(ArchiveContent.awayTeamId as number)}
+            <p className="text-s min-w-[4rem] font-light text-black">어웨이</p>
+            <p className="text-s min-w-[4rem] font-medium text-black">
+              {awayTeamName}
             </p>
           </div>
         </div>
-        <div className="pb-2 pt-6">
+        <div className="pt-6">
           <div>
-            <pre className="whitespace-pre-wrap font-title text-xs">
-              {ArchiveContent.content}
+            <pre className="text-s whitespace-pre-wrap font-title">
+              {content}
             </pre>
-            <div className="pb-4">
-              <img
-                className="w-full"
-                src={ArchiveContent.picUrl}
-                alt="Post Photo"
-              />
+            <div className="pt-5">
+              {picUrl && (
+                <img className="w-full" src={picUrl} alt="Archive Photo" />
+              )}
             </div>
           </div>
         </div>

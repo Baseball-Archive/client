@@ -1,10 +1,10 @@
+import defaultArchiveImage from '../../assets/defaultArchiveImage.png';
 import { DEFAULT_IMAGE } from '../../constants/image';
 import { Weather } from '../../types/Weather';
 import { convertStadiumName } from '../../utils/convertStadiumName';
 import ArchiveHeader from './ArchiveHeader';
 import ReviewSection from './ReviewSection';
 import type { Archive } from '../../types/Archive';
-
 interface ArchiveProps {
   data: Archive;
   isCommunityArchives?: boolean;
@@ -44,10 +44,12 @@ const Archive = ({ data, isCommunityArchives }: ArchiveProps) => {
           isCommunityArchives={isCommunityArchives}
         />
         <div className="w-full flex-col items-center">
-          <img
-            src={picUrl}
-            className="mb-4 aspect-square w-full object-cover"
-          />
+          <div className="mb-4 border">
+            <img
+              src={picUrl || defaultArchiveImage}
+              className="aspect-square w-full object-cover"
+            />
+          </div>
           <ReviewSection
             id={id as number}
             title={title}
