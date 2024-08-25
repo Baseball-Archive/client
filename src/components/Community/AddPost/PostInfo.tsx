@@ -1,3 +1,4 @@
+import React, { startTransition } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
@@ -54,8 +55,10 @@ const PostInfo = ({ communityDetail }: Props) => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['community'] });
-      navigate('/posts');
+      startTransition(() => {
+        queryClient.invalidateQueries({ queryKey: ['community'] });
+        navigate('/posts');
+      });
     },
     onError: (error) => {
       console.error('Error:', error);
