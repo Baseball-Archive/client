@@ -36,19 +36,8 @@ export const getCommunity = async () => {
 };
 
 export const getCommunityDetail = async (id: string) => {
-  try {
-    const response = await apiClient.get(`/board/${id}`);
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.response) {
-        showToast('게시글 조회에 실패했습니다.', 'error');
-      } else {
-        showToast('서버와의 연결이 원활하지 않습니다.', 'error');
-      }
-    }
-    return {};
-  }
+  const response = await apiClient.get(`/board/${id}`);
+  return response.data;
 };
 
 export const deleteCommunity = async (id: string) => {

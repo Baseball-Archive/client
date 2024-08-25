@@ -92,20 +92,8 @@ export const deleteArchiveComment = async ({
 };
 
 export const getCommunityComments = async (boardId: string) => {
-  try {
-    const response = await apiClient.get(`/comments/board/${boardId}`);
-    console.log(response.data);
-    return snakeToCamel(response.data);
-  } catch (error) {
-    if (isAxiosError(error)) {
-      if (error.response) {
-        showToast(error.response.data.error, 'error');
-      } else {
-        showToast(error.message, 'error');
-      }
-    }
-  }
-  return [];
+  const response = await apiClient.get(`/comments/board/${boardId}`);
+  return snakeToCamel(response.data);
 };
 
 export const addCommunityComment = async ({

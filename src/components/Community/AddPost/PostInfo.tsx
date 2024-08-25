@@ -1,20 +1,20 @@
-import React, { startTransition } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
+import React, { startTransition } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import {
   CommunityData,
   postCommunity,
   updateCommunity,
 } from '../../../apis/community';
 import useSchedule from '../../../hooks/useSchedule';
+import { getTeamLabelByKey } from '../../../utils/getTeamValueByKey';
 import Button from '../../common/Button';
 import InputText from '../../common/InputText';
+import { Post } from '../PostDetail';
 import PostInfoSection from './PostInfoSection';
 import PostPickDate from './PostPickDate';
-import { getTeamLabelByKey } from '../../../utils/getTeamValueByKey';
-import { useNavigate } from 'react-router-dom';
-import { Post } from '../PostDetail';
 
 interface Props {
   communityDetail?: Post;
