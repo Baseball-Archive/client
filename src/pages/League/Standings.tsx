@@ -27,7 +27,7 @@ const Standings = () => {
         <tbody>
           {leagueStandings &&
             leagueStandings.map((item) => (
-              <tr className="border-b">
+              <tr key={item.rank} className="border-b">
                 <td className="py-4 text-center font-bold">{item.rank}</td>
                 <td className="text-center">
                   <Badge
