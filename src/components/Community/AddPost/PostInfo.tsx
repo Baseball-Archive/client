@@ -30,7 +30,7 @@ const PostInfo = ({ communityDetail }: Props) => {
         title: communityDetail?.title || '',
         content: communityDetail?.content || '',
         date: communityDetail?.match_date || dayjs().format('YYYY-MM-DD'),
-        // scheduleId: communityDetail?.scheduleId || '',
+        scheduleId: communityDetail?.schedule_id || '',
       },
     });
 
