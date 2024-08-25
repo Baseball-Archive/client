@@ -1,9 +1,9 @@
 import { GithubAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '../../service/firebase';
 import { useNavigate } from 'react-router-dom';
-import { User } from '../../pages/User/Signup';
-import { useAuth } from '../../hooks/useAuth';
 import ROUTES from '../../constants/router';
+import { useAuth } from '../../hooks/useAuth';
+import { User } from '../../pages/User/Signup';
+import { auth } from '../../service/firebase';
 
 const GithubButton = () => {
   const navigate = useNavigate();
@@ -20,7 +20,8 @@ const GithubButton = () => {
         myTeam: null,
       };
 
-      const token = await user.getIdToken();
+      const token = user.uid;
+
       userLogin(token);
       await userSignup(userData);
       navigate(ROUTES.HOME);

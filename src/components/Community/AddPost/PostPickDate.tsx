@@ -1,7 +1,6 @@
-
+import { CalendarDaysIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
-import { CalendarDaysIcon } from '@heroicons/react/20/solid';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -21,7 +20,6 @@ const PostPickDate: React.FC<PostPickDateProps> = ({ onSelectDate }) => {
   };
 
   return (
-
     <DatePicker
       className="w-full rounded border border-[#A9A9A9] p-4"
       wrapperClassName="w-full"
@@ -48,7 +46,6 @@ const PostPickDate: React.FC<PostPickDateProps> = ({ onSelectDate }) => {
         </div>
       }
     />
-
   );
 };
 

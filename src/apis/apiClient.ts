@@ -1,8 +1,8 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../constants/router';
 import { auth } from '../service/firebase';
-import { getToken, setToken } from '../store/authStore';
+import { setToken } from '../store/authStore';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -11,8 +11,9 @@ export const getAuthToken = async (): Promise<string | null> => {
   const user = auth.currentUser;
   if (user) {
     const token = await user.getIdToken();
+    const uid = user.uid;
 
-    setToken(token); // 토큰을 전역 상태나 스토어에 저장합니다.
+    setToken(uid); // 토큰을 전역 상태나 스토어에 저장합니다.
     return `Bearer ${token}`;
   }
   return null; // 로그인된 사용자가 없으면 null 반환
@@ -30,8 +31,8 @@ const apiClient = (() => {
   // 모든 요청에 인증 토큰을 자동으로 추가하는 인터셉터.
   instance.interceptors.request.use(
     async (config) => {
-      const token = getToken(); // 저장된 토큰 가져오기
-      console.log(token);
+      const user = auth.currentUser;
+      const token = await user?.getIdToken();
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }

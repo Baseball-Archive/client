@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { postArchive } from '../../../apis/archive';
 import { MatchData } from '../../../types/MatchData';
 import { Weather } from '../../../types/Weather';
-import { showToast } from '../../common/Toast';
+import { showToast } from '../../common/toast';
 import InfoSection from './InfoSection';
 import MatchReview from './MatchReview';
 import PickDate from './PickDate';
@@ -86,7 +86,7 @@ const ArchiveInfo = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="scrollbar-hide container pt-6"
+      className="container pt-6 scrollbar-hide"
     >
       <InfoSection label="제목 ">
         <input

@@ -1,15 +1,15 @@
-import { useForm } from 'react-hook-form';
-import InputText from '../../components/common/InputText';
-import Button from '../../components/common/Button';
-import { Link } from 'react-router-dom';
+import { FirebaseError } from 'firebase/app';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../service/firebase';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import Button from '../../components/common/Button';
+import InputText from '../../components/common/InputText';
+import { showToast } from '../../components/common/toast';
 import GithubButton from '../../components/User/GithubButton';
 import GoogleButton from '../../components/User/GoogleButton';
 import ROUTES from '../../constants/router';
 import { useAuth } from '../../hooks/useAuth';
-import { showToast } from '../../components/common/Toast';
-import { FirebaseError } from 'firebase/app';
+import { auth } from '../../service/firebase';
 
 export interface LoginProps {
   email: string;
@@ -28,7 +28,7 @@ const Login = () => {
     try {
       if (auth) {
         await signInWithEmailAndPassword(auth, data.email, data.password);
-        const sendToken = await auth.currentUser?.getIdToken();
+        const sendToken = auth.currentUser?.uid;
 
         if (sendToken) {
           userLogin(sendToken);

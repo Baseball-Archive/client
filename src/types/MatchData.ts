@@ -1,8 +1,8 @@
 export interface MatchData {
-  matchDate: string;
+  match_date: string;
   id?: number;
-  homeTeamId: number;
-  awayTeamId: number;
+  home_team_id: number;
+  away_team_id: number;
   stadium: string;
   time: string;
 }
