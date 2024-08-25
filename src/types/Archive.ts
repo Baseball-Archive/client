@@ -22,7 +22,7 @@ export interface Archive {
 }
 
 export interface PostArchiveProps {
-  schedule_id: number;
+  schedule_id?: number;
   weather: string | null;
   home_team_score: number;
   away_team_score: number;
@@ -31,6 +31,7 @@ export interface PostArchiveProps {
   pic_url: string;
   is_public: boolean | null;
   created_at?: string;
+  updated_at?: string;
 }
 export interface EditArchiveProps {
   id: number;

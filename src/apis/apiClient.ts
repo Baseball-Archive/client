@@ -31,7 +31,7 @@ const apiClient = (() => {
   instance.interceptors.request.use(
     async (config) => {
       const token = getToken(); // 저장된 토큰 가져오기
-      console.log(token);
+
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
