@@ -1,5 +1,5 @@
 import { isAxiosError } from 'axios';
-import { showToast } from '../components/common/Toast';
+import { showToast } from '../components/common/toast';
 import { PostComment } from '../types/Comment';
 import { snakeToCamel } from '../utils/snakeToCamel';
 import apiClient from './apiClient';
@@ -111,6 +111,7 @@ export const getCommunityComments = async (boardId: string) => {
 export const addCommunityComment = async ({
   boardId,
   content,
+
   createdAt,
   userId,
 }: PostComment) => {

@@ -29,6 +29,7 @@ const AddComment = () => {
       createdAt: new Date().toISOString(),
     });
   };
+
   return (
     <div className="flex justify-center bg-white pt-4">
       <form
