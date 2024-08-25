@@ -5,6 +5,7 @@ const ROUTES = {
   POSTS: '/posts',
   POST_DETAIL: '/posts/:id',
   ADD_POST: '/post',
+  PUBLIC_ARCHIVES: '/archives',
   ARCHIVE_DETAIL: '/archives/:id',
   LEAGUE: '/league',
   SCHEDULE: 'schedule',
