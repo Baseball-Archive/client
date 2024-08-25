@@ -27,7 +27,6 @@ const ArchiveComment = ({ comment }: Props) => {
     mutationFn: editArchiveComment,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['ArchiveCommnet'] });
-      setIsEditing(false);
     },
     onError: () => {
       showToast('댓글 수정 실패', 'error');

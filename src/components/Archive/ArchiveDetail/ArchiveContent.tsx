@@ -11,7 +11,7 @@ interface ArchiveContentProps {
   onError: () => void;
 }
 //TOFIX : api확정되면 타입수정
-const ArchiveContent = ({ ArchiveContent, onError }: ArchiveContentProps) => {
+const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
   const {
     matchDate,
     homeTeamName,
@@ -28,17 +28,6 @@ const ArchiveContent = ({ ArchiveContent, onError }: ArchiveContentProps) => {
     myTeamName,
   } = ArchiveContent;
 
-  const handleDelete = () => {
-    if (window.confirm('삭제 하시겠습니까?')) {
-      alert('삭제 되었습니다.');
-    }
-  };
-  const handleEdit = () => {
-    if (window.confirm('수정 하시겠습니까?')) {
-      alert('수정 되었습니다.');
-    }
-  };
-  console.log(ArchiveContent);
   return (
     <div className="flex justify-center overflow-hidden bg-white">
       <div className="w-full">

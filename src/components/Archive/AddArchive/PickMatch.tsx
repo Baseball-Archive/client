@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
-import Select, {
-  SingleValue as SingleValueType,
-  StylesConfig,
-} from 'react-select';
+// import React from 'react';
+// import Select, {
+//   SingleValue as SingleValueType,
+//   StylesConfig,
+// } from 'react-select';
 import { getSchedule } from '../../../apis/shedule';
 import { MatchData } from '../../../types/MatchData';
 // import { TeamScheme } from '../../../types/TeamScheme';
@@ -113,9 +113,9 @@ const PickMatch = ({
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  const handleSelectChange = (newValue: SingleValueType<MatchData>) => {
-    handleMatchSelect(newValue ? { ...newValue } : null);
-  };
+  // const handleSelectChange = (newValue: SingleValueType<MatchData>) => {
+  //   handleMatchSelect(newValue ? { ...newValue } : null);
+  // };
   return (
     <div className="w-full">
       {/* <Select
