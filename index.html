@@ -23,7 +23,7 @@
     <script>
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker
-          .register('/service-worker-event.js')
+          .register('/service-worker-event.ts')
           .then((registration) => {
             console.log('Service worker registration succeeded:', registration);
           })
