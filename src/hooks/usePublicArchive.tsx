@@ -1,4 +1,4 @@
-aimport { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
 import { fetchPublicArchives } from '../apis/archive';
 
