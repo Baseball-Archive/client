@@ -4,6 +4,7 @@ import ErrorPage from './components/common/ErrorPage';
 import Loading from './components/common/Loading';
 import Layout from './components/layout/Layout';
 import ROUTES from './constants/router';
+import PublicArchive from './pages/Archive/PublicArchive';
 
 const Archives = lazy(() => import('./pages/Archive/Archives'));
 const AddArchive = lazy(() => import('./pages/Archive/AddArchive'));
@@ -46,6 +47,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <EditArchive />
+          </Suspense>
+        ),
+      },
+      {
+        path: ROUTES.PUBLIC_ARCHIVES,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <PublicArchive />
           </Suspense>
         ),
       },

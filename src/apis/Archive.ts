@@ -34,6 +34,26 @@ export const getArchiveDetailWithComments = async (id: string) => {
     }
   }
 };
+export const fetchPublicArchives = async ({ pageParam = 1 }) => {
+  const limit = 6;
+  try {
+    const response = await apiClient.get('/archive/public', {
+      params: {
+        limit,
+        currentPage: pageParam,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      if (error.response) {
+        showToast(error.response.data.error, 'error');
+      } else {
+        showToast(error.message, 'error');
+      }
+    }
+  }
+};
 
 export const postArchive = async (data: PostArchiveProps) => {
   const response = await apiClient.post('/archive', data);
