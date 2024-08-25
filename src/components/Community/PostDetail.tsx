@@ -1,14 +1,20 @@
-import PostHandleButton from '../common/PostHandleButton';
-import { useState } from 'react';
-import { formatDate } from '../../utils/format';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/20/solid';
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline';
-import Badge from '../common/Badge';
-import { convertTeamNameToEnglish } from '../../utils/convertTeamNameToEnglish';
-import { TeamScheme } from '../../types/TeamScheme';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { deleteCommunity } from '../../apis/community';
-import { useNavigate } from 'react-router-dom';
+import { useCommunityComment } from '../../hooks/useArchiveComments';
+import { useCommunityLike } from '../../hooks/useLike';
+import { TeamScheme } from '../../types/TeamScheme';
+import { convertTeamNameToEnglish } from '../../utils/convertTeamNameToEnglish';
+import { formatDate } from '../../utils/format';
+import formatTimeDifference from '../../utils/formatTimeDifference';
+import Badge from '../common/Badge';
+import LikeButton from '../common/LikeButton';
+import PostHandleButton from '../common/PostHandleButton';
+import AddComment from './Comment/AddComment';
+import CommunityComment from './Comment/CommunityComment';
 
 export interface Post {
   id: number;
@@ -44,43 +50,19 @@ const PostDetail = ({ postDetail }: Props) => {
     likes,
     comments,
   } = postDetail;
-
+  const { id: boardId } = useParams();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-
-  const [isLikesClicked, setIsLikesClicked] = useState(() => {
-    const savedState = localStorage.getItem(`isLikesClicked-${id}`);
-    return savedState ? JSON.parse(savedState) : false;
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: async () => {
-      return await deleteCommunity(String(id));
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['community'] });
-      navigate('/posts');
-      console.log('Success:', data);
-    },
-    onError: (error) => {
-      console.error('Error:', error);
-    },
-  });
-  const toggleLikes = () => {
-    const newState = !isLikesClicked;
-    setIsLikesClicked(newState);
-    localStorage.setItem(`isLikesClicked-${id}`, JSON.stringify(newState));
-  };
-
-  const handleDelete = () => {
-    if (window.confirm('삭제 하시겠습니까?')) {
-      deleteMutation.mutate();
+  const [isLiked, setIsLiked] = useState(false);
+  const { data: communityComment } = useCommunityComment(boardId as string);
+  const { addLike, subLike } = useCommunityLike(Number(boardId));
+  const handleLike = (isLiked: boolean) => {
+    if (isLiked === true) {
+      subLike();
+    } else if (isLiked === false) {
+      addLike();
     }
-  };
-  const handleEdit = () => {
-    if (window.confirm('수정 하시겠습니까?')) {
-      navigate(`/post/${id}`);
-    }
+    setIsLiked((prev) => !prev);
   };
 
   return (
@@ -99,9 +81,8 @@ const PostDetail = ({ postDetail }: Props) => {
           </p>
         </div>
         <div className="text-right">
-          <PostHandleButton onEdit={handleEdit} onDelete={handleDelete} />
           <p className="text-sm font-thin text-gray-500">
-            {formatDate(created_at)}
+            {formatTimeDifference(created_at)}
           </p>
         </div>
       </div>
@@ -127,19 +108,21 @@ const PostDetail = ({ postDetail }: Props) => {
         {pic_url && <img src={pic_url} alt="Post Photo" />}
         <p className="py-2">{content}</p>
       </div>
-      <div className="jutify-center fixed bottom-[30%] right-[10%] z-30 flex h-[50px] w-[50px] items-center rounded-full border border-slate-100 bg-white p-2 shadow-lg md:absolute">
-        <button
-          onClick={toggleLikes}
-          className="jutify-center flex items-center"
-        >
-          {isLikesClicked ? (
-            <HeartIconOutline className="size-6 text-[#DC7B7C]" />
-          ) : (
-            <HeartIconSolid className="size-6 text-[#DC7B7C]" />
-          )}
-          <span className="text-gray-500">{likes}</span>
-        </button>
-      </div>
+      {communityComment && communityComment.length > 0 ? (
+        communityComment
+          .sort((a, b) => parseInt(a.id) - parseInt(b.id))
+          .map((comment) => (
+            <CommunityComment key={comment.id} comment={comment} />
+          ))
+      ) : (
+        <></>
+      )}
+      <AddComment />
+      <LikeButton
+        onClick={() => handleLike(isLiked)}
+        isLiked={isLiked}
+        likeCount={likes}
+      />
     </div>
   );
 };

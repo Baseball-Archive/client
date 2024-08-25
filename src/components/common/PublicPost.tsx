@@ -1,5 +1,6 @@
 import { HeartIcon, ChatBubbleOvalLeftIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
+import { ICommnunityData } from '../../pages/Community/Community';
 import { Post } from '../../types/Post';
 import { TeamScheme } from '../../types/TeamScheme';
 import { convertTeamNameToEnglish } from '../../utils/convertTeamNameToEnglish';
@@ -34,7 +35,7 @@ const PublicPost = ({ post }: Props) => {
             <Badge
               scheme={convertTeamNameToEnglish(awayTeamName) as TeamScheme}
             />
-            <div className="w-64 overflow-hidden text-ellipsis whitespace-nowrap pl-6 font-bold">
+            <div className="w-64 overflow-hidden text-ellipsis whitespace-nowrap pl-10 text-lg font-semibold">
               {title}
             </div>
             <div className="ml-auto">

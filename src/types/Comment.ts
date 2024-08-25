@@ -6,6 +6,7 @@ export interface Comment {
   createdAt: string;
 }
 export interface PostComment {
+  boardId?: string;
   userId?: string;
   archiveId?: string;
   createdAt?: string;

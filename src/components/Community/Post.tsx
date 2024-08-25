@@ -1,13 +1,13 @@
-import dayjs from 'dayjs';
-import { useNavigate } from 'react-router-dom';
-import { TeamScheme } from '../../types/TeamScheme';
-import Badge from '../common/Badge';
-import { convertTeamNameToEnglish } from '../../utils/convertTeamNameToEnglish';
-import { ICommnunityData } from '../../pages/Community/Community';
 import {
   HeartIcon as OutlineHeartIcon,
   ChatBubbleOvalLeftIcon,
 } from '@heroicons/react/24/outline';
+import dayjs from 'dayjs';
+import { useNavigate } from 'react-router-dom';
+import { ICommnunityData } from '../../pages/Community/Community';
+import { TeamScheme } from '../../types/TeamScheme';
+import { convertTeamNameToEnglish } from '../../utils/convertTeamNameToEnglish';
+import Badge from '../common/Badge';
 
 interface Props {
   post: ICommnunityData;

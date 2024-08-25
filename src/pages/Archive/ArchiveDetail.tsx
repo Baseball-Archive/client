@@ -4,23 +4,30 @@ import ArchiveAddComment from '../../components/Archive/ArchiveDetail/ArchiveAdd
 import ArchiveComment from '../../components/Archive/ArchiveDetail/ArchiveComment';
 import ArchiveContent from '../../components/Archive/ArchiveDetail/ArchiveContent';
 import LikeButton from '../../components/common/LikeButton';
+import Loading from '../../components/common/Loading';
 import useArchiveComment from '../../hooks/useArchiveComments';
 import useArchiveDetail from '../../hooks/useArchiveContent';
+import useArchiveContent from '../../hooks/useArchiveContent';
 import { useLike } from '../../hooks/useLike';
 import type { ArchiveContent as ArchiveContentType } from '../../types/Archive';
 
 const ArchiveDetail = () => {
   const { id: archiveId } = useParams();
   const [isLiked, setIsLiked] = useState(false);
-  const { archiveContent, isError, isLoading, refetch } = useArchiveDetail(
-    archiveId as string,
-  );
-  const { archiveComment } = useArchiveComment(archiveId as string);
+  const {
+    data: archiveContent,
+    isLoading,
+    isError,
+  } = useArchiveContent(archiveId);
+  const { data: archiveComment } = useArchiveComment(archiveId as string);
   const { addLike, subLike } = useLike(Number(archiveId));
 
-  const handleRefetch = () => {
-    refetch();
-  };
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isError || !archiveContent) {
+    return <div>Post not found</div>;
+  }
 
   const handleLike = (isLiked: boolean) => {
     if (isLiked === true) {
@@ -30,14 +37,10 @@ const ArchiveDetail = () => {
     }
     setIsLiked((prev) => !prev);
   };
-  if (isLoading) return <div>로딩 중...</div>;
-  if (isError) return <div>오류가 발생했습니다.</div>;
+
   return (
     <div className="relative mb-32 h-full w-full pt-7">
-      <ArchiveContent
-        onError={handleRefetch}
-        ArchiveContent={archiveContent as ArchiveContentType}
-      />
+      <ArchiveContent archiveContent={archiveContent} />
       <div className="mt-8 border-t-2">
         {archiveComment && archiveComment.length > 0 ? (
           archiveComment
@@ -50,7 +53,11 @@ const ArchiveDetail = () => {
         )}
         <ArchiveAddComment />
       </div>
-      <LikeButton onClick={() => handleLike(isLiked)} isLiked={isLiked} />
+      <LikeButton
+        onClick={() => handleLike(isLiked)}
+        isLiked={isLiked}
+        likeCount={archiveContent.likes}
+      />
     </div>
   );
 };
