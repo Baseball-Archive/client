@@ -1,4 +1,3 @@
-
 import { isAxiosError } from 'axios';
 import { showToast } from '../components/common/Toast';
 import { PostComment } from '../types/Comment';
@@ -86,5 +85,27 @@ export const deleteArchiveComment = async ({
       }
     }
   }
+};
 
+export const addCommunityComment = async ({
+  boardId,
+  comment,
+}: {
+  boardId: string;
+  comment: string;
+}) => {
+  try {
+    const response = await apiClient.post(`/comments/board/${boardId}`, {
+      comment,
+    });
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      if (error.response) {
+        showToast(error.response.data.error, 'error');
+      } else {
+        showToast(error.message, 'error');
+      }
+    }
+  }
 };

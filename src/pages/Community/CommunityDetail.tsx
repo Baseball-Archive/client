@@ -28,7 +28,6 @@ const CommunityDetail = () => {
     enabled: !!id,
   });
 
-
   if (isLoading) {
     return <Loading />;
   }
@@ -45,7 +44,7 @@ const CommunityDetail = () => {
         comment={comment}
         />
         ))} */}
-      {id && <AddComment boardId={id} />}
+      {/* {id && <AddComment boardId={id} />} */}
     </div>
   );
 };

@@ -13,7 +13,7 @@ export const postCommunity = async (data: CommunityData) => {
 };
 
 export const getCommunity = async () => {
-  const response = await apiClient.get('/board');
+  const response = await apiClient.get('/board?limit=10&currentPage=1');
   return response.data;
 };
 

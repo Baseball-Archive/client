@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { postComment } from '../../../apis/comment';
+import { addCommunityComment } from '../../../apis/comment';
 
 const AddComment = ({ boardId }: { boardId: string }) => {
   const [comment, setComment] = useState('');
@@ -12,7 +12,7 @@ const AddComment = ({ boardId }: { boardId: string }) => {
     e.preventDefault();
     if (comment.trim()) {
       try {
-        const result = await postComment(comment, boardId);
+        const result = await addCommunityComment(comment, boardId);
         console.log('Comment submitted:', result);
         setComment('');
       } catch (error) {
