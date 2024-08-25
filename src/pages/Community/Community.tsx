@@ -1,11 +1,25 @@
-import { useLocation } from 'react-router-dom';
+
 import Post from '../../components/Community/Post';
-import { dummyPost } from './dummyPost';
+import { Link, useLocation } from 'react-router-dom';
+import { getCommunity } from '../../apis/community';
+import { useQuery } from '@tanstack/react-query';
+import ROUTES from '../../constants/router';
+
+export interface ICommnunityData {
+  away_team_id: number;
+  created_at: string;
+  home_team_id: number;
+  title: string;
+}
+
 
 const Community = () => {
   const location = useLocation();
-  const isCommunity = location.pathname === '/posts';
-  const isDiary = location.pathname === '/archive';
+
+  const { data: commnunityData } = useQuery<ICommnunityData[], Error>({
+    queryKey: ['community'],
+    queryFn: () => getCommunity(),
+  });
 
   return (
     <div className="mb-24">
@@ -29,6 +43,7 @@ const Community = () => {
             <Post key={post.id} post={post} />
           ))}
       </div>
+
     </div>
   );
 };

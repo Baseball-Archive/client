@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import Select, { StylesConfig } from 'react-select';
-import { MatchData } from '../../../types/MatchData';
-import { TeamScheme } from '../../../types/TeamScheme';
+
 import Badge from '../../common/Badge';
+import { TeamScheme } from '../../../types/TeamScheme';
+import { BASEBALL_TEAMS } from '../../../constants/baseballTeams';
+import { ScheduleItem } from '../../../types/MatchData';
 
 interface OptionProps {
   innerProps: React.HTMLAttributes<HTMLDivElement>;
-  data: {
-    homeTeam: TeamScheme;
-    awayTeam: TeamScheme;
-    stadium: string;
-  };
+  data: ScheduleItem;
 }
 
 interface PostPickMatchProps {
-  onSelectMatch: (match: { home: string; away: string }) => void;
+  onSelectMatch: (match: number) => void;
+  scheduleData: ScheduleItem[];
 }
 
 const dummyData: MatchData[] = [
@@ -53,8 +52,14 @@ const dummyData: MatchData[] = [
 const Option = (props: OptionProps) => (
   <div {...props.innerProps} className="flex items-center px-4 py-2">
     <div>
-      <Badge scheme={props.data.homeTeam} /> <span> vs </span>
-      <Badge scheme={props.data.awayTeam} /> <span> </span>
+      <Badge
+        scheme={BASEBALL_TEAMS[props.data.home_team_id - 1].value as TeamScheme}
+      />
+      <span> vs </span>
+      <Badge
+        scheme={BASEBALL_TEAMS[props.data.away_team_id - 1].value as TeamScheme}
+      />
+      <span> </span>
       {props.data.stadium}
     </div>
   </div>
@@ -63,28 +68,32 @@ const Option = (props: OptionProps) => (
 const SingleValue = (props: OptionProps) => (
   <div {...props.innerProps} className="px-2">
     <div>
-      <Badge scheme={props.data.homeTeam} /> <span> vs </span>
-      <Badge scheme={props.data.awayTeam} />
+      <Badge
+        scheme={BASEBALL_TEAMS[props.data.home_team_id - 1].value as TeamScheme}
+      />{' '}
+      <span> vs </span>
+      <Badge
+        scheme={BASEBALL_TEAMS[props.data.away_team_id - 1].value as TeamScheme}
+      />
       <span> </span>
       {props.data.stadium}
     </div>
   </div>
 );
 
-const PostPickMatch: React.FC<PostPickMatchProps> = ({ onSelectMatch }) => {
-  const [selectedOption, setSelectedOption] = useState<MatchData | null>(null);
+const PostPickMatch = ({ onSelectMatch, scheduleData }: PostPickMatchProps) => {
+  const [selectedOption, setSelectedOption] = useState<ScheduleItem | null>(
+    null,
+  );
 
-  const handleChange = (selected: MatchData | null) => {
+  const handleChange = (selected: ScheduleItem | null) => {
     setSelectedOption(selected);
     if (selected) {
-      onSelectMatch({
-        home: selected.homeTeam,
-        away: selected.awayTeam,
-      });
+      onSelectMatch(selected.id);
     }
   };
 
-  const customStyles: StylesConfig<MatchData, false> = {
+  const customStyles: StylesConfig<ScheduleItem, false> = {
     control: (provided) => ({
       ...provided,
       outline: 'none',
@@ -109,13 +118,13 @@ const PostPickMatch: React.FC<PostPickMatchProps> = ({ onSelectMatch }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full rounded border border-[#A9A9A9] p-2">
       <Select
         placeholder="경기를 선택하세요."
         isSearchable={false}
         value={selectedOption}
         onChange={handleChange}
-        options={dummyData}
+        options={scheduleData}
         components={{ Option, SingleValue }}
         styles={customStyles}
       />
