@@ -47,7 +47,9 @@ const PickScore = ({
         <>
           <div className="flex items-center">
             <Badge
-              scheme={getTeamValueByKey(selectedMatch.homeTeamId) as TeamScheme}
+              scheme={
+                getTeamValueByKey(selectedMatch.home_team_id) as TeamScheme
+              }
             />
             <input
               id="homeScore"
@@ -73,7 +75,9 @@ const PickScore = ({
           <span className="self-center font-bold">:</span>
           <div className="flex items-center">
             <Badge
-              scheme={getTeamValueByKey(selectedMatch.awayTeamId) as TeamScheme}
+              scheme={
+                getTeamValueByKey(selectedMatch.away_team_id) as TeamScheme
+              }
             />
 
             <input

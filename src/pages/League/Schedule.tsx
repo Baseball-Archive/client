@@ -1,12 +1,10 @@
-import { useSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
-
+import { useSearchParams } from 'react-router-dom';
+import Loading from '../../components/common/Loading';
 import DateNavigator from '../../components/League/Schedule/DateNavigator';
 import ScheduleItem from '../../components/League/Schedule/ScheduleItem';
-
-import useSchedule from '../../hooks/useSchedule';
 import useDateNavigation from '../../hooks/useDateNavigation';
-import Loading from '../../components/common/Loading';
+import useSchedule from '../../hooks/useSchedule';
 
 const Schedule = () => {
   const [searchParams, setSearchParams] = useSearchParams();

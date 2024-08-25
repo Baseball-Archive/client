@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { deleteArchive, editArchive } from '../../apis/archive';
+import { deleteArchive } from '../../apis/archive';
 import { Weather } from '../../types/Weather';
 import ArchiveHandleButton from '../common/PostHandleButton';
 import { showToast } from '../common/Toast';

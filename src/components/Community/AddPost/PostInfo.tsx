@@ -8,7 +8,7 @@ import Button from '../../common/Button';
 import InputText from '../../common/InputText';
 import PostInfoSection from './PostInfoSection';
 import PostPickDate from './PostPickDate';
-import PostPickMatch from './PostPickMatch';
+// import PostPickMatch from './PostPickMatch';
 
 const PostInfo = () => {
   const { handleSubmit, register } = useForm<CommunityData>();
@@ -60,13 +60,13 @@ const PostInfo = () => {
         <PostPickDate onSelectDate={setDate} />
       </PostInfoSection>
 
-      <PostInfoSection label="홈 vs 원정" name="match">
+      {/* <PostInfoSection label="홈 vs 원정" name="match">
         <PostPickMatch
           onSelectMatch={setMatch}
           {...register('scheduleId')}
           scheduleData={scheduleData || []}
         />
-      </PostInfoSection>
+      </PostInfoSection> */}
 
       <PostInfoSection label="내용" name="content">
         <textarea

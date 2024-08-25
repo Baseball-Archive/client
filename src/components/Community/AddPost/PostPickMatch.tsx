@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import Select, { StylesConfig } from 'react-select';
+import { useState } from 'react';
+import Select, {
+  StylesConfig,
+  SingleValueProps,
+  OptionProps,
+} from 'react-select';
 import { BASEBALL_TEAMS } from '../../../constants/baseballTeams';
 import { ScheduleItem } from '../../../types/MatchData';
 import { TeamScheme } from '../../../types/TeamScheme';
 import Badge from '../../common/Badge';
-
-interface OptionProps {
-  innerProps: React.HTMLAttributes<HTMLDivElement>;
-  data: ScheduleItem;
-}
 
 interface PostPickMatchProps {
   onSelectMatch: (match: number) => void;
   scheduleData: ScheduleItem[];
 }
 
-const Option = (props: OptionProps) => (
+// OptionProps에 대한 타입을 react-select에서 요구하는 형식으로 조정
+const Option = (props: OptionProps<ScheduleItem>) => (
   <div {...props.innerProps} className="flex items-center px-4 py-2">
     <div>
       <Badge
@@ -31,7 +31,8 @@ const Option = (props: OptionProps) => (
   </div>
 );
 
-const SingleValue = (props: OptionProps) => (
+// SingleValueProps에 대한 타입을 react-select에서 요구하는 형식으로 조정
+const SingleValue = (props: SingleValueProps<ScheduleItem>) => (
   <div {...props.innerProps} className="px-2">
     <div>
       <Badge
