@@ -13,7 +13,7 @@ interface PickWeatherProps {
   onSelectWeather: (weather: Weather) => void;
 }
 
-const PickWeather: React.FC<PickWeatherProps> = ({ onSelectWeather }) => {
+const PickWeather = ({ onSelectWeather }: PickWeatherProps) => {
   const [selectedEmoji, setSelectedEmoji] = useState<Weather>(null);
   const [isDropdownView, setDropdownView] = useState(false);
 

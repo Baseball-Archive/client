@@ -28,6 +28,7 @@ const CommunityDetail = () => {
     enabled: !!id,
   });
 
+
   if (isLoading) {
     return <Loading />;
   }

@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { CheckCircleIcon, FaceSmileIcon } from '@heroicons/react/20/solid';
+import { useState } from 'react';
 
 interface PublicPrivateToggleProps {
   isPublic: boolean | null;

@@ -1,3 +1,4 @@
+
 import Post from '../../components/Community/Post';
 import { Link, useLocation } from 'react-router-dom';
 import { getCommunity } from '../../apis/community';
@@ -11,6 +12,7 @@ export interface ICommnunityData {
   title: string;
 }
 
+
 const Community = () => {
   const location = useLocation();
 
@@ -21,32 +23,27 @@ const Community = () => {
 
   return (
     <div className="mb-24">
-      <ul className="flex justify-center gap-3 py-10 font-light">
-        <li
-          className={`${location.pathname.includes('posts') ? 'border-b-2 border-black font-medium' : 'font-light'}`}
+      <div className="m-10 flex justify-center">
+        <button
+          className={`h-12 w-20 ${isCommunity ? 'underline underline-offset-4' : ''}`}
         >
-          <Link to={ROUTES.POSTS}>커뮤니티</Link>
-        </li>
-        <li
-          className={`${location.pathname.includes('archive') ? 'border-b-2 border-black font-medium' : 'font-light'}`}
+          <span className="font-black">커뮤니티</span>
+        </button>
+        <button
+          className={`h-12 w-20 ${isDiary ? 'underline underline-offset-4' : ''}`}
         >
-          <Link to={ROUTES.ARCHIVE_DETAIL}>일기</Link>
-        </li>
-      </ul>
-      <table className="w-full border-t border-black">
-        <tbody>
-          {commnunityData &&
-            commnunityData.map((item, index) => (
-              <Post
-                key={index}
-                home={item.home_team_id}
-                away={item.away_team_id}
-                createdAt={item.created_at}
-                title={item.title}
-              />
-            ))}
-        </tbody>
-      </table>
+          <span className="font-black">일기</span>
+        </button>
+      </div>
+      <div>
+        {dummyPost
+          .slice()
+          .reverse()
+          .map((post) => (
+            <Post key={post.id} post={post} />
+          ))}
+      </div>
+
     </div>
   );
 };

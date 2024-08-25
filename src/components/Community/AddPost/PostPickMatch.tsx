@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Select, { StylesConfig } from 'react-select';
+
 import Badge from '../../common/Badge';
 import { TeamScheme } from '../../../types/TeamScheme';
 import { BASEBALL_TEAMS } from '../../../constants/baseballTeams';
@@ -14,6 +15,39 @@ interface PostPickMatchProps {
   onSelectMatch: (match: number) => void;
   scheduleData: ScheduleItem[];
 }
+
+const dummyData: MatchData[] = [
+  {
+    matchDate: '2024-08-14',
+    homeTeam: 'hanhwa',
+    awayTeam: 'lg',
+    stadium: '한밭종합운동장',
+  },
+  {
+    matchDate: '2024-08-14',
+    homeTeam: 'samsung',
+    awayTeam: 'kt',
+    stadium: '대구 삼성 라이온즈 파크',
+  },
+  {
+    matchDate: '2024-08-14',
+    homeTeam: 'kiwoom',
+    awayTeam: 'kia',
+    stadium: '고척돔',
+  },
+  {
+    matchDate: '2024-08-14',
+    homeTeam: 'doosan',
+    awayTeam: 'lotte',
+    stadium: '서울종합운동장',
+  },
+  {
+    matchDate: '2024-08-14',
+    homeTeam: 'nc',
+    awayTeam: 'ssg',
+    stadium: '창원NC파크',
+  },
+];
 
 const Option = (props: OptionProps) => (
   <div {...props.innerProps} className="flex items-center px-4 py-2">

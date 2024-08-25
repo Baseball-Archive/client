@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+
 import { TeamScheme } from '../../types/TeamScheme';
 import dayjs from 'dayjs';
 import { BASEBALL_TEAMS } from '../../constants/baseballTeams';
 import Badge from '../common/Badge';
+
 
 interface Props {
   away: number;
@@ -10,6 +12,7 @@ interface Props {
   home: number;
   title: string;
 }
+
 
 const Post = ({ away, createdAt, home, title }: Props) => {
   return (
@@ -26,6 +29,7 @@ const Post = ({ away, createdAt, home, title }: Props) => {
         </td>
       </Link>
     </tr>
+
   );
 };
 

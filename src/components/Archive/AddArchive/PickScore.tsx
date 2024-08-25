@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import Badge from '../../common/Badge';
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
+import React, { useState } from 'react';
 import { MatchData } from '../../../types/MatchData';
-import { getTeamValueByKey } from '../../../utils/getTeamValueByKey';
 import { TeamScheme } from '../../../types/TeamScheme';
+import { getTeamValueByKey } from '../../../utils/getTeamValueByKey';
+import Badge from '../../common/Badge';
 
 const MIN_SCORE = 0;
 const MAX_SCORE = 30;

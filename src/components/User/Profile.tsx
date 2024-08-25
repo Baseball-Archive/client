@@ -1,24 +1,23 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { CameraIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { signOut } from 'firebase/auth';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { updateUser } from '../../apis/auth';
+import { uploadImage } from '../../apis/uploadImage';
+import { OptionsProps } from '../../constants/baseballTeams';
+import { DEFAULT_IMAGE } from '../../constants/image';
+import ROUTES from '../../constants/router';
 import { auth } from '../../service/firebase';
 import { useAuthStore } from '../../store/authStore';
-import ROUTES from '../../constants/router';
 import Button from '../common/Button';
-import { DEFAULT_IMAGE } from '../../constants/image';
-import { uploadImage } from '../../apis/uploadImage';
-import { updateUser } from '../../apis/auth';
-import { OptionsProps } from '../../constants/baseballTeams';
 
 export interface Props {
   profile: string;
   email: string;
-  nickname: string;
-  myTeam: OptionsProps | undefined;
+  onUpdateUser: (data: { picURL?: string }) => void;
 }
 
-const Profile = ({ profile, email, nickname, myTeam }: Props) => {
+const Profile = ({ profile, email, onUpdateUser }: Props) => {
   const { isloggedIn } = useAuthStore();
   const { storeLogout } = useAuthStore();
   const navigate = useNavigate();
@@ -42,12 +41,9 @@ const Profile = ({ profile, email, nickname, myTeam }: Props) => {
 
         if (result.fileUrl) {
           setProfileImage(result.fileUrl);
-          const updateResult = await updateUser({
-            picURL: result.fileUrl,
-            nickname,
-            myTeam: myTeam?.key,
-          });
-          window.alert(updateResult.message);
+
+          onUpdateUser({ picURL: result.fileUrl });
+
         }
       } else {
         console.error('토큰이 없습니다.');

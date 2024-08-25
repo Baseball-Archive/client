@@ -69,6 +69,7 @@ const PostInfo = () => {
         />
       </PostInfoSection>
 
+
       <PostInfoSection label="내용" name="content">
         <textarea
           id="content"

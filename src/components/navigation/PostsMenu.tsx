@@ -1,13 +1,13 @@
-import { useRef } from 'react';
-import PostsMenuItem from './PostsMenuItem';
 import {
   PlusCircleIcon,
   BookOpenIcon,
   ChatBubbleLeftRightIcon,
   XMarkIcon,
 } from '@heroicons/react/20/solid';
-import { useClickOutside } from '../../hooks/useClickOutside';
+import { useRef } from 'react';
 import ROUTES from '../../constants/router';
+import { useClickOutside } from '../../hooks/useClickOutside';
+import PostsMenuItem from './PostsMenuItem';
 
 interface Props {
   togglePostModal: () => void;

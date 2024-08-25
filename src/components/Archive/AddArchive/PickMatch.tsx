@@ -1,63 +1,29 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import Select, { StylesConfig } from 'react-select';
-import Badge from '../../common/Badge';
+import { getSchedule } from '../../../apis/shedule';
 import { MatchData } from '../../../types/MatchData';
 import { TeamScheme } from '../../../types/TeamScheme';
+import { convertStadiumName } from '../../../utils/convertStadiumName';
 import { getTeamValueByKey } from '../../../utils/getTeamValueByKey';
+import Badge from '../../common/Badge';
 
 interface PickMatchProps {
   selectedDate: string;
   selectedMatch: MatchData | null;
   handleMatchData: (option: MatchData | null) => void;
+  handleScheduleId: (scheduleId: number) => void;
 }
 interface MatchProps {
   innerProps: React.HTMLAttributes<HTMLDivElement>;
   data: {
+    id?: number;
     matchDate: string;
-    scheduleId: number;
     homeTeamId: number;
     awayTeamId: number;
     stadium: string;
   };
 }
-
-const DUMMY_SCHEDULE: MatchData[] = [
-  {
-    scheduleId: 6,
-    matchDate: '2024-08-22',
-    homeTeamId: 1,
-    awayTeamId: 3,
-    stadium: '포항야구장',
-  },
-  {
-    scheduleId: 5,
-    matchDate: '2024-08-22',
-    homeTeamId: 2,
-    awayTeamId: 6,
-    stadium: '광주기아챔피언스필드',
-  },
-  {
-    scheduleId: 5,
-    matchDate: '2024-08-22',
-    homeTeamId: 4,
-    awayTeamId: 7,
-    stadium: '수원KT위즈파크',
-  },
-  {
-    scheduleId: 6,
-    matchDate: '2024-08-22',
-    homeTeamId: 5,
-    awayTeamId: 9,
-    stadium: '청주야구장',
-  },
-  {
-    scheduleId: 7,
-    matchDate: '2024-08-22',
-    homeTeamId: 8,
-    awayTeamId: 10,
-    stadium: '잠실야구장',
-  },
-];
 
 const customStyles: StylesConfig<MatchData, false> = {
   control: (provided) => ({
@@ -94,8 +60,9 @@ const Option = (props: MatchProps) => {
         <Badge
           scheme={getTeamValueByKey(props.data.awayTeamId) as TeamScheme}
         />
-        <span> </span>
-        {props.data.stadium}
+        <span className="ml-3">
+          {convertStadiumName(props.data.stadium) || props.data.stadium}
+        </span>
       </div>
     </div>
   );
@@ -112,8 +79,9 @@ const SingleValue = (props: MatchProps) => {
         <Badge
           scheme={getTeamValueByKey(props.data.awayTeamId) as TeamScheme}
         />
-        <span> </span>
-        {props.data.stadium}
+        <span className="ml-3">
+          {convertStadiumName(props.data.stadium) || props.data.stadium}
+        </span>
       </div>
     </div>
   );
@@ -123,15 +91,35 @@ const PickMatch = ({
   selectedDate,
   selectedMatch,
   handleMatchData,
+  handleScheduleId,
 }: PickMatchProps) => {
+  const handleMatchSelect = (seletedOption: MatchData | null) => {
+    handleScheduleId(seletedOption?.id as number);
+    handleMatchData(seletedOption);
+  };
+
+  const getschedules = async () => {
+    console.log(selectedDate);
+
+    return await getSchedule(selectedDate);
+  };
+
+  const { data: getScheduleQuery, isLoading } = useQuery<MatchData[]>({
+    queryKey: ['schedule', selectedDate],
+    queryFn: getschedules,
+  });
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="w-full">
       <Select
         placeholder="경기를 선택하세요."
         isSearchable={false}
         value={selectedMatch}
-        onChange={handleMatchData}
-        options={DUMMY_SCHEDULE}
+        onChange={handleMatchSelect}
+        options={getScheduleQuery || []}
         components={{ Option, SingleValue }}
         styles={customStyles}
       />
