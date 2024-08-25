@@ -31,7 +31,7 @@ const GoogleButton = () => {
 
   return (
     <button className="rounded-full bg-slate-200" onClick={onClick}>
-      <img className="h-16 w-16" src="/public/icons/google/google-g-icon.svg" />
+      <img className="h-16 w-16" src="/icons/google/google-g-icon.svg" />
     </button>
   );
 };

@@ -32,7 +32,7 @@ const GithubButton = () => {
 
   return (
     <button className="rounded-full bg-white" onClick={onClick}>
-      <img className="h-16 w-16" src="/public/icons/github/github-mark.svg" />
+      <img className="h-16 w-16" src="/icons/github/github-mark.svg" />
     </button>
   );
 };
