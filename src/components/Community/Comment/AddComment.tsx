@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-// import { db, collection, addDoc } from './firebase';
+import { postComment } from '../../../apis/comment';
 
-const AddComment = () => {
+const AddComment = ({ boardId }: { boardId: string }) => {
   const [comment, setComment] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -12,11 +12,8 @@ const AddComment = () => {
     e.preventDefault();
     if (comment.trim()) {
       try {
-        // await addDoc(collection(db, 'comments'), {
-        //   text: comment,
-        //   timestamp: new Date()
-        // });
-        console.log('Comment submitted:', comment);
+        const result = await postComment(comment, boardId);
+        console.log('Comment submitted:', result);
         setComment('');
       } catch (error) {
         console.error('Error adding comment: ', error);

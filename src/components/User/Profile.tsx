@@ -41,7 +41,9 @@ const Profile = ({ profile, email, onUpdateUser }: Props) => {
 
         if (result.fileUrl) {
           setProfileImage(result.fileUrl);
+
           onUpdateUser({ picURL: result.fileUrl });
+
         }
       } else {
         console.error('토큰이 없습니다.');

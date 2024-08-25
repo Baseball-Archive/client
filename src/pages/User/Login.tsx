@@ -28,8 +28,10 @@ const Login = () => {
     try {
       if (auth) {
         await signInWithEmailAndPassword(auth, data.email, data.password);
+
         const sendToken = await auth.currentUser?.getIdToken();
         const userId = auth.currentUser?.uid;
+
         if (sendToken) {
           userLogin(sendToken);
           if (userId) {

@@ -1,9 +1,9 @@
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from '../../service/firebase';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../../constants/router';
 import { useAuth } from '../../hooks/useAuth';
 import { User } from '../../pages/User/Signup';
+import { auth } from '../../service/firebase';
 
 const GoogleButton = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const GoogleButton = () => {
         myTeam: null,
       };
 
-      const token = await user.getIdToken();
+      const token = user.uid;
       userLogin(token);
       await userSignup(userData);
       navigate(ROUTES.HOME);

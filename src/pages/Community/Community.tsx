@@ -1,3 +1,4 @@
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import Post from '../../components/Community/Post';
 import { dummyPost } from './dummyPost';

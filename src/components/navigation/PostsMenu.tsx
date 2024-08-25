@@ -42,7 +42,7 @@ const PostsMenu = ({ togglePostModal }: Props) => {
           <li className="py-4" onClick={togglePostModal}>
             <PostsMenuItem
               title="커뮤니티 글쓰기"
-              link={ROUTES.POSTS}
+              link={ROUTES.ADD_POST}
               icon={<ChatBubbleLeftRightIcon className="size-8" />}
             />
           </li>

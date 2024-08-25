@@ -11,6 +11,7 @@ import { useAuthStore } from '../../store/authStore';
 const User = () => {
   const { userData, isLoading, error, myTeam } = useUserData();
   const { isloggedIn } = useAuthStore();
+
   const { mutate: updateUser } = useUpdateUser();
 
   const handleUpdateUser = (data: {

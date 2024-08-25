@@ -1,139 +1,87 @@
-// import { db, collection, addDoc } from './firebaseConfig';
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { CommunityData, postCommunity } from '../../../apis/community';
+import useSchedule from '../../../hooks/useSchedule';
+import Button from '../../common/Button';
+import InputText from '../../common/InputText';
 import PostInfoSection from './PostInfoSection';
-import PostMatchReview from './PostMatchReview';
 import PostPickDate from './PostPickDate';
 import PostPickMatch from './PostPickMatch';
-import PostPickWeather from './PostPickWeather';
 
 const PostInfo = () => {
-  const [title, setTitle] = useState('');
-  const [weather, setWeather] = useState<string | null>(null);
-  const [date, setDate] = useState<string>('');
-  const [match, setMatch] = useState<{ home: string; away: string }>({
-    home: '',
-    away: '',
+  const { handleSubmit, register } = useForm<CommunityData>();
+  const [date, setDate] = useState<string>(dayjs().format('YYYYMMDD'));
+  const [match, setMatch] = useState<number | null>(null);
+  const { data: scheduleData } = useSchedule(date);
+
+  useEffect(() => {
+    setMatch(null);
+  }, [date, scheduleData]);
+
+  const mutation = useMutation({
+    mutationFn: async (data: CommunityData) => {
+      if (match === null) {
+        throw new Error('Match ID is required');
+      }
+      return await postCommunity({
+        scheduleId: match,
+        title: data.title,
+        content: data.content,
+      });
+    },
+    onSuccess: (data) => {
+      console.log('Success:', data);
+    },
+    onError: (error) => {
+      console.error('Error:', error);
+    },
   });
-  const [winningTeam, setWinningTeam] = useState<string>('');
-  const [review, setReview] = useState<string>('');
 
-  const teams = [
-    'kia',
-    'samsung',
-    'lg',
-    'doosan',
-    'ssg',
-    'kt',
-    'nc',
-    'hanhwa',
-    'lotte',
-    'kiwoom',
-  ];
-  const filteredTeams = teams.filter(
-    (team) => team === match.home || team === match.away,
-  );
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    const formData = {
-      title,
-      weather,
-      date,
-      match,
-      winningTeam,
-      review,
-    };
-
-    try {
-      // const docRef = await addDoc(collection(db, 'posts'), formData);
-      // console.log('Document written with ID: ', docRef.id);
-    } catch (error) {
-      console.error('Error adding document: ', error);
-    }
-  };
-
-  const handleSelectClick = (event: React.MouseEvent<HTMLSelectElement>) => {
-    if (!match.home || !match.away) {
-      event.preventDefault();
-      alert('경기를 먼저 선택해 주세요.');
-    }
+  const onSubmit: SubmitHandler<CommunityData> = async (data) => {
+    mutation.mutate(data);
   };
 
   return (
-    <form className="container pt-6 scrollbar-hide" onSubmit={handleSubmit}>
-      <PostInfoSection label="제목">
-        <input
-          className="w-full px-4 outline-none"
-          placeholder="제목을 입력하세요"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+    <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+      <PostInfoSection label="제목" name="title">
+        <InputText
+          id="title"
+          inputType="text"
+          inputSize="large"
+          scheme="primary"
+          placeholder="제목 입력해주세요."
+          {...register('title', { required: true })}
         />
       </PostInfoSection>
 
-      <PostInfoSection label="날씨">
-        <PostPickWeather onSelectWeather={setWeather} />
-      </PostInfoSection>
-
-      <PostInfoSection label="경기 날짜">
+      <PostInfoSection label="경기 날짜" name="date">
         <PostPickDate onSelectDate={setDate} />
       </PostInfoSection>
 
-      <PostInfoSection label="홈 vs 원정">
-        <PostPickMatch onSelectMatch={setMatch} />
+      <PostInfoSection label="홈 vs 원정" name="match">
+        <PostPickMatch
+          onSelectMatch={setMatch}
+          {...register('scheduleId')}
+          scheduleData={scheduleData || []}
+        />
       </PostInfoSection>
 
-      <div className="mt-2">
-        <label className="mb-2 block text-base font-medium">승리 팀</label>
-        <div className="relative">
-          <select
-            name="승리 팀"
-            className={`h-12 w-full appearance-none rounded-[4px] border px-4 text-lg ${!match.home || !match.away ? 'cursor-not-allowed bg-gray-200' : ''}`}
-            value={winningTeam}
-            onChange={(e) => setWinningTeam(e.target.value)}
-            onClick={handleSelectClick}
-            disabled={!match.home || !match.away}
-          >
-            {filteredTeams.length === 0 ? (
-              <option value="" disabled>
-                경기를 먼저 선택하세요.
-              </option>
-            ) : (
-              filteredTeams.map((team) => (
-                <option key={team} value={team}>
-                  {team}
-                </option>
-              ))
-            )}
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-            <svg
-              className="h-5 w-5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </div>
-        </div>
-      </div>
+      <PostInfoSection label="내용" name="content">
+        <textarea
+          id="content"
+          className="h-[200px] rounded border border-[#A9A9A9] p-3"
+          placeholder="내용을 입력하세요."
+          {...register('content', { required: true })}
+        />
+      </PostInfoSection>
 
-      <PostMatchReview onSetReview={setReview} />
-
-      <div className="mb-10 mt-6 flex flex-col">
-        <button
-          type="submit"
-          className="my-10 h-20 rounded-[10px] bg-black text-2xl font-medium text-white"
-        >
+      <fieldset className="py-10 text-center">
+        <Button type="submit" size="medium" scheme="primary">
           게시글 등록
-        </button>
-      </div>
+        </Button>
+      </fieldset>
     </form>
   );
 };
