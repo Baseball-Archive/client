@@ -1,15 +1,14 @@
+import { useMutation } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-
+import { CommunityData, postCommunity } from '../../../apis/community';
+import useSchedule from '../../../hooks/useSchedule';
+import Button from '../../common/Button';
+import InputText from '../../common/InputText';
 import PostInfoSection from './PostInfoSection';
 import PostPickDate from './PostPickDate';
 import PostPickMatch from './PostPickMatch';
-import { CommunityData, postCommunity } from '../../../apis/community';
-import InputText from '../../common/InputText';
-import Button from '../../common/Button';
-import dayjs from 'dayjs';
-import useSchedule from '../../../hooks/useSchedule';
-import { useMutation } from '@tanstack/react-query';
 
 const PostInfo = () => {
   const { handleSubmit, register } = useForm<CommunityData>();
@@ -68,7 +67,6 @@ const PostInfo = () => {
           scheduleData={scheduleData || []}
         />
       </PostInfoSection>
-
 
       <PostInfoSection label="내용" name="content">
         <textarea

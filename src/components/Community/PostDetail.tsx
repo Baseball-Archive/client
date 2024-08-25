@@ -1,10 +1,11 @@
-import PostHandleButton from '../common/PostHandleButton';
-import { useState } from 'react';
-import dayjs from 'dayjs';
-import { getTeamLabelByKey } from '../../utils/getTeamValueByKey';
-import { formatDate } from '../../utils/format';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/20/solid';
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline';
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { formatDate } from '../../utils/format';
+import { getTeamLabelByKey } from '../../utils/getTeamValueByKey';
+import Badge from '../common/Badge';
+import PostHandleButton from '../common/PostHandleButton';
 
 interface Post {
   away_team_id: number;
@@ -17,7 +18,6 @@ interface Post {
   pic_url: string;
   title: string;
 }
-
 
 interface Props {
   postDetail: Post;
@@ -60,7 +60,6 @@ const PostDetail = ({ postDetail }: Props) => {
       alert('수정 되었습니다.');
     }
   };
-
 
   const homeTeam = transformTeamName(home_team_name);
   const awayTeam = transformTeamName(away_team_name);
@@ -148,7 +147,6 @@ const PostDetail = ({ postDetail }: Props) => {
               </svg>
             </div>
           </button>
-
         </div>
         <PostHandleButton onEdit={handleEdit} onDelete={handleDelete} />
       </div>
