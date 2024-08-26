@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { getArchiveContent } from '../apis/archive';
-import { ArchiveContent } from '../types/Archive';
 
 const useArchiveContent = (id: string | undefined) => {
   return useQuery({

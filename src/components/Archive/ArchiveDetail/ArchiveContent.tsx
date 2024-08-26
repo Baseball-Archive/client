@@ -1,7 +1,3 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { DEFAULT_IMAGE } from '../../../constants/image';
-import useArchiveContent from '../../../hooks/useArchiveContent';
 import { TeamScheme } from '../../../types/TeamScheme';
 import { Weather } from '../../../types/Weather';
 import { convertTeamNameToEnglish } from '../../../utils/convertTeamNameToEnglish';
@@ -9,8 +5,6 @@ import { formatDate } from '../../../utils/format';
 import formatTimeDifference from '../../../utils/formatTimeDifference';
 import { useRenderEmoji } from '../../../utils/renderWeatherEmoji';
 import Badge from '../../common/Badge';
-import Loading from '../../common/Loading';
-import PostHandleButton from '../../common/PostHandleButton';
 import type { ArchiveContent } from '../../../types/Archive';
 
 interface Props {
@@ -18,8 +12,6 @@ interface Props {
 }
 
 const ArchiveContent = ({ archiveContent }: Props) => {
-  const { id: archiveId } = useParams();
-
   const {
     matchDate,
     homeTeamName,
@@ -34,20 +26,7 @@ const ArchiveContent = ({ archiveContent }: Props) => {
     createdAt,
     nickname,
     myTeamName,
-    likes,
-    comments,
   } = archiveContent;
-
-  const handleDelete = () => {
-    if (window.confirm('삭제 하시겠습니까?')) {
-      alert('삭제 되었습니다.');
-    }
-  };
-  const handleEdit = () => {
-    if (window.confirm('수정 하시겠습니까?')) {
-      alert('수정 되었습니다.');
-    }
-  };
 
   return (
     <div className="flex justify-center overflow-hidden bg-white">

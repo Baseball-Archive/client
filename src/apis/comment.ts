@@ -1,5 +1,5 @@
 import { isAxiosError } from 'axios';
-import { showToast } from '../components/common/toast';
+import { showToast } from '../components/common/Toast';
 import { PostComment } from '../types/Comment';
 import { snakeToCamel } from '../utils/snakeToCamel';
 import apiClient from './apiClient';

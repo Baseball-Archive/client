@@ -1,8 +1,5 @@
-// import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import Loading from '../../components/common/Loading';
-import AddComment from '../../components/Community/Comment/AddComment';
-import Comment from '../../components/Community/Comment/Comment';
 import PostDetail from '../../components/Community/PostDetail';
 import useCommunityDetail from '../../hooks/useCommunityDetail';
 
@@ -20,14 +17,14 @@ const CommunityDetail = () => {
 
   return (
     <div className="mb-32">
-      {/* <PostDetail postDetail={communityDetail} />
-      {filteredComment.slice().map((comment) => (
+      <PostDetail postDetail={communityDetail} />
+      {/* {filteredComment.slice().map((comment) => (
         <Comment 
         key={comment.id}
         comment={comment}
         />
-        ))} */}
-      {/* {id && <AddComment boardId={id} />} */}
+        ))}
+      {id && <AddComment boardId={id} />} */}
     </div>
   );
 };

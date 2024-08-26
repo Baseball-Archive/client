@@ -10,6 +10,7 @@ import { DEFAULT_IMAGE } from '../../../constants/image';
 import { Comment as CommentType } from '../../../types/Comment';
 import formatTimeDifference from '../../../utils/formatTimeDifference';
 import { showToast } from '../../common/Toast';
+
 interface Props {
   comment: CommentType;
 }

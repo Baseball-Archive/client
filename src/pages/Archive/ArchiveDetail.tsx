@@ -6,10 +6,8 @@ import ArchiveContent from '../../components/Archive/ArchiveDetail/ArchiveConten
 import LikeButton from '../../components/common/LikeButton';
 import Loading from '../../components/common/Loading';
 import useArchiveComment from '../../hooks/useArchiveComments';
-import useArchiveDetail from '../../hooks/useArchiveContent';
 import useArchiveContent from '../../hooks/useArchiveContent';
 import { useLike } from '../../hooks/useLike';
-import type { ArchiveContent as ArchiveContentType } from '../../types/Archive';
 
 const ArchiveDetail = () => {
   const { id: archiveId } = useParams();

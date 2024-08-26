@@ -2,8 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PublicPost from '../../components/common/PublicPost';
 import ROUTES from '../../constants/router';
-import usePublicArchive from '../../hooks/usePublicArchive';
-import Community from '../Community/Community';
+import { usePublicArchive } from '../../hooks/usePublicArchive';
 
 interface PublicArchive {
   id: number;

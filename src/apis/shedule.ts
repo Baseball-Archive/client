@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { showToast } from '../components/common/toast';
+import { showToast } from '../components/common/Toast';
 import { snakeToCamel } from '../utils/snakeToCamel';
 import apiClient from './apiClient';
 export const getSchedule = async (date: string) => {

@@ -13,7 +13,7 @@ interface Props {
 }
 
 const Comment = ({ comment }: Props) => {
-  const { id, nickname, picUrl, content, createdAt } = comment;
+  const { nickname, picUrl, content, createdAt } = comment;
 
   return (
     <div className="flex justify-center overflow-hidden bg-white pt-4">

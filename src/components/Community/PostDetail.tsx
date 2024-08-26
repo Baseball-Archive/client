@@ -1,6 +1,5 @@
-import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useCommunityComment } from '../../hooks/useArchiveComments';
 import { useCommunityLike } from '../../hooks/useLike';
 import { TeamScheme } from '../../types/TeamScheme';
@@ -33,7 +32,6 @@ interface Props {
 
 const PostDetail = ({ postDetail }: Props) => {
   const {
-    id,
     match_date,
     home_team_name,
     away_team_name,
@@ -46,8 +44,7 @@ const PostDetail = ({ postDetail }: Props) => {
     likes,
   } = postDetail;
   const { id: boardId } = useParams();
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
+
   const [isLiked, setIsLiked] = useState(false);
   const { data: communityComment } = useCommunityComment(boardId as string);
   const { addLike, subLike } = useCommunityLike(Number(boardId));

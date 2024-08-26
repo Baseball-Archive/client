@@ -3,9 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import {
-  deleteArchiveComment,
   deleteCommunityComment,
-  editArchiveComment,
   editCommunityComment,
 } from '../../../apis/comment';
 import { DEFAULT_IMAGE } from '../../../constants/image';
