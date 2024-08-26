@@ -1,37 +1,44 @@
-import React, { useState } from 'react';
-// import { addCommunityComment } from '../../../apis/comment';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import { addCommunityComment } from '../../../apis/comment';
 
-//{ boardId }: { boardId: string }
 const AddComment = () => {
-  const [comment, setComment] = useState('');
+  const queryClient = useQueryClient();
+  const { id: boardId } = useParams<{ id: string }>();
+  const { register, handleSubmit, reset } = useForm<{
+    content: string;
+  }>();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setComment(e.target.value);
-  };
+  const { mutate: addCommunityCommentMutation } = useMutation({
+    mutationFn: addCommunityComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['CommunityComment'] });
+      reset();
+    },
+    onError: () => {
+      alert('댓글 추가 실패');
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (comment.trim()) {
-      try {
-        // const result = await addCommunityComment(comment, boardId);
-        // console.log('Comment submitted:', result);
-        setComment('');
-      } catch (error) {
-        console.error('Error adding comment: ', error);
-      }
-    }
+  const onSubmit = (data: { content: string }) => {
+    addCommunityCommentMutation({
+      boardId: boardId,
+      content: data.content,
+      userId: localStorage.getItem('userId') as string,
+      createdAt: new Date().toISOString(),
+    });
   };
 
   return (
     <div className="flex justify-center bg-white pt-4">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="flex w-full overflow-hidden rounded-md border"
       >
         <input
           type="text"
-          value={comment}
-          onChange={handleInputChange}
+          {...register('content', { required: true })}
           placeholder="댓글을 입력하세요"
           className="flex-grow border-none pl-4 focus:outline-none"
         />

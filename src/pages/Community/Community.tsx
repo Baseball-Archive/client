@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link, useLocation } from 'react-router-dom';
 import { getCommunity } from '../../apis/community';
-import Post from '../../components/Community/Post';
+import PublicPost from '../../components/common/PublicPost';
 import ROUTES from '../../constants/router';
+import type { Post as PostType } from '../../types/Post';
 
 export interface ICommnunityData {
   id: number;
@@ -19,7 +20,7 @@ export interface ICommnunityData {
 const Community = () => {
   const location = useLocation();
 
-  const { data: commnunityData } = useQuery<ICommnunityData[], Error>({
+  const { data: commnunityData } = useQuery<PostType[], Error>({
     queryKey: ['community'],
     queryFn: () => getCommunity(),
   });
@@ -35,12 +36,16 @@ const Community = () => {
         <li
           className={`${location.pathname.includes('archive') ? 'border-b-2 border-black font-medium' : 'font-light'}`}
         >
-          <Link to={ROUTES.ARCHIVE_DETAIL}>일기</Link>
+          <Link to={ROUTES.PUBLIC_ARCHIVES}>일기</Link>
         </li>
       </ul>
-      <table className="w-full border-t border-black">
+      <table className="w-full border-black">
         {commnunityData &&
-          commnunityData.map((item) => <Post key={item.id} post={item} />)}
+          commnunityData.map((item) => (
+            <Link to={`/posts/${item.id}`}>
+              <PublicPost key={item.id} post={item} />
+            </Link>
+          ))}
       </table>
     </div>
   );

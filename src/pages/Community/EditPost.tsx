@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
+import Loading from '../../components/common/Loading';
 import PostInfo from '../../components/Community/AddPost/PostInfo';
 import useCommunityDetail from '../../hooks/useCommunityDetail';
-import Loading from '../../components/common/Loading';
 
 const EditPost = () => {
   const { id: communityId } = useParams<{ id: string }>();

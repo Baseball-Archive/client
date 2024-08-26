@@ -1,17 +1,25 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { DEFAULT_IMAGE } from '../../../constants/image';
+import useArchiveContent from '../../../hooks/useArchiveContent';
 import { TeamScheme } from '../../../types/TeamScheme';
 import { Weather } from '../../../types/Weather';
 import { convertTeamNameToEnglish } from '../../../utils/convertTeamNameToEnglish';
+import { formatDate } from '../../../utils/format';
 import formatTimeDifference from '../../../utils/formatTimeDifference';
 import { useRenderEmoji } from '../../../utils/renderWeatherEmoji';
 import Badge from '../../common/Badge';
+import Loading from '../../common/Loading';
+import PostHandleButton from '../../common/PostHandleButton';
 import type { ArchiveContent } from '../../../types/Archive';
 
-interface ArchiveContentProps {
-  ArchiveContent: ArchiveContent;
-  onError: () => void;
+interface Props {
+  archiveContent: ArchiveContent;
 }
-//TOFIX : api확정되면 타입수정
-const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
+
+const ArchiveContent = ({ archiveContent }: Props) => {
+  const { id: archiveId } = useParams();
+
   const {
     matchDate,
     homeTeamName,
@@ -26,7 +34,20 @@ const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
     createdAt,
     nickname,
     myTeamName,
-  } = ArchiveContent;
+    likes,
+    comments,
+  } = archiveContent;
+
+  const handleDelete = () => {
+    if (window.confirm('삭제 하시겠습니까?')) {
+      alert('삭제 되었습니다.');
+    }
+  };
+  const handleEdit = () => {
+    if (window.confirm('수정 하시겠습니까?')) {
+      alert('수정 되었습니다.');
+    }
+  };
 
   return (
     <div className="flex justify-center overflow-hidden bg-white">
@@ -34,7 +55,7 @@ const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
         <div className="border-b-[1px] border-black">
           <div className="flex items-center justify-between">
             <div className="pl-2 text-2xl font-semibold">{title}</div>
-            <div className="flex items-center text-sm text-gray-400">
+            <div className="mt-3 flex items-center text-sm text-gray-400">
               {formatTimeDifference(createdAt)}
             </div>
           </div>
@@ -53,7 +74,7 @@ const ArchiveContent = ({ ArchiveContent }: ArchiveContentProps) => {
           <div className="flex items-start">
             <p className="text-s min-w-[4rem] font-light">경기 날짜</p>
             <p className="text-s min-w-[4rem] font-medium">
-              {matchDate ? matchDate.slice(0, 10) : '날짜 없음'}
+              {formatDate(matchDate)}
             </p>
           </div>
           <div className="flex items-center">

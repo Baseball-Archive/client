@@ -1,9 +1,9 @@
 // import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import Loading from '../../components/common/Loading';
-// import AddComment from '../../components/Community/Comment/AddComment';
-// import Comment from '../../components/Community/Comment/Comment';
-// import PostDetail from '../../components/Community/PostDetail';
+import AddComment from '../../components/Community/Comment/AddComment';
+import Comment from '../../components/Community/Comment/Comment';
+import PostDetail from '../../components/Community/PostDetail';
 import useCommunityDetail from '../../hooks/useCommunityDetail';
 
 const CommunityDetail = () => {

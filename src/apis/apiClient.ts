@@ -33,6 +33,7 @@ const apiClient = (() => {
     async (config) => {
       const user = auth.currentUser;
       const token = await user?.getIdToken();
+
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }

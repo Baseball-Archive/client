@@ -1,13 +1,39 @@
 import { useQuery } from '@tanstack/react-query';
-import { getArchiveComments } from '../apis/comment';
+import React from 'react';
+import { getArchiveComments, getCommunityComments } from '../apis/comment';
 import { Comment } from '../types/Comment';
 
 const useArchiveComment = (id: string) => {
-  const { data: archiveComment } = useQuery<Comment[]>({
+  return useQuery<Comment[]>({
     queryKey: ['ArchiveCommnet'],
-    queryFn: () => getArchiveComments(id),
+    queryFn: async () => {
+      if (!id) {
+        throw new Error('Board Id가 없습니다.');
+      }
+      const data = await getArchiveComments(id);
+      if (!data) {
+        throw new Error('Data가 없습니다.');
+      }
+      return data;
+    },
+    enabled: !!id,
   });
-  return { archiveComment };
 };
-
 export default useArchiveComment;
+
+export const useCommunityComment = (id: string | undefined) => {
+  return useQuery<Comment[]>({
+    queryKey: ['CommunityComment'],
+    queryFn: async () => {
+      if (!id) {
+        throw new Error('Board Id가 없습니다.');
+      }
+      const data = await getCommunityComments(id);
+      if (!data) {
+        throw new Error('Data가 없습니다.');
+      }
+      return data;
+    },
+    enabled: !!id,
+  });
+};
