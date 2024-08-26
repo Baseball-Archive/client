@@ -19,21 +19,6 @@ export const getArchives = async () => {
   }
   return [];
 };
-// export const getArchiveContent = async (id: string) => {
-//   try {
-//     const response = await apiClient.get(`/archive/public/${id}`);
-//     return snakeToCamel(response.data);
-//   } catch (error) {
-//     if (isAxiosError(error)) {
-//       if (error.response) {
-//         showToast(error.response.data.error, 'error');
-//       } else {
-//         showToast(error.message, 'error');
-//       }
-//     }
-//   }
-//   return { archive: {} };
-// };
 
 export const getArchiveContent = async (id: string) => {
   const response = await apiClient.get(`/archive/public/${id}`);
