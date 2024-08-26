@@ -27,14 +27,14 @@ const Community = () => {
 
   return (
     <div className="mb-24">
-      <ul className="flex justify-center gap-3 py-10 font-light">
+      <ul className="flex justify-center gap-3 py-10 font-semibold">
         <li
-          className={`${location.pathname.includes('posts') ? 'border-b-2 border-black font-medium' : 'font-light'}`}
+          className={`${location.pathname.includes('posts') ? 'border-b-2 border-black font-semibold' : 'font-normal'}`}
         >
           <Link to={ROUTES.POSTS}>커뮤니티</Link>
         </li>
         <li
-          className={`${location.pathname.includes('archive') ? 'border-b-2 border-black font-medium' : 'font-light'}`}
+          className={`${location.pathname.includes('archive') ? 'border-b-2 border-black font-semibold' : 'font-normal'}`}
         >
           <Link to={ROUTES.PUBLIC_ARCHIVES}>일기</Link>
         </li>

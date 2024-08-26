@@ -1,4 +1,4 @@
-import PostInfo from "../../components/Community/AddPost/PostInfo";
+import PostInfo from '../../components/Community/AddPost/PostInfo';
 
 const AddPost = () => {
   return (

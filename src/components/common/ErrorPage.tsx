@@ -2,6 +2,7 @@ import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { Link } from 'react-router-dom';
 import Icon from '/images/icon.png';
 import ROUTES from '../../constants/router';
+import Button from './Button';
 
 const ErrorPage = () => {
   return (
@@ -16,6 +17,9 @@ const ErrorPage = () => {
         >
           홈으로 <ChevronRightIcon className="size-8" />
         </Link>
+        <Button scheme="primary" size="medium">
+          <Link to={ROUTES.LOGIN}>다시 로그인하기</Link>
+        </Button>
       </div>
     </>
   );

@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import Button from '../../components/common/Button';
+import Loading from '../../components/common/Loading';
 import Profile from '../../components/User/Profile';
 import UserEditForm from '../../components/User/UserEditForm';
-import Loading from '../../components/common/Loading';
-import useUserData from '../../hooks/useUserData';
-import useUpdateUser from '../../hooks/useUpdateUser';
 import ROUTES from '../../constants/router';
+import useUpdateUser from '../../hooks/useUpdateUser';
+import useUserData from '../../hooks/useUserData';
 import { useAuthStore } from '../../store/authStore';
 
 const User = () => {
