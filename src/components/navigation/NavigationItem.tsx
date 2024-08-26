@@ -22,7 +22,7 @@ const NavigationItem = ({ title, icon, link, onClick }: Props) => {
           {icon}
         </span>
         <span
-          className={`text-sm md:hidden xl:inline xl:text-base ${location.pathname === link ? 'font-medium' : 'font-light'}`}
+          className={`text-sm md:hidden xl:inline xl:text-base ${location.pathname === link ? 'font-semibold' : 'font-normal'}`}
         >
           {title}
         </span>

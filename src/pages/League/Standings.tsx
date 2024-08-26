@@ -1,8 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
 import { getStandings } from '../../apis/league';
 import Badge from '../../components/common/Badge';
-import { TeamScheme } from '../../types/TeamScheme';
 import { BASEBALL_TEAMS } from '../../constants/baseballTeams';
-import { useQuery } from '@tanstack/react-query';
+import { TeamScheme } from '../../types/TeamScheme';
 
 interface Standings {
   rank: number;
@@ -37,12 +37,12 @@ const Standings = () => {
                     }
                   />
                 </td>
-                <td className="text-center font-light">
+                <td className="font-noraml text-center">
                   <span className="font-normal">{item.wins}</span>승
                   <span className="pl-2 font-normal">{item.draws}</span>무
                   <span className="pl-2 font-normal">{item.losses}</span>패
                 </td>
-                <td className="text-center font-light">
+                <td className="font-noraml text-center">
                   승률
                   <span className="pl-2 font-normal">{item.winning_rate}</span>
                 </td>

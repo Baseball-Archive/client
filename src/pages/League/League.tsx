@@ -5,14 +5,14 @@ const Matches = () => {
   const location = useLocation();
   return (
     <>
-      <ul className="flex justify-center gap-3 py-10 font-light">
+      <ul className="flex justify-center gap-3 py-10 font-normal">
         <li
-          className={`${location.pathname.includes('schedule') ? 'border-b-2 border-black font-medium' : 'font-light'}`}
+          className={`${location.pathname.includes('schedule') ? 'border-b-2 border-black font-semibold' : 'font-normal'}`}
         >
           <Link to={`${ROUTES.LEAGUE}/${ROUTES.SCHEDULE}`}>일정</Link>
         </li>
         <li
-          className={`${location.pathname.includes('standings') ? 'border-b-2 border-black font-medium' : 'font-light'}`}
+          className={`${location.pathname.includes('standings') ? 'border-b-2 border-black font-semibold' : 'font-normal'}`}
         >
           <Link to={`${ROUTES.LEAGUE}/${ROUTES.STANDINGS}`}>순위</Link>
         </li>

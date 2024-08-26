@@ -1,7 +1,7 @@
+import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { Link } from 'react-router-dom';
 import Icon from '/images/icon.png';
 import ROUTES from '../../constants/router';
-import { ChevronRightIcon } from '@heroicons/react/20/solid';
 
 const ErrorPage = () => {
   return (
